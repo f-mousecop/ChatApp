@@ -42,7 +42,7 @@
                     FontSize="20"
                     Foreground="Black"
                     MaxLength="36"
-                    Text="{Binding UserSignIn.Username}" />
+                    Text="{Binding Login.Username}" />
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="15">
                 <TextBlock

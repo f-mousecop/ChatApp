@@ -15,5 +15,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" FontSize="40" Text="Chat Page" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="1">
+            <Button Name="GoBack" Width="100" Height="40" Content="Go Back" Click="GoBack_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

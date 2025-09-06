@@ -7,5 +7,5 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800"
         WindowStartupLocation="CenterScreen">
-    <Frame Name="main" NavigationUIVisibility="Visible"/>
+    <Frame Name="main" NavigationUIVisibility="Hidden"/>
 </Window>

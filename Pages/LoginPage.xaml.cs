@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace ChatApp
     /// </summary>
     public partial class LoginPage : Page
     {
+        public LoginViewModel Login { get; set; } = new LoginViewModel();
         public LoginPage()
         {
             InitializeComponent();
@@ -27,7 +29,9 @@ namespace ChatApp
 
         private void UserLogin_Click(object sender, RoutedEventArgs e)
         {
-            var userName = userNameBox.Text;
+            var userName = Login.Username;
+            var password = Login.Password;
+            var pass = passwordBox.Password;
             if (!string.IsNullOrEmpty(userName))
             {
                 NavigationService.Navigate(new Chat());
