@@ -13,104 +13,105 @@
       Background="{DynamicResource WindowsBackgroundBrush}">
     <Page.Resources>
         <LinearGradientBrush x:Key="WindowsBackgroundBrush">
-            <GradientStop Offset="0" Color="White"/>
-            <GradientStop Offset="1" Color="Gray"/>
-
+            <GradientStop Offset="0" Color="MidnightBlue"/>
+            <GradientStop Offset="1" Color="LightSlateGray"/>
         </LinearGradientBrush>
     </Page.Resources>
     <Border>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label
-                Grid.Row="0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Sign In"
-                FontFamily="Georgia"
-                FontSize="40"
-                Foreground="Black" />
-            <StackPanel Grid.Row="1" Margin="15">
-                <TextBlock
-                    FontSize="20"
-                    Foreground="Black"
-                    Text="Username:" 
-                    FontFamily="Georgia"/>
-                <TextBox
-                    Name="userNameBox"
-                    Height="40"
-                    Padding="10,5,0,0"
-                    FontSize="20"
-                    Foreground="Black"
-                    MaxLength="36"
-                    Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-            <StackPanel Grid.Row="2" Margin="15">
-                <TextBlock
-                    FontSize="20"
-                    Foreground="Black"
-                    Text="Password:"
-                    FontFamily="Georgia"/>
-                <PasswordBox
-                    Name="passwordBox"
-                    Height="40"
-                    Padding="10,5,0,0"
-                    FontSize="20"
-                    Foreground="Black"
-                    MaxLength="36"
-                    utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
-                    <TextBlock Padding="0,0,5,0" HorizontalAlignment="Left" FontSize="14">
-                        Don't have an account? <Hyperlink NavigateUri="SignUp.xaml">Sign up</Hyperlink>
-                    </TextBlock>
-                    <TextBlock Text="||" FontSize="14"/>
-                    <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right" FontSize="14">
-                        <Hyperlink NavigateUri="ForgotPass.xaml">Forgot Password?</Hyperlink>
-                    </TextBlock>
-                </WrapPanel>
-            </StackPanel>
-            <StackPanel
-                Grid.Row="3"
-                Margin="0,35"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                <Button
-                    Width="100"
-                    Name="UserLogin"
-                    Command="{Binding LoginCommand}"
-                    Content="Login"
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Sign In"
                     FontFamily="Georgia"
-                    Margin="5"
-                    Height="40"/>
-                <Button
-                    Width="100"
-                    Name="Quit"
-                    Command="{Binding QuitCommand}"
-                    Content="Quit"
-                    FontFamily="Georgia"
-                    Margin="5"
-                    Height="40"/>
-            </StackPanel>
-            <RichTextBox 
-                Grid.Column="1"
-                IsReadOnly="True"
-                Margin="10,20,0,10" 
-                Grid.RowSpan="4"
-                Foreground="Black"
-                Background="Transparent">
-                <FlowDocument FontFamily="Georgia">
-                    <Paragraph FontSize="40">Welcome!</Paragraph>
-                    <Paragraph FontSize="24">Please login</Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-        </Grid>
+                    FontSize="40"
+                    Foreground="Black" />
+                <StackPanel Grid.Row="1" Margin="15">
+                    <TextBlock
+                        FontSize="20"
+                        Foreground="Black"
+                        Text="Username:" 
+                        FontFamily="Georgia"/>
+                    <TextBox
+                        Name="userNameBox"
+                        Height="40"
+                        Padding="10,5,0,0"
+                        FontSize="20"
+                        Foreground="Black"
+                        MaxLength="36"
+                        Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <StackPanel Grid.Row="2" Margin="15">
+                    <TextBlock
+                        FontSize="20"
+                        Foreground="Black"
+                        Text="Password:"
+                        FontFamily="Georgia"/>
+                    <PasswordBox
+                        Name="passwordBox"
+                        Height="40"
+                        Padding="10,5,0,0"
+                        FontSize="20"
+                        Foreground="Black"
+                        MaxLength="36"
+                        utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
+                        <TextBlock Padding="0,0,5,0" HorizontalAlignment="Left" FontSize="14">
+                            Don't have an account? <Hyperlink NavigateUri="SignUp.xaml">Sign up</Hyperlink>
+                        </TextBlock>
+                        <TextBlock Text="||" FontSize="14"/>
+                        <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right" FontSize="14">
+                            <Hyperlink NavigateUri="ForgotPass.xaml">Forgot Password?</Hyperlink>
+                        </TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="3"
+                    Margin="0,35"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="100"
+                        Name="UserLogin"
+                        Command="{Binding LoginCommand}"
+                        Content="Login"
+                        FontFamily="Georgia"
+                        Margin="5"
+                        Height="40"/>
+                    <Button
+                        Width="100"
+                        Name="Quit"
+                        Command="{Binding QuitCommand}"
+                        Content="Quit"
+                        FontFamily="Georgia"
+                        Margin="5"
+                        Height="40"/>
+                </StackPanel>
+                <RichTextBox 
+                    Grid.Column="1"
+                    IsReadOnly="True"
+                    Margin="10,20,0,10" 
+                    Grid.RowSpan="4"
+                    Foreground="Black"
+                    Background="Transparent">
+                    <FlowDocument FontFamily="Georgia">
+                        <Paragraph FontSize="40">Welcome!</Paragraph>
+                        <Paragraph FontSize="24">Please login</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </Grid>
+        </ScrollViewer>
     </Border>
 </Page>

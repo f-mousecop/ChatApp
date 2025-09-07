@@ -6,10 +6,57 @@
       xmlns:local="clr-namespace:ChatApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SignUp">
+      Title="SignUp"
+      Background="{DynamicResource WindowsBackgroundBrush}">
 
-    <Grid>
-        <TextBlock FontSize="40" HorizontalAlignment="Center" Text="Create an Account"/>
-        <Button Name="GoBack" Content="Go Back" Click="GoBack_Click" Height="60" Width="100"/>
-    </Grid>
+    <Page.Resources>
+        <LinearGradientBrush x:Key="WindowsBackgroundBrush">
+            <GradientStop Offset="0" Color="MidnightBlue"/>
+            <GradientStop Offset="1" Color="LightSlateGray"/>
+        </LinearGradientBrush>
+    </Page.Resources>
+
+    <Border>
+        <Grid>
+            <!--<Grid.Background>
+
+            </Grid.Background>-->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    TextBlock.TextAlignment="Center">
+                    <Border 
+                        Background="WhiteSmoke" 
+                        CornerRadius="10"
+                        Padding="15,50,15,15"
+                        Width="400"
+                        Margin="50,50,50,0">
+
+                        <StackPanel>
+                            <TextBlock Text="Create an Account" 
+                                       FontSize="40" 
+                                       FontFamily="Arial"
+                                       Foreground="CornflowerBlue"/>
+                            <TextBlock Text="Email:" />
+                            <TextBox />
+
+                            <TextBlock Text="Username:" />
+                            <TextBox />
+                            <TextBlock Text="Password:" />
+                            <TextBox />
+                            <TextBlock Text="Confirm Password:" />
+                            <TextBox />
+
+                            <WrapPanel HorizontalAlignment="Center">
+                                <Button Content="Next" Margin="10" Width="60" Height="30"/>
+                                <Button Name="GoBack" Content="Go Back" Margin="10" Width="60" Height="30" Click="GoBack_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+    </Border>
 </Page>
