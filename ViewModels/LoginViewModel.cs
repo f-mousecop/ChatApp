@@ -9,6 +9,10 @@ using System.Windows.Input;
 
 namespace ChatApp.ViewModels
 {
+    /// <summary>
+    /// View model for Login page
+    /// Uses composition for UserViewModel
+    /// </summary>
     public class LoginViewModel : BaseViewModel
     {
         public UserViewModel User { get; } = new();
@@ -58,8 +62,7 @@ namespace ChatApp.ViewModels
             var ok = await _auth.LoginAsync(User.Username, Password);
             if (ok.Success) LoginSucceeded?.Invoke();
             else MessageBox.Show(
-                "Invalid username or password.",
-                "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                ok.Error ?? "Login Failed", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             //try
             //{
             //    LoginSucceeded?.Invoke();

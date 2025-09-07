@@ -34,6 +34,11 @@ namespace ChatApp
             DataContext = vm;
         }
 
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+
+        }
+
         //private void UserLogin_Click(object sender, RoutedEventArgs e)
         //{
         //    var userName = Login.Username;

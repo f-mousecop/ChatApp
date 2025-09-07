@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChatApp.ViewModels
 {
+    /// <summary>
+    /// UserViewModel that inherits from the BaseViewModel file 
+    /// Defines ID and Username
+    /// </summary>
     public class UserViewModel : BaseViewModel
     {
         private int _id;

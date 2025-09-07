@@ -27,7 +27,14 @@ namespace ChatApp
 
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            try
+            {
+                NavigationService.GoBack();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

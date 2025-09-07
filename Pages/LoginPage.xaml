@@ -9,10 +9,17 @@
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:vm="clr-namespace:ChatApp.ViewModels"
       d:DataContext="{d:DesignInstance vm:LoginViewModel, IsDesignTimeCreatable=True}"
-      Title="LoginPage">
+      Title="LoginPage"
+      Background="{DynamicResource WindowsBackgroundBrush}">
+    <Page.Resources>
+        <LinearGradientBrush x:Key="WindowsBackgroundBrush">
+            <GradientStop Offset="0" Color="White"/>
+            <GradientStop Offset="1" Color="Gray"/>
 
+        </LinearGradientBrush>
+    </Page.Resources>
     <Border>
-        <Grid Background="AliceBlue">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -60,6 +67,15 @@
                     Foreground="Black"
                     MaxLength="36"
                     utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
+                    <TextBlock Padding="0,0,5,0" HorizontalAlignment="Left" FontSize="14">
+                        Don't have an account? <Hyperlink NavigateUri="SignUp.xaml">Sign up</Hyperlink>
+                    </TextBlock>
+                    <TextBlock Text="||" FontSize="14"/>
+                    <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right" FontSize="14">
+                        <Hyperlink NavigateUri="ForgotPass.xaml">Forgot Password?</Hyperlink>
+                    </TextBlock>
+                </WrapPanel>
             </StackPanel>
             <StackPanel
                 Grid.Row="3"
@@ -89,7 +105,7 @@
                 Margin="10,20,0,10" 
                 Grid.RowSpan="4"
                 Foreground="Black"
-                Background="AliceBlue">
+                Background="Transparent">
                 <FlowDocument FontFamily="Georgia">
                     <Paragraph FontSize="40">Welcome!</Paragraph>
                     <Paragraph FontSize="24">Please login</Paragraph>

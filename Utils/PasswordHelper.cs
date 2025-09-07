@@ -8,6 +8,9 @@ using System.Windows.Controls;
 
 namespace ChatApp.Utils
 {
+    /// <summary>
+    /// Password helper class for PasswordBox binding
+    /// </summary>
     public static class PasswordHelper
     {
         public static readonly DependencyProperty BoundPasswordProperty =

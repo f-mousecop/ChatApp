@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Models.Auth
 {
+    /// <summary>
+    /// Temporary Dummy Authentication service 
+    /// Allows non-empty username & passwords to login successfully 
+    /// </summary>
     public class DummyAuthServ : IAuthService
     {
         public Task<AuthResult> LoginAsync(string username, string password)
@@ -15,7 +19,7 @@ namespace ChatApp.Models.Auth
             {
                 return Task.FromResult(AuthResult.Ok(new User { Id = 1, Username = username }));
             }
-            return Task.FromResult(AuthResult.Fail("Invalid Login"));
+            return Task.FromResult(AuthResult.Fail("Invalid username or password"));
         }
 
         public Task<AuthResult> RegisterAsync(string username, string password)
