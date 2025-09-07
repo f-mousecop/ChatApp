@@ -1,4 +1,5 @@
-﻿using ChatApp.ViewModels;
+﻿using ChatApp.Models.Auth;
+using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,35 +22,41 @@ namespace ChatApp
     /// </summary>
     public partial class LoginPage : Page
     {
-        public LoginViewModel Login { get; set; } = new LoginViewModel();
+        //public LoginViewModel Login { get; set; } = new LoginViewModel();
         public LoginPage()
         {
             InitializeComponent();
-        }
-
-        private void UserLogin_Click(object sender, RoutedEventArgs e)
-        {
-            var userName = Login.Username;
-            var password = Login.Password;
-            var pass = passwordBox.Password;
-            if (!string.IsNullOrEmpty(userName))
+            var vm = new LoginViewModel(new DummyAuthServ());
+            vm.LoginSucceeded += () =>
             {
-                NavigationService.Navigate(new Chat());
-            }
-            else
-            {
-                MessageBox.Show("Please Enter Username and Password", "Login Fail", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
+                NavigationService?.Navigate(new Chat());
+            };
+            DataContext = vm;
         }
 
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+        //private void UserLogin_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var userName = Login.Username;
+        //    var password = Login.Password;
+        //    var pass = passwordBox.Password;
+        //    if (!string.IsNullOrEmpty(userName))
+        //    {
+        //        NavigationService.Navigate(new Chat());
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please Enter Username and Password", "Login Fail", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //    }
+        //}
 
-        private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
-        {
+        //private void Quit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Application.Current.Shutdown();
+        //}
 
-        }
+        //private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
 }

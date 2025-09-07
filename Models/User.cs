@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp.ViewModels
+namespace ChatApp.Models
 {
-    public class SignUpViewModel : UserViewModel
+    public class User
     {
-        public string ConfirmPass { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; } = "";
     }
 }

@@ -6,9 +6,20 @@ using System.Threading.Tasks;
 
 namespace ChatApp.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : BaseViewModel
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set => SetProperty(ref _username, value);
+        }
     }
 }

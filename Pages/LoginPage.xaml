@@ -4,9 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ChatApp"
+      xmlns:utils="clr-namespace:ChatApp.Utils"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:vm="clr-namespace:ChatApp.ViewModels"
+      d:DataContext="{d:DesignInstance vm:LoginViewModel, IsDesignTimeCreatable=True}"
       Title="LoginPage">
 
     <Border>
@@ -42,7 +44,7 @@
                     FontSize="20"
                     Foreground="Black"
                     MaxLength="36"
-                    Text="{Binding Login.Username}" />
+                    Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="15">
                 <TextBlock
@@ -57,7 +59,7 @@
                     FontSize="20"
                     Foreground="Black"
                     MaxLength="36"
-                    LostFocus="passwordBox_LostFocus"/>
+                    utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel
                 Grid.Row="3"
@@ -67,7 +69,7 @@
                 <Button
                     Width="100"
                     Name="UserLogin"
-                    Click="UserLogin_Click"
+                    Command="{Binding LoginCommand}"
                     Content="Login"
                     FontFamily="Georgia"
                     Margin="5"
@@ -75,7 +77,7 @@
                 <Button
                     Width="100"
                     Name="Quit"
-                    Click="Quit_Click"
+                    Command="{Binding QuitCommand}"
                     Content="Quit"
                     FontFamily="Georgia"
                     Margin="5"
