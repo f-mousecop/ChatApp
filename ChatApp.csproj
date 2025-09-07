@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <Content Include="Images\Logo\icon.ico" />
+    <Content Include="Images\Loginview.png" />
+    <Content Include="Images\Chatview.png" />
+    <Content Include="Images\Signupview.png" />
   </ItemGroup>
 
 </Project>
