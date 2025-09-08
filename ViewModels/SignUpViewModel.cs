@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChatApp.ViewModels
 {
-    public class SignUpViewModel : UserViewModel
+    public class SignUpViewModel : BaseViewModel
     {
+        public UserViewModel User { get; } = new();
         public string ConfirmPass { get; set; }
+
     }
 }

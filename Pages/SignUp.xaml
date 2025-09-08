@@ -9,48 +9,38 @@
       Title="SignUp"
       Background="{DynamicResource WindowsBackgroundBrush}">
 
-    <Page.Resources>
-        <LinearGradientBrush x:Key="WindowsBackgroundBrush">
-            <GradientStop Offset="0" Color="MidnightBlue"/>
-            <GradientStop Offset="1" Color="LightSlateGray"/>
-        </LinearGradientBrush>
-    </Page.Resources>
-
     <Border>
         <Grid>
-            <!--<Grid.Background>
-
-            </Grid.Background>-->
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <StackPanel
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    TextBlock.TextAlignment="Center">
+                    TextBlock.TextAlignment="Center"
+                    TextBlock.LineHeight="10">
                     <Border 
                         Background="WhiteSmoke" 
                         CornerRadius="10"
                         Padding="15,50,15,15"
                         Width="400"
-                        Margin="50,50,50,0">
+                        Margin="50,50,50,50">
 
                         <StackPanel>
                             <TextBlock Text="Create an Account" 
-                                       FontSize="40" 
-                                       FontFamily="Arial"
-                                       Foreground="CornflowerBlue"/>
+                                       FontSize="40"/>
+                            <Line Stroke="Black" StrokeThickness="2" X1="400" Margin="0,0,0,10"/>
                             <TextBlock Text="Email:" />
-                            <TextBox />
+                            <TextBox Margin="0,0,0,5" Padding="2"/>
 
                             <TextBlock Text="Username:" />
-                            <TextBox />
+                            <TextBox Margin="0,0,0,5" Padding="2"/>
                             <TextBlock Text="Password:" />
-                            <TextBox />
+                            <TextBox Margin="0,0,0,5" Padding="2"/>
                             <TextBlock Text="Confirm Password:" />
-                            <TextBox />
+                            <TextBox Margin="0,0,0,5" Padding="2"/>
 
                             <WrapPanel HorizontalAlignment="Center">
-                                <Button Content="Next" Margin="10" Width="60" Height="30"/>
-                                <Button Name="GoBack" Content="Go Back" Margin="10" Width="60" Height="30" Click="GoBack_Click"/>
+                                <Button Content="Next" Margin="10" Width="80" Height="40"/>
+                                <Button Name="GoBack" Content="Go Back" Margin="10" Width="80" Height="40" Click="GoBack_Click"/>
                             </WrapPanel>
                         </StackPanel>
                     </Border>

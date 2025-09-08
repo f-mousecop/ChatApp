@@ -25,5 +25,13 @@ namespace ChatApp.ViewModels
             get => _username;
             set => SetProperty(ref _username, value);
         }
+
+        private string _email;
+
+        public string Email
+        {
+            get => _email;
+            set => SetProperty(ref _email, value);
+        }
     }
 }

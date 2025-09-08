@@ -11,13 +11,7 @@
       d:DataContext="{d:DesignInstance vm:LoginViewModel, IsDesignTimeCreatable=True}"
       Title="LoginPage"
       Background="{DynamicResource WindowsBackgroundBrush}">
-    <Page.Resources>
-        <LinearGradientBrush x:Key="WindowsBackgroundBrush">
-            <GradientStop Offset="0" Color="#0f172a"/>
-            <GradientStop Offset="2" Color="#333"/>
-            <GradientStop Offset="2" Color="#6b21a8"/>
-        </LinearGradientBrush>
-    </Page.Resources>
+
     <Border>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid>
@@ -35,8 +29,7 @@
                     Grid.Row="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Content="Sign In"
-                    FontFamily="Georgia"
+                    Content="Sign In"                  
                     FontSize="40"
                     Foreground="#fff" />
                 <StackPanel Grid.Row="1" Margin="15">
@@ -44,7 +37,7 @@
                         FontSize="20"
                         Foreground="#fff"
                         Text="Username:" 
-                        FontFamily="Georgia"/>
+                        />
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="#333">
                         <TextBox
                         Name="userNameBox"
@@ -54,7 +47,7 @@
                         Foreground="#fff"
                         Background="Transparent"
                         BorderThickness="0"
-                        MaxLength="36"                
+                        MaxLength="36"   
                         Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
                 </StackPanel>
@@ -63,7 +56,7 @@
                         FontSize="20"
                         Foreground="#fff"
                         Text="Password:"
-                        FontFamily="Georgia"/>
+                        />
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="#333">
                         <PasswordBox
                             Name="passwordBox"
@@ -91,60 +84,31 @@
                     Margin="0,35"
                     HorizontalAlignment="Center"
                     Orientation="Horizontal">
-
-                    <Border CornerRadius="5" 
-                            BorderThickness="1" 
-                            BorderBrush="DarkGray" 
-                            Background="#333"
-                            Margin="5">
-                        <Button
-                            Width="100"
-                            Name="UserLogin"
-                            Command="{Binding LoginCommand}"
-                            Content="Login"
-                            FontFamily="Georgia"
-                            Margin="5"
-                            Height="40"
-                            BorderThickness="0"
-                            Foreground="#fff"
-                            Background="Transparent"
-                            />
-                    </Border>
-                    <Border CornerRadius="5" 
-                            BorderThickness="1" 
-                            BorderBrush="DarkGray" 
-                            Background="#333"
-                            Margin="5">
-                        <Button
-                            Width="100"
-                            Name="Quit"
-                            Command="{Binding QuitCommand}"
-                            Content="Quit"
-                            FontFamily="Georgia"
-                            Margin="5"
-                            Height="40"
-                            BorderThickness="0"
-                            Foreground="#fff"
-                            Background="Transparent"
-                            />
-                    </Border>
-                    <!--<Button
+                    <Button
+                        x:Name="UserLogin"
+                        Content="Login"
+                        Command="{Binding LoginCommand}"                        
+                        Height="40"
                         Width="100"
-                        Name="Quit"
+                        Margin="5">
+                    </Button>
+                    <Button
+                        x:Name="Quit"
                         Command="{Binding QuitCommand}"
-                        Content="Quit"
-                        FontFamily="Georgia"
-                        Margin="5"
-                        Height="40"/>-->
+                        Content="Quit"                       
+                        Height="40"
+                        Width="100"
+                        Margin="5">
+                    </Button>
                 </StackPanel>
+
                 <RichTextBox 
                     Grid.Column="1"
-                    IsReadOnly="True"
-                    Margin="10,20,0,10" 
+                    IsReadOnly="True"                   
                     Grid.RowSpan="4"
                     Foreground="#fff"
                     Background="Transparent">
-                    <FlowDocument FontFamily="Georgia">
+                    <FlowDocument>
                         <Paragraph FontSize="40">Welcome!</Paragraph>
                         <Paragraph FontSize="24">Please login</Paragraph>
                     </FlowDocument>

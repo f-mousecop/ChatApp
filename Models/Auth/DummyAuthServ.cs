@@ -12,6 +12,12 @@ namespace ChatApp.Models.Auth
     /// </summary>
     public class DummyAuthServ : IAuthService
     {
+        /// <summary>
+        /// Login function
+        /// </summary>
+        /// <param name="username">username textbox</param>
+        /// <param name="password">password passwordbox</param>
+        /// <returns><see cref="AuthResult.Ok(User)"/> or <see cref="AuthResult.Fail(string)"/></returns>
         public Task<AuthResult> LoginAsync(string username, string password)
         {
             // Demo for production purposes: non-empty username & password success
@@ -22,6 +28,12 @@ namespace ChatApp.Models.Auth
             return Task.FromResult(AuthResult.Fail("Invalid username or password"));
         }
 
+        /// <summary>
+        /// Function to handle new user registration
+        /// </summary>
+        /// <param name="username">Grabs username</param>
+        /// <param name="password">Grabs password</param>
+        /// <returns>Auth result (User / success or error / fail</returns>
         public Task<AuthResult> RegisterAsync(string username, string password)
         {
             // Demo for production purposes: accept anything
