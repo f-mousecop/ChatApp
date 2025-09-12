@@ -26,18 +26,11 @@ namespace ChatApp
         public LoginPage()
         {
             InitializeComponent();
-            var vm = new LoginViewModel(new DummyAuthServ());
-            vm.LoginSucceeded += () =>
-            {
-                NavigationService?.Navigate(new Chat());
-            };
-            DataContext = vm;
+
+            //var vm = new LoginViewModel();
         }
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
 
-        }
 
         //private void UserLogin_Click(object sender, RoutedEventArgs e)
         //{
@@ -65,3 +58,4 @@ namespace ChatApp
         //}
     }
 }
+

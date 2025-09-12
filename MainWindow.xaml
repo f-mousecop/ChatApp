@@ -6,11 +6,38 @@
         xmlns:local="clr-namespace:ChatApp" xmlns:viewmodels="clr-namespace:ChatApp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:WindowViewModel}"
         mc:Ignorable="d"
         Title="Chat App" Height="550" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        Style="{StaticResource CustomWindow}"
+        AllowsTransparency="False"
+         >
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="Transparent"
+                  MouseDown="Window_MouseDown">
+            <TextBlock Text="Chat App" HorizontalAlignment="Center"/>
+            <Button 
+                    x:Name="Exit" 
+                    Content="X" 
+                    FontSize="{StaticResource FontSizeSmall}"
+                    Style="{StaticResource menuButton}"
+                    Margin="0,0,10,0"
+                    Foreground="Red"
+                    Click="Exit_Click"
+                    HorizontalAlignment="Right" />
+        </Grid>
         <Frame 
-            x:Name="main" 
-            Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" 
-            NavigationUIVisibility="Hidden"/>
+                Grid.Row="1"
+                x:Name="main" 
+                Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" 
+                NavigationUIVisibility="Hidden"/>
     </Grid>
+
 </Window>

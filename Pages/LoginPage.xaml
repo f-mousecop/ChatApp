@@ -5,13 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ChatApp"
       xmlns:utils="clr-namespace:ChatApp.Utils"
+      xmlns:viewModel="clr-namespace:ChatApp.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      xmlns:vm="clr-namespace:ChatApp.ViewModels"
-      d:DataContext="{d:DesignInstance vm:LoginViewModel, IsDesignTimeCreatable=True}"
       Title="LoginPage"
-      Background="{DynamicResource WindowsBackgroundBrush}">
+      utils:OnLoadedCommand.LoadedCommand="{Binding ApplyThemeCommand}"
+      >
 
+    <Page.DataContext>
+        <viewModel:LoginViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Page.Resources>
+    <Page.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Page.Visibility>
     <Border>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid>
@@ -48,7 +58,7 @@
                         Background="Transparent"
                         BorderThickness="0"
                         MaxLength="36"   
-                        Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Margin="15">
@@ -69,6 +79,7 @@
                             MaxLength="36"
                             utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
+
                     <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
                         <TextBlock Padding="0,0,5,0" HorizontalAlignment="Left" FontSize="14" Foreground="LightGray">
                             Don't have an account? <Hyperlink NavigateUri="SignUp.xaml">Sign up</Hyperlink>
@@ -87,7 +98,8 @@
                     <Button
                         x:Name="UserLogin"
                         Content="Login"
-                        Command="{Binding LoginCommand}"                        
+                        Style="{StaticResource regularButtons}"
+                        Command="{Binding LoginCommand}"
                         Height="40"
                         Width="100"
                         Margin="5">
@@ -95,7 +107,8 @@
                     <Button
                         x:Name="Quit"
                         Command="{Binding QuitCommand}"
-                        Content="Quit"                       
+                        Content="Quit"   
+                        Style="{StaticResource regularButtons}"
                         Height="40"
                         Width="100"
                         Margin="5">
@@ -111,6 +124,14 @@
                     <FlowDocument>
                         <Paragraph FontSize="40">Welcome!</Paragraph>
                         <Paragraph FontSize="24">Please login</Paragraph>
+                        <Paragraph>
+                            <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               Foreground="#d7596d"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               Margin="0,10,0,0"
+                               TextWrapping="Wrap"/>
+                        </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </Grid>

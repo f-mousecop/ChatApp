@@ -1,5 +1,6 @@
 ﻿using ChatApp.ViewModels;
 using System.Text;
+using ChatApp.Pages;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +22,20 @@ namespace ChatApp
         {
             InitializeComponent();
             this.DataContext = new WindowViewModel();
-            //main.Content = new LoginPage();
+        }
+
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

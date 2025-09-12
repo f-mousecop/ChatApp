@@ -3,12 +3,27 @@
 
     <LinearGradientBrush x:Key="WindowsBackgroundBrush">
         <GradientStop Offset="0" Color="#0f172a"/>
-        <GradientStop Offset="2" Color="#333"/>
-        <GradientStop Offset="2" Color="#6b21a8"/>
+        <GradientStop Offset="0.5" Color="#333"/>
+        <GradientStop Offset="1" Color="#6b21a8"/>
     </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="WindowChromeBackgroundBrush" Color="#161616"/>
+    <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="#33FFFFFF"/>
 
     <Color x:Key="BackgroundDark">#0f172a</Color>
     <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}"/>
+
+    <Color x:Key="CadetGray">#93A3B1</Color>
+    <SolidColorBrush x:Key="CadetGrayBrush" Color="{StaticResource CadetGray}"/>
+
+    <Color x:Key="BattleshipGray">#7C898B</Color>
+    <SolidColorBrush x:Key="BattleshipGrayBrush" Color="{StaticResource BattleshipGray}"/>
+
+    <Color x:Key="TeaGreen">#D5E1A3</Color>
+    <SolidColorBrush x:Key="TeaGreenBrush" Color="{StaticResource TeaGreen}"/>
+
+    <Color x:Key="Citron">#D0D38F</Color>
+    <SolidColorBrush x:Key="CitronBrush" Color="{StaticResource Citron}"/>
 
     <Color x:Key="BackgroundGray">#333</Color>
     <SolidColorBrush x:Key="BackgroundGrayBrush" Color="{StaticResource BackgroundGray}"/>
