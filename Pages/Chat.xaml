@@ -10,9 +10,6 @@
       Title="Chat"
       Background="{DynamicResource WindowChromeBackgroundBrush}">
 
-    <Page.DataContext>
-        <vm:ChatViewModel/>
-    </Page.DataContext>
 
     <Page.Resources>
         <SolidColorBrush x:Key="WindowChromeBackgroundBrush" Color="Aqua" Opacity="0.8"/>

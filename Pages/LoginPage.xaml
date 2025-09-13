@@ -13,10 +13,6 @@
       utils:OnLoadedCommand.LoadedCommand="{Binding ApplyThemeCommand}"
       >
 
-    <Page.DataContext>
-        <viewModel:LoginViewModel/>
-    </Page.DataContext>
-
     <Border>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid>

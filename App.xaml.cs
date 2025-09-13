@@ -1,7 +1,6 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using ChatApp.Stores;
+using ChatApp.ViewModels;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ChatApp
 {
@@ -10,6 +9,19 @@ namespace ChatApp
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            NavigationStore navigationStore = new NavigationStore();
+
+            navigationStore.CurrentViewModel = new LoginViewModel(navigationStore);
+            MainWindow = new MainWindow()
+            {
+                DataContext = new WindowViewModel(navigationStore)
+            };
+            MainWindow.Show();
+
+            base.OnStartup(e);
+        }
     }
 
 }

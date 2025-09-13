@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using ChatApp.Commands;
+using ChatApp.Stores;
+using System.Windows.Input;
 
 namespace ChatApp.ViewModels
 {
     public class SignUpViewModel : BaseViewModel
     {
-        public UserViewModel User { get; } = new();
         public string ConfirmPass { get; set; }
+
+        public ICommand NavigateSignUpCommand { get; }
+
+        public SignUpViewModel(NavigationStore navigationStore)
+        {
+            NavigateSignUpCommand = new NavigateSignUpCommand(navigationStore);
+        }
 
     }
 }

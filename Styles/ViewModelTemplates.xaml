@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ChatApp"
                     xmlns:vm="clr-namespace:ChatApp.ViewModels"
-                    xmlns:pgs="clr-namespace:ChatApp.Pages">
+                    xmlns:views="clr-namespace:ChatApp.Views">
 
     <DataTemplate DataType="{x:Type vm:LoginViewModel}">
-        <local:LoginPage/>
+        <views:LoginView/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:ChatViewModel}">
-        <local:Chat/>
+        <views:ChatView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:SignUpViewModel}">
-        <pgs:SignUp/>
+        <views:SignUpView />
     </DataTemplate>
 </ResourceDictionary>

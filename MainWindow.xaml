@@ -39,11 +39,11 @@
                     HorizontalAlignment="Right" />
         </Grid>
 
-        <Frame 
-                Grid.Row="1"
-                x:Name="main" 
-                Content="{Binding Nav.CurrentViewModel}" 
-                NavigationUIVisibility="Hidden"/>
+        <ContentControl
+            Grid.Row="1"
+            x:Name="main"
+            Content="{Binding CurrentViewModel}">
+        </ContentControl>
     </Grid>
 
 </Window>

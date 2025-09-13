@@ -1,28 +1,18 @@
-﻿using ChatApp.Models;
-using ChatApp.Models.Auth;
+﻿using ChatApp.Commands;
+using ChatApp.Models;
 using ChatApp.Repositories;
+using ChatApp.Stores;
 using ChatApp.Utils;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Security;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
 
 namespace ChatApp.ViewModels
 {
-    // 1. Initialize _auth via constructor injection (add a constructor overload).
-    // 2. Initialize _username and _password to empty strings.
-    // 3. Initialize ShowPasswordCommand to a default RelayCommand (even if not implemented yet).
 
     public class LoginViewModel : BaseViewModel
     {
@@ -31,6 +21,7 @@ namespace ChatApp.ViewModels
         private SecureString _password;
         private string _errorMessage;
 
+        private readonly NavigateCommand _navigationStore;
         private IUserRepository _userRepository;
 
         public string Username
@@ -66,6 +57,8 @@ namespace ChatApp.ViewModels
         // Commands
         public ICommand ApplyThemeCommand { get; }
         public ICommand LoginCommand { get; }
+        public ICommand NavigateChatCommand { get; }
+        public ICommand NavigateSignUpCommand { get; }
         public ICommand RecoverPasswordCommand { get; }
         public ICommand ShowPasswordCommand { get; }
         public ICommand QuitCommand { get; }
@@ -74,20 +67,17 @@ namespace ChatApp.ViewModels
         // View decides how to navigate accordingly
         //public event Action? LoginSucceeded;
 
-        public LoginViewModel()
+        public LoginViewModel(NavigationStore navigationStore)
         {
-            //ApplyThemeCommand = new RelayCommand(ApplyTheme);
-            //IAuthService _auth;
-            //DummyAuthServ dummyAuthServ = new();
             _userRepository = new UserRepository();
 
-            //LoginCommand = new RelayCommand(async _ => await LoginAsync(), _ => CanLogin());
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
+            NavigateChatCommand = new NavigateCommand(navigationStore);
+            NavigateSignUpCommand = new NavigateSignUpCommand(navigationStore);
             RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
             ShowPasswordCommand = new RelayCommand(_ => { /* TODO */ });
             QuitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
         }
-
 
         public bool CanExecuteLoginCommand()
         {
@@ -101,11 +91,6 @@ namespace ChatApp.ViewModels
             return validData;
         }
 
-        // Remove or comment out the following line in ExecuteLoginCommand method:
-        // NavigationService.GetNavigationService();
-
-        // If you need to use NavigationService.GetNavigationService, you must pass a DependencyObject (such as a View or a FrameworkElement).
-        // For now, since there is no DependencyObject available in this ViewModel, simply remove the problematic line to resolve CS7036.
 
         private async Task ExecuteLoginCommand()
         {
@@ -117,6 +102,8 @@ namespace ChatApp.ViewModels
 
                     Thread.CurrentPrincipal = new GenericPrincipal(
                         new GenericIdentity(Username), null);
+                    NavigateChatCommand.Execute(_navigationStore);
+
                 }
                 else
                 {
@@ -154,25 +141,7 @@ namespace ChatApp.ViewModels
             ThemeService.SetWindowTheme(gradient);
         }
 
-        //private bool CanLogin()
-        //{
-        //    bool validData;
-        //    if (string.IsNullOrEmpty(Username) || Username.Length < 3 ||
-        //        Password == null || Password.Length < 3)
-        //        validData = false;
-        //    else validData = true;
-        //    return validData;
-        //}
 
-
-
-        //private async Task LoginAsync()
-        //{
-        //    var ok = await _auth.LoginAsync(Username, Password);
-        //    if (ok.Success) LoginSucceeded?.Invoke();
-        //    else MessageBox.Show(
-        //        ok.Error ?? "Login Failed", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        //}
 
         private void ExecuteRecoverPassCommand(string username, string email)
         {

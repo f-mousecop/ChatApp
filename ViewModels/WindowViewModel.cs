@@ -1,35 +1,23 @@
 ﻿using ChatApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+using ChatApp.Stores;
 
 namespace ChatApp.ViewModels
 {
     public class WindowViewModel : BaseViewModel
     {
-        //private ApplicationPage _currentPage = ApplicationPage.Login;
+        private readonly NavigationStore _navigationStore;
+        public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
-        public NavStore Nav { get; }
-
-        #region Public Properties
-        /// <summary>
-        /// The current page of the application
-        /// </summary>
-        //public ApplicationPage CurrentPage
-        //{
-        //    get => _currentPage;
-        //    set => SetProperty(ref _currentPage, value);
-        //}
-        #endregion
-
-        public WindowViewModel(NavStore store, INavService toLogin)
+        public WindowViewModel(NavigationStore navigationStore)
         {
-            Nav = store;
-            toLogin.Navigate();
+            _navigationStore = navigationStore;
+
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }
