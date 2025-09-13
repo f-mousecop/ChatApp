@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,11 @@ namespace ChatApp
             {
                 MessageBox.Show($"Exception: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Navigate_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new LoginPage());
         }
     }
 }

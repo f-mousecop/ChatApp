@@ -2,11 +2,13 @@
 using ChatApp.Models.Auth;
 using ChatApp.Repositories;
 using ChatApp.Utils;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Security;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +28,8 @@ namespace ChatApp.ViewModels
     {
         //private readonly IAuthService? _auth;
         private string _username = string.Empty;
-        private string _password;
+        private SecureString _password;
         private string _errorMessage;
-        private bool _isViewVisible = true;
 
         private IUserRepository _userRepository;
 
@@ -42,7 +43,7 @@ namespace ChatApp.ViewModels
             }
         }
 
-        public string Password
+        public SecureString Password
         {
             get => _password;
             set
@@ -58,17 +59,6 @@ namespace ChatApp.ViewModels
             set
             {
                 if (SetProperty(ref _errorMessage, value))
-                    ((RelayCommand)LoginCommand).RaiseCanExecuteChanged();
-            }
-        }
-
-
-        public bool IsViewVisible
-        {
-            get => _isViewVisible;
-            set
-            {
-                if (SetProperty(ref _isViewVisible, value))
                     ((RelayCommand)LoginCommand).RaiseCanExecuteChanged();
             }
         }
@@ -92,7 +82,7 @@ namespace ChatApp.ViewModels
             _userRepository = new UserRepository();
 
             //LoginCommand = new RelayCommand(async _ => await LoginAsync(), _ => CanLogin());
-            LoginCommand = new RelayCommand(_ => ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
+            LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
             RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
             ShowPasswordCommand = new RelayCommand(_ => { /* TODO */ });
             QuitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
@@ -101,26 +91,32 @@ namespace ChatApp.ViewModels
 
         public bool CanExecuteLoginCommand()
         {
-            bool validData = false;
-            if ((!string.IsNullOrEmpty(Password)) &&
-                (!string.IsNullOrEmpty(Username)) &&
-                (Password.Length >= 3) && (Username.Length >= 3))
+            bool validData;
+            if (string.IsNullOrEmpty(Username) || Username.Length < 3 ||
+                Password == null || Password.Length < 3)
             {
-                validData = true;
+                validData = false;
             }
+            else validData = true;
             return validData;
         }
 
-        private void ExecuteLoginCommand()
+        // Remove or comment out the following line in ExecuteLoginCommand method:
+        // NavigationService.GetNavigationService();
+
+        // If you need to use NavigationService.GetNavigationService, you must pass a DependencyObject (such as a View or a FrameworkElement).
+        // For now, since there is no DependencyObject available in this ViewModel, simply remove the problematic line to resolve CS7036.
+
+        private async Task ExecuteLoginCommand()
         {
             try
             {
-                var isValidUser = _userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
+                var isValidUser = await _userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
                 if (isValidUser)
                 {
+
                     Thread.CurrentPrincipal = new GenericPrincipal(
                         new GenericIdentity(Username), null);
-                    IsViewVisible = false;
                 }
                 else
                 {
@@ -134,6 +130,8 @@ namespace ChatApp.ViewModels
                 ErrorMessage = e.Message;
                 Debug.WriteLine(e.Message);
             }
+
+
         }
 
         private Action<object> ExecuteShowPasswordCommand()

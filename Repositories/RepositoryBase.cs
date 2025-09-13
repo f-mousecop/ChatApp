@@ -16,7 +16,7 @@ namespace ChatApp.Repositories
         private readonly string _connectionString;
         public RepositoryBase()
         {
-            _connectionString = "Server = 127.0.0.1; Port = 3306; Database = chatapp_dev; User ID = chatapp; Password = dev_password123!; SslMode = None; AllowPublicKeyRetrieval = True; ";
+            _connectionString = "Server = localhost; Port = 3306; Database = chatapp_dev; User ID = chatapp; Password = dev_password123!; SslMode = None; AllowPublicKeyRetrieval = True; ";
         }
         protected MySqlConnection GetConnection()
         {

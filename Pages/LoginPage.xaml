@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ChatApp"
       xmlns:utils="clr-namespace:ChatApp.Utils"
-      xmlns:viewModel="clr-namespace:ChatApp.ViewModels"
+      xmlns:viewModel="clr-namespace:ChatApp.ViewModels" 
+      xmlns:customControls="clr-namespace:ChatApp.CustomControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage"
@@ -16,12 +17,6 @@
         <viewModel:LoginViewModel/>
     </Page.DataContext>
 
-    <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    </Page.Resources>
-    <Page.Visibility>
-        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
-    </Page.Visibility>
     <Border>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid>
@@ -68,16 +63,9 @@
                         Text="Password:"
                         />
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="#333">
-                        <PasswordBox
-                            Name="passwordBox"
-                            Height="40"
-                            Padding="10,5,0,0"
-                            FontSize="20"
-                            Foreground="#fff"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            MaxLength="36"
-                            utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <customControls:BindablePassBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="40">
+                        </customControls:BindablePassBox>
                     </Border>
 
                     <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
@@ -89,6 +77,16 @@
                             <Hyperlink NavigateUri="ForgotPass.xaml">Forgot Password?</Hyperlink>
                         </TextBlock>
                     </WrapPanel>
+                    <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="#d7596d"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             BorderBrush="Transparent"
+                             HorizontalAlignment="Center"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontWeight="Medium"
+                           Margin="0,10,0,0"
+                           TextWrapping="Wrap"/>
                 </StackPanel>
                 <StackPanel
                     Grid.Row="3"
@@ -99,7 +97,7 @@
                         x:Name="UserLogin"
                         Content="Login"
                         Style="{StaticResource regularButtons}"
-                        Command="{Binding LoginCommand}"
+                        Command="{Binding LoginCommand, UpdateSourceTrigger=PropertyChanged}"
                         Height="40"
                         Width="100"
                         Margin="5">
@@ -124,14 +122,6 @@
                     <FlowDocument>
                         <Paragraph FontSize="40">Welcome!</Paragraph>
                         <Paragraph FontSize="24">Please login</Paragraph>
-                        <Paragraph>
-                            <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                               Foreground="#d7596d"
-                               FontSize="12"
-                               FontWeight="Medium"
-                               Margin="0,10,0,0"
-                               TextWrapping="Wrap"/>
-                        </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </Grid>

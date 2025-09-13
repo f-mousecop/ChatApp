@@ -2,6 +2,7 @@
 using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,36 +27,7 @@ namespace ChatApp
         public LoginPage()
         {
             InitializeComponent();
-
-            //var vm = new LoginViewModel();
         }
-
-
-
-        //private void UserLogin_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var userName = Login.Username;
-        //    var password = Login.Password;
-        //    var pass = passwordBox.Password;
-        //    if (!string.IsNullOrEmpty(userName))
-        //    {
-        //        NavigationService.Navigate(new Chat());
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please Enter Username and Password", "Login Fail", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        //    }
-        //}
-
-        //private void Quit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Application.Current.Shutdown();
-        //}
-
-        //private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
-        //{
-
-        //}
     }
 }
 

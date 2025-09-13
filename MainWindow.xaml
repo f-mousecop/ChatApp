@@ -11,8 +11,13 @@
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
         Style="{StaticResource CustomWindow}"
-        AllowsTransparency="False"
+        AllowsTransparency="True"
          >
+
+    <Window.Resources>
+        <local:ApplicationPageValueConverter x:Key="PageConverter"/>
+    </Window.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,10 +38,11 @@
                     Click="Exit_Click"
                     HorizontalAlignment="Right" />
         </Grid>
+
         <Frame 
                 Grid.Row="1"
                 x:Name="main" 
-                Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" 
+                Content="{Binding Nav.CurrentViewModel}" 
                 NavigationUIVisibility="Hidden"/>
     </Grid>
 

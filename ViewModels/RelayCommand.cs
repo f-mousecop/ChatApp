@@ -27,7 +27,7 @@ namespace ChatApp.ViewModels
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public bool CanExecute(object? parameter) => _canExecute == null ? true : _canExecute(parameter);
+        public bool CanExecute(object? parameter) => _canExecute == null || _canExecute(parameter);
 
         public void Execute(object? parameter)
         {

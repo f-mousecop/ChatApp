@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ namespace ChatApp.Utils
         public static string GetBoundPassword(DependencyObject obj) =>
             (string)obj.GetValue(BoundPasswordProperty);
 
+        // Change the type of the value parameter in SetBoundPassword from string to SecureString
         public static void SetBoundPassword(DependencyObject obj, string value) =>
             obj.SetValue(BoundPasswordProperty, value);
 
@@ -33,9 +35,12 @@ namespace ChatApp.Utils
             pb.PasswordChanged -= HandlePasswordChanged;
 
             var newPassword = e.NewValue as string ?? string.Empty;
-            if (pb.Password != newPassword)
+            if (newPassword != null)
             {
-                pb.Password = newPassword;
+                if (pb.Password != newPassword)
+                {
+                    pb.Password = newPassword;
+                }
             }
 
             pb.PasswordChanged += HandlePasswordChanged;
@@ -46,6 +51,36 @@ namespace ChatApp.Utils
             if (sender is PasswordBox pb)
             {
                 SetBoundPassword(pb, pb.Password);
+            }
+        }
+
+        private static SecureString ConvertToSecureString(string password)
+        {
+            if (password == null)
+                return null;
+            var secure = new SecureString();
+            foreach (char c in password)
+                secure.AppendChar(c);
+            secure.MakeReadOnly();
+            return secure;
+        }
+
+        private static string ConvertToUnSecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+            {
+                return string.Empty;
+            }
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(securePassword);
+                return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(unmanagedString);
+            }
+            finally
+            {
+                if (unmanagedString != IntPtr.Zero)
+                    System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(unmanagedString);
             }
         }
     }

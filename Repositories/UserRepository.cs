@@ -13,12 +13,12 @@ namespace ChatApp.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        public void Add(User users)
+        public void Add(UserModel users)
         {
             throw new NotImplementedException();
         }
 
-        public bool AuthenticateUser(NetworkCredential credential)
+        public Task<bool> AuthenticateUser(NetworkCredential credential)
         {
             bool validateUser;
             using (var connection = GetConnection())
@@ -31,25 +31,25 @@ namespace ChatApp.Repositories
                 command.Parameters.Add("@password", MySqlDbType.VarChar).Value = credential.Password;
                 validateUser = command.ExecuteScalar() == null ? false : true;
             }
-            return validateUser;
+            return Task.FromResult(validateUser);
         }
 
-        public void Edit(User users)
+        public void Edit(UserModel users)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetByAll()
+        public IEnumerable<UserModel> GetByAll()
         {
             throw new NotImplementedException();
         }
 
-        public User GetByInt(int id)
+        public UserModel GetByInt(int id)
         {
             throw new NotImplementedException();
         }
 
-        public User GetByUsername(string username)
+        public UserModel GetByUsername(string username)
         {
             throw new NotImplementedException();
         }

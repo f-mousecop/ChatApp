@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ChatApp"
+                    xmlns:vm="clr-namespace:ChatApp.ViewModels"
+                    xmlns:pgs="clr-namespace:ChatApp.Pages">
+
+    <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+        <local:LoginPage/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+        <local:Chat/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SignUpViewModel}">
+        <pgs:SignUp/>
+    </DataTemplate>
+</ResourceDictionary>

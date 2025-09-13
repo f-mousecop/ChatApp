@@ -15,7 +15,7 @@ namespace ChatApp
         /// The initial login page
         /// </summary>
         Login = 0,
-        SignUp = 1,
-        Chat = 2,
+        Chat = 1,
+        SignUp = 2,
     }
 }

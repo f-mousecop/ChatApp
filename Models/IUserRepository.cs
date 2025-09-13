@@ -9,12 +9,12 @@ namespace ChatApp.Models
 {
     public interface IUserRepository
     {
-        bool AuthenticateUser(NetworkCredential credential);
-        void Add(User users);
-        void Edit(User users);
+        Task<bool> AuthenticateUser(NetworkCredential credential);
+        void Add(UserModel users);
+        void Edit(UserModel users);
         void Remove(int id);
-        User GetByInt(int id);
-        User GetByUsername(string username);
-        IEnumerable<User> GetByAll();
+        UserModel GetByInt(int id);
+        UserModel GetByUsername(string username);
+        IEnumerable<UserModel> GetByAll();
     }
 }
