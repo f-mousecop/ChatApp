@@ -69,18 +69,16 @@ namespace ChatApp.ViewModels
 
         // Initialize NavCommand in the constructor to fix CS8618
         public ChatViewModel(AccountStore accountStore,
-            NavigationBarViewModel navigationBarViewModel,
-            NavigationService<HomeViewModel> homeNavigationService,
-            NavigationService<AccountViewModel> accountNavigationService)
+            INavigationService<AccountViewModel> accountNavigationService)
         {
-            NavigationBarViewModel = navigationBarViewModel;
+            //NavigationBarViewModel = navigationBarViewModel;
 
             GetUserNameCommand = new RelayCommand(_ => { /* TODO */ });
             GetUserMessageCommand = new RelayCommand(_ => { /* TODO */ });
             GetBotMessageCommand = new RelayCommand(_ => { /* TODO */ });
             GetErrorMessageCommand = new RelayCommand(_ => { /* TODO */ });
 
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            //NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
         }
     }

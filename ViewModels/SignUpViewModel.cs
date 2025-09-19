@@ -11,15 +11,17 @@ namespace ChatApp.ViewModels
     {
         public string ConfirmPass { get; set; }
         private readonly NavigationStore _navigationStore;
+        private readonly AccountStore _accountStore;
 
         public ICommand NavigateSignUpCommand { get; }
         public ICommand NavigateBackCommand { get; }
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public SignUpViewModel(
             AccountStore accountStore,
-            NavigationBarViewModel navigationBarViewModel,
-            NavigationService<LoginViewModel> loginNavigationService)
+            INavigationService<LoginViewModel> loginNavigationService)
         {
+            _accountStore = accountStore;
             NavigateBackCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
         }
     }

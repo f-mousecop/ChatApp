@@ -1,4 +1,5 @@
-﻿using ChatApp.Stores;
+﻿using ChatApp.Services;
+using ChatApp.Stores;
 using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,22 @@ namespace ChatApp.Commands
 {
     class NavigateSignUpCommand : CommandBase
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly LoginViewModel _viewModel;
         private readonly AccountStore _accountStore;
-        private readonly NavigationBarViewModel _navigationBarViewModel;
+        private readonly NavigationService<LoginViewModel> _navigationService;
 
-        public NavigateSignUpCommand(NavigationStore navigationStore, AccountStore accountStore, NavigationBarViewModel navigationBarViewModel)
+        public NavigateSignUpCommand
+            (LoginViewModel viewModel, AccountStore accountStore, NavigationService<LoginViewModel> navigationService)
         {
-            _navigationStore = navigationStore;
+            _viewModel = viewModel;
             _accountStore = accountStore;
+            _navigationService = navigationService;
+
         }
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = new SignUpViewModel(_navigationStore, _accountStore, _navigationBarViewModel);
+            _navigationService.Navigate();
         }
     }
 }

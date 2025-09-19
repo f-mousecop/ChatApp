@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Services
 {
-    public interface INavigationService
+    public interface INavigationService<TViewModel> where TViewModel : BaseViewModel
     {
         void Navigate();
     }
-    public class NavigationService<TViewModel> : INavigationService
+    public class NavigationService<TViewModel> : INavigationService<TViewModel>
         where TViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;

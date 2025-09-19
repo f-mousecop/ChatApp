@@ -4,40 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.Views"
-             xmlns:vm="clr-namespace:ChatApp.ViewModels"
+             xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components"
              d:DataContext="{d:DesignInstance Type=vm:ChatViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border Margin="20">
+    <Border Margin="20" Background="{DynamicResource TeaGreenBrush}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" FontSize="40" Text="Chat Page" HorizontalAlignment="Center"/>
-            <StackPanel Grid.Row="1">
-                <TextBox Name="txtValue"/>
-                <WrapPanel Margin="0,10">
-                    <TextBlock Text="Window Title: " FontWeight="Bold" FontSize="{StaticResource FontSizeRegular}"/>
-                    <TextBox 
+
+            <components:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="40" Text="Chat Page" HorizontalAlignment="Center"/>
+                <StackPanel Grid.Row="1">
+                    <TextBox Name="txtValue"/>
+                    <WrapPanel Margin="0,10">
+                        <TextBlock Text="Window Title: " FontWeight="Bold" FontSize="{StaticResource FontSizeRegular}"/>
+                        <TextBox 
                         Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                 Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                         Width="150"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,10,0,0">
-                    <TextBlock Text="Window dimensions: " FontWeight="Bold"/>
-                    <TextBox Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0">
+                        <TextBlock Text="Window dimensions: " FontWeight="Bold"/>
+                        <TextBox Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                     Path=Width, Mode=TwoWay}"
                              Width="50"/>
-                    <TextBlock Text=" x "/>
-                    <TextBox Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                        <TextBlock Text=" x "/>
+                        <TextBox Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                     Path=Height, Mode=TwoWay}" 
                              Width="50"/>
-                </WrapPanel>
-                <Button Name="GoBack" Width="100" Height="40" Content="Logout" Command="{Binding NavigateBackCommand}"/>
-                <Button Name="Navigate" Width="100" Height="40" Content="Account Home" Command="{Binding NavigateAccountCommand}"/>
-            </StackPanel>
+                    </WrapPanel>
+                    <Button Name="Navigate" Width="100" Height="40" Content="Account Home" Command="{Binding NavigateAccountCommand}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

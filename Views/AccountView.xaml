@@ -9,35 +9,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="{DynamicResource ForegroundLightBrush}" CornerRadius="{StaticResource WindowCornerRadius}">
-        <Grid>
+
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <components:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
 
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Column="0" Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
-
-                <StackPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center">
-                    <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.DisplayName}"/>
-                    <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email}"/>
-                    <TextBlock Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
-                </StackPanel>
-                <Button Grid.Row="2" HorizontalAlignment="Left" 
+            <StackPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center">
+                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.DisplayName}"/>
+                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email}"/>
+                <TextBlock Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
+            </StackPanel>
+            <Button Grid.Row="2" HorizontalAlignment="Center" 
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
                     Command="{Binding NavigateChatCommand}"
-                    Content="Home"/>
-            </Grid>
+                    Content="Chat Now"/>
         </Grid>
     </Border>
 </UserControl>

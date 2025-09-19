@@ -72,18 +72,16 @@ namespace ChatApp.ViewModels
         public LoginViewModel(
 
             AccountStore accountStore,
-            NavigationBarViewModel navigationBarViewModel,
-            NavigationService<AccountViewModel> accountNavigationService,
-            NavigationService<ChatViewModel> chatNavigationService,
-            NavigationService<SignUpViewModel> signUpNavigationService)
+            INavigationService<AccountViewModel> accountNavigationService,
+            INavigationService<SignUpViewModel> signUpNavigationService)
         {
             _accountStore = accountStore;
-            NavigationBarViewModel = navigationBarViewModel;
+            //NavigationBarViewModel = navigationBarViewModel;
             _userRepository = new UserRepository();
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
 
-            NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
+            //NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
 
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
 

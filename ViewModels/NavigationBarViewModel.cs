@@ -12,11 +12,16 @@ namespace ChatApp.ViewModels
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateHomeCommand { get; }
-        public NavigationBarViewModel(AccountStore accountStore,
-            NavigationService<HomeViewModel> homeNavigationService,
-            NavigationService<ChatViewModel> chatNavigationService,
-            NavigationService<AccountViewModel> accountNavigationService,
-            NavigationService<LoginViewModel> loginNavigationService)
+        public ICommand NavigateSignUpCommand { get; }
+
+        public bool IsLoggedIn => _accountStore.IsLoggedIn;
+        public NavigationBarViewModel(
+            AccountStore accountStore,
+            INavigationService<HomeViewModel> homeNavigationService,
+            INavigationService<ChatViewModel> chatNavigationService,
+            INavigationService<AccountViewModel> accountNavigationService,
+            INavigationService<LoginViewModel> loginNavigationService,
+            INavigationService<SignUpViewModel> signUpNavigationService)
         {
             _accountStore = accountStore;
 
@@ -28,6 +33,8 @@ namespace ChatApp.ViewModels
                 (accountNavigationService);
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>
                 (loginNavigationService);
+            NavigateSignUpCommand = new NavigateCommand<SignUpViewModel>
+                (signUpNavigationService);
         }
     }
 }

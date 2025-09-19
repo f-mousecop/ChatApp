@@ -17,7 +17,6 @@ namespace ChatApp.ViewModels
     public class AccountViewModel : BaseViewModel
     {
         // Fields
-        public NavigationBarViewModel NavigationBarViewModel { get; }
         private readonly AccountStore _accountStore;
         private UserAccountModel _currentUserAccount;
         private IUserRepository _userRepository;
@@ -38,13 +37,9 @@ namespace ChatApp.ViewModels
 
         public AccountViewModel(
             AccountStore accountStore,
-            NavigationBarViewModel navigationBarViewModel,
-            NavigationService<HomeViewModel> homeNavigationService,
-            NavigationService<ChatViewModel> chatNavigationService,
-            NavigationService<LoginViewModel> loginNavigationService)
+            INavigationService<HomeViewModel> homeNavigationService,
+            INavigationService<ChatViewModel> chatNavigationService)
         {
-            NavigationBarViewModel = navigationBarViewModel;
-
             _accountStore = accountStore;
             _userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
@@ -52,7 +47,7 @@ namespace ChatApp.ViewModels
 
             NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
 
-            CloseAccountCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            //CloseAccountCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
 
             NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
         }
