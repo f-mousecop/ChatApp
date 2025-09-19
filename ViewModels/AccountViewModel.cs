@@ -61,32 +61,6 @@ namespace ChatApp.ViewModels
                 return;
             }
             CurrentUserAccount = acct;
-
-            //var username = Thread.CurrentPrincipal?.Identity?.Name;
-
-            //if (string.IsNullOrWhiteSpace(username))
-            //{
-            //    MessageBox.Show("Session expired. Please log in again.");
-            //    CloseAccountCommand.Execute(navigationStore);
-            //    return;
-            //}
-
-            //var user = _userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
-            //if (user != null)
-            //{
-
-            //    _accountStore.CurrentUserAccount.Username = user.Username;
-            //    CurrentUserAccount.DisplayName = $"Welcome {user.Username} ;)";
-            //    CurrentUserAccount.Email = user.Email;
-            //    CurrentUserAccount.CurrentTime = DateTimeOffset.UtcNow.ToLocalTime().ToString();
-            //    CurrentUserAccount.ProfilePicture = null;
-
-            //}
-            //else
-            //{
-            //    CurrentUserAccount.DisplayName = "Invalid user, not logged in";
-            //}
-
         }
     }
 }

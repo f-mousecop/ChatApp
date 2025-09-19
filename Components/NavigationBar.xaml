@@ -35,7 +35,7 @@
             Command="{Binding NavigateHomeCommand}"
             Margin="15 10 0 0"
             Width="60"
-            Style="{StaticResource navButton}"
+            Style="{StaticResource regularButtons}"
             Content="Home" />
 
         <Button 
@@ -44,7 +44,7 @@
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
             Width="60"
-            Style="{StaticResource navButton}"
+            Style="{StaticResource regularButtons}"
             Content="Chat" />
         <Button 
             Grid.Column="3" 
@@ -52,14 +52,14 @@
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
             Width="60"
-            Style="{StaticResource navButton}"
+            Style="{StaticResource regularButtons}"
             Content="Account" />
         <Button 
             Grid.Column="4" 
             Command="{Binding NavigateLoginCommand}"
             Margin="15 10 0 0"
             Width="60"
-            Style="{StaticResource navButton}"
+            Style="{StaticResource regularButtons}"
             Content="Logout" />
     </Grid>
 </UserControl>

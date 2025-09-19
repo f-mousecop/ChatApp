@@ -24,12 +24,20 @@
                 <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email}"/>
                 <TextBlock Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
             </StackPanel>
-            <Button Grid.Row="2" HorizontalAlignment="Center" 
+            <StackPanel Grid.Row="2">
+                <Button  HorizontalAlignment="Center" 
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
-                    Command="{Binding NavigateChatCommand}"
+                    Command="{Binding NavigateChatCommand, UpdateSourceTrigger=PropertyChanged}"
                     Content="Chat Now"/>
+                <Button HorizontalAlignment="Center"
+                    Style="{StaticResource regularButtons}"
+                    Width="100"
+                    Height="50"
+                    Command="{Binding NavigateHomeCommand, UpdateSourceTrigger=PropertyChanged}"
+                    Content="Go Home"/>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

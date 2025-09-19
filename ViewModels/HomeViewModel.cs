@@ -29,9 +29,10 @@ namespace ChatApp.ViewModels
         public ICommand NavigateChatCommand { get; }
         public ICommand NavigateLoginCommand { get; }
         public HomeViewModel(
+            AccountStore accountStore,
             INavigationService<LoginViewModel> loginNavigationService)
         {
-            //_accountStore = accountStore;
+            _accountStore = accountStore;
             CurrentUserAccount = new UserAccountModel();
 
             var acct = _accountStore?.CurrentUserAccount;

@@ -8,12 +8,12 @@ namespace ChatApp.ViewModels
 {
     public class LayoutViewModel : BaseViewModel
     {
-        public NavigationBarViewModel NavigationBar { get; }
+        public NavigationBarViewModel NavigationBarViewModel { get; }
         public BaseViewModel ContentViewModel { get; }
 
         public LayoutViewModel(NavigationBarViewModel navigationBarViewModel, BaseViewModel contentViewModel)
         {
-            NavigationBar = navigationBarViewModel;
+            NavigationBarViewModel = navigationBarViewModel;
             ContentViewModel = contentViewModel;
         }
 

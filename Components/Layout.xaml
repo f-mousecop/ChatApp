@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:ChatApp.Components" 
              xmlns:viewmodels="clr-namespace:ChatApp.ViewModels" 
              xmlns:components="clr-namespace:ChatApp.Components"
-             d:DataContext="{d:DesignInstance Type=viewmodels:WindowViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -15,14 +14,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <components:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+        <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
 
         <ContentControl 
-            Grid.Row="1"
-            x:Name="main"
-            MaxWidth="1000" 
-            Margin="20" 
-            Content="{Binding CurrentViewModel}"/>
+            Grid.Row="1" 
+            MaxWidth="1000"
+            Margin="20"
+            Content="{Binding ContentViewModel}"/>
 
     </Grid>
 </UserControl>

@@ -92,7 +92,7 @@
                             x:Name="UserLogin"
                             Content="Login"
                             Style="{StaticResource regularButtons}"
-                            Command="{Binding LoginCommand, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding LoginCommand}"
                             Height="40"
                             Width="100"
                             Margin="5">

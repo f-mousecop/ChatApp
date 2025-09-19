@@ -54,7 +54,7 @@ namespace ChatApp
             return new LayoutNavigationService<HomeViewModel>
                 (_navigationStore,
                 () => new HomeViewModel
-                    (CreateLoginNavigationService()),
+                    (_accountStore, CreateLoginNavigationService()),
                     _navigationBarViewModel);
         }
         private INavigationService<AccountViewModel> CreateAccountNavigationService()
@@ -83,6 +83,7 @@ namespace ChatApp
                 (_navigationStore,
                 () => new LoginViewModel
                     (_accountStore,
+                    _navigationBarViewModel,
                     CreateAccountNavigationService(), CreateSignUpNavigationService()));
         }
     }
