@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace ChatApp.ViewModels
 {
-    public class NavigationBarViewModel
+    public class NavigationBarViewModel : BaseViewModel
     {
         private readonly AccountStore _accountStore;
         public ICommand NavigateChatCommand { get; }

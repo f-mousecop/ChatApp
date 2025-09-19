@@ -18,6 +18,7 @@ namespace ChatApp.Stores
             {
                 if (_currentViewModel == value) return;
                 _currentViewModel = value;
+                System.Diagnostics.Debug.WriteLine($"Navigate -> {_currentViewModel.GetType().Name}");
                 OnCurrentViewModelChanged();
             }
         }

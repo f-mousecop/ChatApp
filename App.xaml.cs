@@ -10,29 +10,44 @@ namespace ChatApp
     /// </summary>
     public partial class App : Application
     {
-        private readonly AccountStore _accountStore;
-        private readonly NavigationStore _navigationStore;
-        private readonly NavigationBarViewModel _navigationBarViewModel;
+        private readonly AccountStore _accountStore = new();
+        private readonly NavigationStore _navigationStore = new();
+
+        private NavigationBarViewModel _navigationBarViewModel;
+        private NavigationBarViewModel GetNavBar() => _navigationBarViewModel;
 
         public App()
         {
-            _accountStore = new AccountStore();
-            _navigationStore = new NavigationStore();
-            _navigationBarViewModel = new NavigationBarViewModel(
-                _accountStore,
-                CreateHomeNavigationService(),
-                CreateChatNavigationService(),
-                CreateAccountNavigationService(),
-                CreateLoginNavigationService(),
-                CreateSignUpNavigationService());
+            //_accountStore = new AccountStore();
+            //_navigationStore = new NavigationStore();
+            //_navigationBarViewModel = new NavigationBarViewModel(
+            //    _accountStore,
+            //    CreateHomeNavigationService(),
+            //    CreateChatNavigationService(),
+            //    CreateAccountNavigationService(),
+            //    CreateLoginNavigationService(),
+            //    CreateSignUpNavigationService());
         }
 
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Build services using GetNavBar (no direct nav-bar dependency yet
+            var homeSvc = CreateHomeNavigationService();
+            var chatSvc = CreateChatNavigationService();
+            var accountSvc = CreateAccountNavigationService();
+            var loginSvc = CreateLoginNavigationService();
+            var signUpSvc = CreateSignUpNavigationService();
 
-            INavigationService<HomeViewModel> homeNavigationService = CreateHomeNavigationService();
-            homeNavigationService.Navigate();
+            // Creating one nav bar VM using those services
+            _navigationBarViewModel = new NavigationBarViewModel(
+                _accountStore, homeSvc, chatSvc, accountSvc, loginSvc, signUpSvc);
+
+            // Nav to home
+            homeSvc.Navigate();
+
+            //INavigationService<HomeViewModel> homeNavigationService = CreateHomeNavigationService();
+            //homeNavigationService.Navigate();
             MainWindow = new MainWindow()
             {
                 DataContext = new WindowViewModel(_navigationStore)
@@ -42,20 +57,15 @@ namespace ChatApp
             base.OnStartup(e);
         }
 
-        private INavigationService<SignUpViewModel> CreateSignUpNavigationService()
-        {
-            return new NavigationService<SignUpViewModel>
-                (_navigationStore,
-                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService()));
-        }
-
         private INavigationService<HomeViewModel> CreateHomeNavigationService()
         {
             return new LayoutNavigationService<HomeViewModel>
                 (_navigationStore,
                 () => new HomeViewModel
-                    (_accountStore, CreateLoginNavigationService()),
-                    _navigationBarViewModel);
+                    (_accountStore, CreateLoginNavigationService(),
+                    CreateChatNavigationService(),
+                    CreateAccountNavigationService()),
+                    GetNavBar);
         }
         private INavigationService<AccountViewModel> CreateAccountNavigationService()
         {
@@ -66,16 +76,16 @@ namespace ChatApp
                     _accountStore,
                     CreateHomeNavigationService(),
                     CreateChatNavigationService()),
-                _navigationBarViewModel);
+                GetNavBar);
         }
-
         private INavigationService<ChatViewModel> CreateChatNavigationService()
         {
-            return new NavigationService<ChatViewModel>
+            return new LayoutNavigationService<ChatViewModel>
                 (_navigationStore,
                 () => new ChatViewModel
                     (_accountStore,
-                    CreateAccountNavigationService()));
+                    CreateAccountNavigationService()),
+                GetNavBar);
         }
         private INavigationService<LoginViewModel> CreateLoginNavigationService()
         {
@@ -86,6 +96,11 @@ namespace ChatApp
                     _navigationBarViewModel,
                     CreateAccountNavigationService(), CreateSignUpNavigationService()));
         }
+        private INavigationService<SignUpViewModel> CreateSignUpNavigationService()
+        {
+            return new NavigationService<SignUpViewModel>
+                (_navigationStore,
+                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService()));
+        }
     }
-
 }

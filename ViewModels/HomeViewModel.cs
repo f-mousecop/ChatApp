@@ -1,5 +1,6 @@
 ﻿using ChatApp.Commands;
 using ChatApp.Models;
+using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ChatApp.ViewModels
@@ -15,6 +17,8 @@ namespace ChatApp.ViewModels
     {
         private readonly AccountStore _accountStore;
         private UserAccountModel _currentUserAccount;
+        private IUserRepository _userRepository;
+
         public UserAccountModel CurrentUserAccount
         {
             get => _currentUserAccount;
@@ -25,26 +29,38 @@ namespace ChatApp.ViewModels
             }
         }
 
+        public bool IsLoggedIn => _accountStore.IsLoggedIn;
+        public bool IsNotLoggedIn => _accountStore.IsNotLoggedIn;
+
         // Commands
         public ICommand NavigateChatCommand { get; }
         public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateAccountCommand { get; }
         public HomeViewModel(
             AccountStore accountStore,
-            INavigationService<LoginViewModel> loginNavigationService)
+            INavigationService<LoginViewModel> loginNavigationService,
+            INavigationService<ChatViewModel> chatNavigationService,
+            INavigationService<AccountViewModel> accountNavigationService)
         {
             _accountStore = accountStore;
+            _userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
-
-            var acct = _accountStore?.CurrentUserAccount;
-            if (acct != null)
-            {
-                _accountStore.CurrentUserAccount.DisplayName = "No account found. Please log in";
-            }
-            CurrentUserAccount = acct;
+            LoadCurrentDataFromStore();
 
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
+            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
 
         }
 
+        private void LoadCurrentDataFromStore()
+        {
+            var acct = _accountStore.CurrentUserAccount;
+            if (acct != null)
+            {
+                _currentUserAccount = acct;
+            }
+            return;
+        }
     }
 }

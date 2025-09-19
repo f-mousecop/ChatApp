@@ -28,6 +28,7 @@ namespace ChatApp.Services
         public void Navigate()
         {
             var navBar = _getNavigationBarViewModel(); // Resolved now (not during App ctor
+            System.Diagnostics.Debug.Assert(navBar != null, "NavBar VM is null!");
             _navigationStore.CurrentViewModel = new LayoutViewModel(navBar, _createViewModel());
         }
     }

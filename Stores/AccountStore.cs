@@ -24,5 +24,6 @@ namespace ChatApp.Stores
 
         public string? Username => CurrentUserAccount?.Username;
         public bool IsLoggedIn => CurrentUserAccount != null;
+        public bool IsNotLoggedIn => CurrentUserAccount == null;
     }
 }

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// DEBUG
+#if DEBUG
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace ChatApp.Components
 {
@@ -23,6 +16,28 @@ namespace ChatApp.Components
         public Layout()
         {
             InitializeComponent();
+            this.Loaded += Layout_Loaded;
         }
+
+        private void Layout_Loaded(object sender, RoutedEventArgs e)
+        {
+            int navCount = CountElementsofType<Components.NavigationBar>(this);
+            Debug.Assert(navCount == 1, $"Found {navCount} Navigationbars. There should be exactly 1 (in layout).");
+        }
+
+        private static int CountElementsofType<T>(DependencyObject root)
+        {
+            int count = 0;
+            int children = VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < children; i++)
+            {
+                var child = VisualTreeHelper.GetChild(root, i);
+                if (child is T) count++;
+                count += CountElementsofType<T>(child);
+            }
+            return count;
+        }
+
     }
 }
+#endif

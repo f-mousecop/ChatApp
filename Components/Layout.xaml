@@ -19,7 +19,7 @@
         <ContentControl 
             Grid.Row="1" 
             MaxWidth="1000"
-            Margin="20"
+            Margin="10"
             Content="{Binding ContentViewModel}"/>
 
     </Grid>

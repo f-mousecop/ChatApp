@@ -29,13 +29,13 @@
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
-                    Command="{Binding NavigateChatCommand, UpdateSourceTrigger=PropertyChanged}"
+                    Command="{Binding NavigateChatCommand}"
                     Content="Chat Now"/>
                 <Button HorizontalAlignment="Center"
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
-                    Command="{Binding NavigateHomeCommand, UpdateSourceTrigger=PropertyChanged}"
+                    Command="{Binding NavigateHomeCommand}"
                     Content="Go Home"/>
             </StackPanel>
         </Grid>
