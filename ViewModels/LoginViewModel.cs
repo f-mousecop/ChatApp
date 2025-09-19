@@ -1,6 +1,7 @@
 ﻿using ChatApp.Commands;
 using ChatApp.Models;
 using ChatApp.Repositories;
+using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.Utils;
 using System.Diagnostics;
@@ -16,12 +17,11 @@ namespace ChatApp.ViewModels
 
     public class LoginViewModel : BaseViewModel
     {
-        //private readonly IAuthService? _auth;
         private string _username = string.Empty;
         private SecureString _password;
         private string _errorMessage;
 
-        private readonly NavigateCommand _navigationStore;
+        private readonly AccountStore _accountStore;
         private IUserRepository _userRepository;
 
         public string Username
@@ -59,21 +59,36 @@ namespace ChatApp.ViewModels
         public ICommand LoginCommand { get; }
         public ICommand NavigateChatCommand { get; }
         public ICommand NavigateSignUpCommand { get; }
+        public ICommand NavigateAccountCommand { get; }
         public ICommand RecoverPasswordCommand { get; }
         public ICommand ShowPasswordCommand { get; }
         public ICommand QuitCommand { get; }
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
 
         // View decides how to navigate accordingly
         //public event Action? LoginSucceeded;
 
-        public LoginViewModel(NavigationStore navigationStore)
+        public LoginViewModel(
+
+            AccountStore accountStore,
+            NavigationBarViewModel navigationBarViewModel,
+            NavigationService<AccountViewModel> accountNavigationService,
+            NavigationService<ChatViewModel> chatNavigationService,
+            NavigationService<SignUpViewModel> signUpNavigationService)
         {
+            _accountStore = accountStore;
+            NavigationBarViewModel = navigationBarViewModel;
             _userRepository = new UserRepository();
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
-            NavigateChatCommand = new NavigateCommand(navigationStore);
-            NavigateSignUpCommand = new NavigateSignUpCommand(navigationStore);
+
+            NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
+
+            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
+
+            NavigateSignUpCommand = new NavigateCommand<SignUpViewModel>(signUpNavigationService);
+
             RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
             ShowPasswordCommand = new RelayCommand(_ => { /* TODO */ });
             QuitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
@@ -99,10 +114,18 @@ namespace ChatApp.ViewModels
                 var isValidUser = await _userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
                 if (isValidUser)
                 {
+                    var user = _userRepository.GetByUsername(Username);
+                    _accountStore.CurrentUserAccount = new UserAccountModel
+                    {
+                        Username = user?.Username ?? Username,
+                        Email = user?.Email ?? "",
+                        DisplayName = $"Welcome {Username}",
+                    };
 
-                    Thread.CurrentPrincipal = new GenericPrincipal(
-                        new GenericIdentity(Username), null);
-                    NavigateChatCommand.Execute(_navigationStore);
+                    //Thread.CurrentPrincipal = new GenericPrincipal(
+                    //    new GenericIdentity(Username), null);
+                    //NavigateChatCommand.Execute(LoginCommand);
+                    NavigateAccountCommand.Execute(null);
 
                 }
                 else
@@ -121,25 +144,25 @@ namespace ChatApp.ViewModels
 
         }
 
-        private Action<object> ExecuteShowPasswordCommand()
-        {
-            throw new NotImplementedException();
-        }
+        //private Action<object> ExecuteShowPasswordCommand()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        private void ApplyTheme(object obj)
-        {
-            var gradient = new LinearGradientBrush
-            {
-                StartPoint = new Point(0, 0),
-                EndPoint = new Point(1, 1),
-                GradientStops = {
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
-                }
-            };
+        //private void ApplyTheme(object obj)
+        //{
+        //    var gradient = new LinearGradientBrush
+        //    {
+        //        StartPoint = new Point(0, 0),
+        //        EndPoint = new Point(1, 1),
+        //        GradientStops = {
+        //            new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
+        //            new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
+        //        }
+        //    };
 
-            ThemeService.SetWindowTheme(gradient);
-        }
+        //    ThemeService.SetWindowTheme(gradient);
+        //}
 
 
 

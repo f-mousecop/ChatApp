@@ -40,7 +40,7 @@
 
                             <WrapPanel HorizontalAlignment="Center">
                                 <Button Content="Next" Margin="10" Width="80" Height="40"/>
-                                <Button Name="GoBack" Content="Go Back" Margin="10" Width="80" Height="40" Command="{Binding NavBackCommand}"/>
+                                <Button Name="GoBack" Content="Go Back" Margin="10" Width="80" Height="40" Command="{Binding NavigateBackCommand}"/>
                             </WrapPanel>
                         </StackPanel>
                     </Border>

@@ -35,8 +35,8 @@
                                     Path=Height, Mode=TwoWay}" 
                              Width="50"/>
                 </WrapPanel>
-                <Button Name="GoBack" Width="100" Height="40" Content="Go Back" Command="{Binding NavBackCommand}"/>
-                <Button Name="Navigate" Width="100" Height="40" Content="Navigate" Command="{Binding NavCommand}"/>
+                <Button Name="GoBack" Width="100" Height="40" Content="Logout" Command="{Binding NavigateBackCommand}"/>
+                <Button Name="Navigate" Width="100" Height="40" Content="Account Home" Command="{Binding NavigateAccountCommand}"/>
             </StackPanel>
         </Grid>
     </Border>

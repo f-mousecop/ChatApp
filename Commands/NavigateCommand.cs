@@ -1,4 +1,5 @@
-﻿using ChatApp.Stores;
+﻿using ChatApp.Services;
+using ChatApp.Stores;
 using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,19 @@ using System.Windows.Input;
 
 namespace ChatApp.Commands
 {
-    public class NavigateCommand : CommandBase
+    public class NavigateCommand<TViewModel> : CommandBase
+        where TViewModel : BaseViewModel
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly NavigationService<TViewModel> _navigationService;
 
-
-        public NavigateCommand(NavigationStore navigationStore)
+        public NavigateCommand(NavigationService<TViewModel> navigationService)
         {
-            _navigationStore = navigationStore;
-
+            _navigationService = navigationService;
         }
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = new ChatViewModel();
+            _navigationService.Navigate();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ChatApp.Stores
             get => _currentViewModel;
             set
             {
+                if (_currentViewModel == value) return;
                 _currentViewModel = value;
                 OnCurrentViewModelChanged();
             }

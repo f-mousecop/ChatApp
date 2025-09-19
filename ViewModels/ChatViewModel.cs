@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using ChatApp.Commands;
+using ChatApp.Services;
+using ChatApp.Stores;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ChatApp.ViewModels
@@ -60,29 +63,25 @@ namespace ChatApp.ViewModels
         public ICommand GetBotMessageCommand { get; }
         public ICommand GetErrorMessageCommand { get; }
         public ICommand NavCommand { get; }
+        public ICommand NavigateHomeCommand { get; }
+        public ICommand NavigateAccountCommand { get; }
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         // Initialize NavCommand in the constructor to fix CS8618
-        public ChatViewModel()
+        public ChatViewModel(AccountStore accountStore,
+            NavigationBarViewModel navigationBarViewModel,
+            NavigationService<HomeViewModel> homeNavigationService,
+            NavigationService<AccountViewModel> accountNavigationService)
         {
+            NavigationBarViewModel = navigationBarViewModel;
+
             GetUserNameCommand = new RelayCommand(_ => { /* TODO */ });
             GetUserMessageCommand = new RelayCommand(_ => { /* TODO */ });
             GetBotMessageCommand = new RelayCommand(_ => { /* TODO */ });
             GetErrorMessageCommand = new RelayCommand(_ => { /* TODO */ });
-            NavCommand = new RelayCommand(_ => CanExecuteNav());
-        }
 
-        public async Task CanExecuteNav()
-        {
-            try
-            {
-
-                await Task.Delay(1);
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ChatApp.Models;
-using System.Net;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using MySqlConnector;
+using System.Net;
 
 namespace ChatApp.Repositories
 {
@@ -44,7 +45,29 @@ namespace ChatApp.Repositories
 
         public UserModel GetByUsername(string username)
         {
-            throw new NotImplementedException();
+            UserModel user = null;
+            using (var connection = GetConnection())
+            using (var command = new MySqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM users WHERE username = @username LIMIT 1;";
+                command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user = new UserModel()
+                        {
+                            Id = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = string.Empty,
+                            Email = reader[2].ToString(),
+                        };
+                    }
+                }
+            }
+            return user;
         }
 
         public void Remove(int id)
