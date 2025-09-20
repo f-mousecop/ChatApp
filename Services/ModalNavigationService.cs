@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Services
 {
-    public class ModalNavigationService<TViewModel> : INavigationService<TViewModel>
+    public class ModalNavigationService<TViewModel> : INavigationService
         where TViewModel : BaseViewModel
     {
         private readonly ModalNavigationStore _modalNavigationStore;

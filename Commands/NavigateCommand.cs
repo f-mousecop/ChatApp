@@ -10,12 +10,11 @@ using System.Windows.Input;
 
 namespace ChatApp.Commands
 {
-    public class NavigateCommand<TViewModel> : CommandBase
-        where TViewModel : BaseViewModel
+    public class NavigateCommand : CommandBase
     {
-        private readonly INavigationService<TViewModel> _navigationService;
+        private readonly INavigationService _navigationService;
 
-        public NavigateCommand(INavigationService<TViewModel> navigationService)
+        public NavigateCommand(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }

@@ -74,8 +74,8 @@ namespace ChatApp.ViewModels
         public LoginViewModel(
 
             AccountStore accountStore,
-            INavigationService<AccountViewModel> accountNavigationService,
-            INavigationService<SignUpViewModel> signUpNavigationService)
+            INavigationService accountNavigationService,
+            INavigationService signUpNavigationService)
         {
             _accountStore = accountStore;
             _userRepository = new UserRepository();
@@ -84,9 +84,9 @@ namespace ChatApp.ViewModels
 
             //NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
 
-            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
+            NavigateAccountCommand = new NavigateCommand(accountNavigationService);
 
-            NavigateSignUpCommand = new NavigateCommand<SignUpViewModel>(signUpNavigationService);
+            NavigateSignUpCommand = new NavigateCommand(signUpNavigationService);
 
             RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
             ShowPasswordCommand = new RelayCommand(_ => { /* TODO */ });

@@ -49,9 +49,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </WrapPanel>
+
         </Grid>
 
-        <!--<components:Layout Grid.Row="1" d:DataContext="{d:DesignInstance Type=viewmodels:LayoutViewModel}" DataContext="{Binding NavigationBarViewModel}"/>-->
 
         <custom:Modal 
             Panel.ZIndex="100" 

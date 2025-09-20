@@ -38,18 +38,18 @@ namespace ChatApp.ViewModels
         public ICommand NavigateAccountCommand { get; }
         public HomeViewModel(
             AccountStore accountStore,
-            INavigationService<LoginViewModel> loginNavigationService,
-            INavigationService<ChatViewModel> chatNavigationService,
-            INavigationService<AccountViewModel> accountNavigationService)
+            INavigationService loginNavigationService,
+            INavigationService chatNavigationService,
+            INavigationService accountNavigationService)
         {
             _accountStore = accountStore;
             _userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
             LoadCurrentDataFromStore();
 
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
-            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
+            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
+            NavigateChatCommand = new NavigateCommand(chatNavigationService);
+            NavigateAccountCommand = new NavigateCommand(accountNavigationService);
 
         }
 

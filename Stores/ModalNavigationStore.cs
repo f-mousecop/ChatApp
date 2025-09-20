@@ -19,7 +19,10 @@ namespace ChatApp.Stores
                 if (_currentViewModel == value) return;
                 _currentViewModel?.Dispose();
                 _currentViewModel = value;
-                System.Diagnostics.Debug.WriteLine($"Navigate -> {_currentViewModel.GetType().Name}");
+                System.Diagnostics.Debug.WriteLine(
+                _currentViewModel == null
+                    ? "Navigate -> null"
+                    : $"Navigate -> {_currentViewModel.GetType().Name}");
                 OnCurrentViewModelChanged();
             }
         }

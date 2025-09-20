@@ -14,8 +14,6 @@ namespace ChatApp
         private readonly NavigationStore _navigationStore = new();
         private readonly ModalNavigationStore _modalNavigationStore = new();
 
-        private NavigationBarViewModel _navigationBarViewModel;
-        //private NavigationBarViewModel GetNavBar() => _navigationBarViewModel;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -34,8 +32,6 @@ namespace ChatApp
             var homeSvc = CreateHomeNavigationService();
             homeSvc.Navigate();
 
-            //INavigationService<HomeViewModel> homeNavigationService = CreateHomeNavigationService();
-            //homeNavigationService.Navigate();
             MainWindow = new MainWindow()
             {
                 DataContext = new WindowViewModel(_navigationStore, _modalNavigationStore)
@@ -46,7 +42,7 @@ namespace ChatApp
         }
 
 
-        private INavigationService<HomeViewModel> CreateHomeNavigationService()
+        private INavigationService CreateHomeNavigationService()
         {
             return new LayoutNavigationService<HomeViewModel>
                 (_navigationStore,
@@ -58,7 +54,7 @@ namespace ChatApp
         }
 
 
-        private INavigationService<AccountViewModel> CreateAccountNavigationService()
+        private INavigationService CreateAccountNavigationService()
         {
             return new LayoutNavigationService<AccountViewModel>
                 (_navigationStore,
@@ -69,7 +65,7 @@ namespace ChatApp
                     CreateChatNavigationService()),
                 CreateNavigationBarViewModel);
         }
-        private INavigationService<ChatViewModel> CreateChatNavigationService()
+        private INavigationService CreateChatNavigationService()
         {
             return new LayoutNavigationService<ChatViewModel>
                 (_navigationStore,
@@ -79,17 +75,20 @@ namespace ChatApp
                 CreateNavigationBarViewModel);
         }
 
-        private INavigationService<LoginViewModel> CreateLoginNavigationService()
+        private INavigationService CreateLoginNavigationService()
         {
+            CompositeNavigationService navigationService = new CompositeNavigationService(
+                new CloseModalNavigationService(_modalNavigationStore),
+                CreateAccountNavigationService()
+                );
+
             return new ModalNavigationService<LoginViewModel>
                 (_modalNavigationStore,
-                () => new LoginViewModel(_accountStore,
-                CreateAccountNavigationService(),
-                CreateSignUpNavigationService()));
+                () => new LoginViewModel(_accountStore, navigationService, CreateSignUpNavigationService()));
 
         }
 
-        private INavigationService<SignUpViewModel> CreateSignUpNavigationService()
+        private INavigationService CreateSignUpNavigationService()
         {
             return new LayoutNavigationService<SignUpViewModel>
                 (_navigationStore,

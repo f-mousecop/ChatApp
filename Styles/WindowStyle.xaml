@@ -6,7 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <CornerRadius x:Key="WindowCornerRadius">50</CornerRadius>
-    <Thickness x:Key="WindowBorderThickness">5</Thickness>
+    <Thickness x:Key="WindowBorderThickness">2</Thickness>
 
     <Style TargetType="{x:Type Window}" x:Key="CustomWindow">
         <Setter Property="Background" Value="{DynamicResource WindowChromeBackgroundBrush}"/>
@@ -17,7 +17,7 @@
                         x:Name="Root"
                         CornerRadius="{DynamicResource WindowCornerRadius}"
                         BorderThickness="{DynamicResource WindowBorderThickness}"
-                        BorderBrush="{DynamicResource WindowChromeBorderBrush}"
+                        BorderBrush="{DynamicResource BattleshipGrayBrush}"
                         Background="{TemplateBinding Background}">
                         <AdornerDecorator>
                             <ContentPresenter />

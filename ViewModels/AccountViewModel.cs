@@ -38,19 +38,19 @@ namespace ChatApp.ViewModels
 
         public AccountViewModel(
             AccountStore accountStore,
-            INavigationService<HomeViewModel> homeNavigationService,
-            INavigationService<ChatViewModel> chatNavigationService)
+            INavigationService homeNavigationService,
+            INavigationService chatNavigationService)
         {
             _accountStore = accountStore;
             _userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
             LoadCurrentDataFromStore();
 
-            NavigateChatCommand = new NavigateCommand<ChatViewModel>(chatNavigationService);
+            NavigateChatCommand = new NavigateCommand(chatNavigationService);
 
             //CloseAccountCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
 
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
             NavigateLogoutCommand = new LogoutCommand(_accountStore);
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;

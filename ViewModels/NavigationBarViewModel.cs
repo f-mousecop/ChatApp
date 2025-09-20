@@ -16,27 +16,23 @@ namespace ChatApp.ViewModels
         public ICommand NavigateSignUpCommand { get; }
 
         public bool IsLoggedIn => _accountStore.IsLoggedIn;
+        public bool IsNotLoggedIn => _accountStore.IsNotLoggedIn;
         public NavigationBarViewModel(
             AccountStore accountStore,
-            INavigationService<HomeViewModel> homeNavigationService,
-            INavigationService<ChatViewModel> chatNavigationService,
-            INavigationService<AccountViewModel> accountNavigationService,
-            INavigationService<LoginViewModel> loginNavigationService,
-            INavigationService<SignUpViewModel> signUpNavigationService)
+            INavigationService homeNavigationService,
+            INavigationService chatNavigationService,
+            INavigationService accountNavigationService,
+            INavigationService loginNavigationService,
+            INavigationService signUpNavigationService)
         {
             _accountStore = accountStore;
 
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>
-                (homeNavigationService);
-            NavigateChatCommand = new NavigateCommand<ChatViewModel>
-                (chatNavigationService);
-            NavigateAccountCommand = new NavigateCommand<AccountViewModel>
-                (accountNavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
+            NavigateChatCommand = new NavigateCommand(chatNavigationService);
+            NavigateAccountCommand = new NavigateCommand(accountNavigationService);
             NavigateLogoutCommand = new LogoutCommand(_accountStore);
-            NavigateSignUpCommand = new NavigateCommand<SignUpViewModel>
-                (signUpNavigationService);
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>
-                (loginNavigationService);
+            NavigateSignUpCommand = new NavigateCommand(signUpNavigationService);
+            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }

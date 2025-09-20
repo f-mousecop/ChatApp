@@ -33,7 +33,7 @@ namespace ChatApp.Views
 
         private void Tmr_Tick(object? sender, EventArgs e)
         {
-            curr_Date_Time.Text = DateTimeOffset.UtcNow.ToLocalTime().ToString();
+            curr_Date_Time.Text = DateTime.UtcNow.ToLocalTime().ToString();
         }
     }
 }

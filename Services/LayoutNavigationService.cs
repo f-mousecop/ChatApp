@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Services
 {
-    public class LayoutNavigationService<TViewModel> : INavigationService<TViewModel>
+    public class LayoutNavigationService<TViewModel> : INavigationService
         where TViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;

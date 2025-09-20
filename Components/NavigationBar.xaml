@@ -66,6 +66,7 @@
                 Margin="15 10 0 0"
                 Width="80"
                 Style="{StaticResource regularButtons}"
+                Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
                 Content="Login"/>
 
             <Button 
