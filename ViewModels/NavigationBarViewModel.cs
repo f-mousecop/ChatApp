@@ -11,6 +11,7 @@ namespace ChatApp.ViewModels
         public ICommand NavigateChatCommand { get; }
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateLogoutCommand { get; }
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateSignUpCommand { get; }
 
@@ -31,10 +32,26 @@ namespace ChatApp.ViewModels
                 (chatNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>
                 (accountNavigationService);
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>
-                (loginNavigationService);
+            NavigateLogoutCommand = new LogoutCommand(_accountStore);
             NavigateSignUpCommand = new NavigateCommand<SignUpViewModel>
                 (signUpNavigationService);
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>
+                (loginNavigationService);
+
+            _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
+
+        private void OnCurrentAccountChanged()
+        {
+            OnPropertyChanged(nameof(IsLoggedIn));
+        }
+
+        public override void Dispose()
+        {
+            _accountStore.CurrentAccountChanged -= OnCurrentAccountChanged;
+
+            base.Dispose();
+        }
+
     }
 }

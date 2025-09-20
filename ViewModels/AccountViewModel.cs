@@ -34,6 +34,7 @@ namespace ChatApp.ViewModels
         public ICommand NavigateChatCommand { get; }
         public ICommand CloseAccountCommand { get; }
         public ICommand NavigateHomeCommand { get; }
+        public ICommand NavigateLogoutCommand { get; }
 
         public AccountViewModel(
             AccountStore accountStore,
@@ -50,6 +51,25 @@ namespace ChatApp.ViewModels
             //CloseAccountCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
 
             NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateLogoutCommand = new LogoutCommand(_accountStore);
+
+            _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
+        }
+
+        ~AccountViewModel()
+        {
+
+        }
+
+        private void OnCurrentAccountChanged()
+        {
+            if (_currentUserAccount != null)
+            {
+                CurrentUserAccount.DisplayName = string.Empty;
+                CurrentUserAccount.Email = string.Empty;
+                OnPropertyChanged(nameof(CurrentUserAccount));
+                return;
+            }
         }
 
         private void LoadCurrentDataFromStore()
@@ -61,6 +81,12 @@ namespace ChatApp.ViewModels
                 return;
             }
             CurrentUserAccount = acct;
+        }
+
+        public override void Dispose()
+        {
+            _accountStore.CurrentAccountChanged -= OnCurrentAccountChanged;
+            base.Dispose();
         }
     }
 }

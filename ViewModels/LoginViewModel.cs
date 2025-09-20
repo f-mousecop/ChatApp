@@ -20,6 +20,7 @@ namespace ChatApp.ViewModels
         private string _username = string.Empty;
         private SecureString _password;
         private string _errorMessage;
+        public bool ShowErrorMessage => _errorMessage != string.Empty;
 
         private readonly AccountStore _accountStore;
         private IUserRepository _userRepository;
@@ -54,6 +55,7 @@ namespace ChatApp.ViewModels
             }
         }
 
+
         // Commands
         public ICommand ApplyThemeCommand { get; }
         public ICommand LoginCommand { get; }
@@ -72,12 +74,10 @@ namespace ChatApp.ViewModels
         public LoginViewModel(
 
             AccountStore accountStore,
-            NavigationBarViewModel navigationBarViewModel,
             INavigationService<AccountViewModel> accountNavigationService,
             INavigationService<SignUpViewModel> signUpNavigationService)
         {
             _accountStore = accountStore;
-            NavigationBarViewModel = navigationBarViewModel;
             _userRepository = new UserRepository();
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
@@ -118,18 +118,14 @@ namespace ChatApp.ViewModels
                     {
                         Username = user?.Username ?? Username,
                         Email = user?.Email ?? "",
-                        DisplayName = $"Welcome {Username}",
+                        DisplayName = $"Welcome, {Username}",
                     };
-
-                    //Thread.CurrentPrincipal = new GenericPrincipal(
-                    //    new GenericIdentity(Username), null);
-                    //NavigateChatCommand.Execute(LoginCommand);
                     NavigateAccountCommand.Execute(null);
 
                 }
                 else
                 {
-                    ErrorMessage = "* Invalid Username or Password";
+                    ErrorMessage = "Invalid Username or Password";
                 }
 
             }

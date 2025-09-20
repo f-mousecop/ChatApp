@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Stores
 {
-    public class NavigationStore
+    public class ModalNavigationStore
     {
         public event Action CurrentViewModelChanged;
         private BaseViewModel _currentViewModel;
@@ -24,6 +24,12 @@ namespace ChatApp.Stores
             }
         }
 
+        public bool IsOpen => CurrentViewModel != null;
+
+        public void Close()
+        {
+            CurrentViewModel = null;
+        }
         private void OnCurrentViewModelChanged()
         {
             CurrentViewModelChanged?.Invoke();

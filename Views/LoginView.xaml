@@ -10,6 +10,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVis"/>
+    </UserControl.Resources>
+
     <Border Background="{DynamicResource WindowsBackgroundBrush}" CornerRadius="{StaticResource WindowCornerRadius}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Border HorizontalAlignment="Center"
@@ -73,15 +77,17 @@
                             </TextBlock>
                         </WrapPanel>
                         <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            Foreground="#d7596d"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             BorderBrush="Transparent"
-                             HorizontalAlignment="Center"
-                           FontSize="{StaticResource FontSizeRegular}"
-                           FontWeight="Medium"
-                           Margin="0,10,0,0"
-                           TextWrapping="Wrap"/>
+                                 Foreground="#d7596d"
+                                 Background="Transparent"
+                                 Visibility="{Binding ShowErrorMessage, Converter={StaticResource boolToVis}}"
+                                 HorizontalAlignment="Center"
+                                 FontSize="{StaticResource FontSizeRegular}"
+                                 FontWeight="Medium"
+                                 BorderBrush="Transparent"
+                                 IsReadOnly="True"
+                                 BorderThickness="0"
+                                 Margin="10"
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="3"

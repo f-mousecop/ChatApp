@@ -9,12 +9,12 @@
              d:DataContext="{d:DesignInstance Type=vm:HomeViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
+
     <Border Background="{DynamicResource WindowsBackgroundBrush}" CornerRadius="{StaticResource WindowCornerRadius}">
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -66,6 +66,5 @@
                 Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
         </Grid>
-
     </Border>
 </UserControl>

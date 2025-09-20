@@ -17,5 +17,12 @@ namespace ChatApp.ViewModels
             ContentViewModel = contentViewModel;
         }
 
+        public override void Dispose()
+        {
+            NavigationBarViewModel.Dispose();
+            ContentViewModel.Dispose();
+            base.Dispose();
+        }
+
     }
 }

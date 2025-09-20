@@ -10,20 +10,28 @@ namespace ChatApp.Stores
     public class AccountStore
     {
         // Fields
-        private UserAccountModel _currentUserAccount;
-        private IUserRepository _userRepository;
+        private UserAccountModel? _currentUserAccount;
+        private IUserRepository? _userRepository;
 
-        public UserAccountModel CurrentUserAccount
+        public UserAccountModel? CurrentUserAccount
         {
             get => _currentUserAccount;
             set
             {
                 _currentUserAccount = value;
+                CurrentAccountChanged?.Invoke();
             }
         }
 
         public string? Username => CurrentUserAccount?.Username;
         public bool IsLoggedIn => CurrentUserAccount != null;
         public bool IsNotLoggedIn => CurrentUserAccount == null;
+
+        public event Action CurrentAccountChanged;
+
+        public void Logout()
+        {
+            CurrentUserAccount = null;
+        }
     }
 }

@@ -7,13 +7,13 @@
              xmlns:vm="clr-namespace:ChatApp.ViewModels"
              d:DataContext="{d:DesignInstance Type=vm:NavigationBarViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
-             Background="IndianRed"
-             d:DesignHeight="50" d:DesignWidth="800">
+             Background="{StaticResource CadetGrayBrush}"
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid Margin="20 10" MaxWidth="1000">
+    <Grid Margin="5 0 5 0" MaxWidth="1000">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
@@ -29,37 +29,55 @@
             Text="Chat App"/>
 
 
-        <Button 
-            Grid.Column="1"
+        <WrapPanel Grid.Column="1" Margin="0 0 0 10">
+            <Button 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             x:Name="homeButton"
             Command="{Binding NavigateHomeCommand}"
             Margin="15 10 0 0"
-            Width="60"
+            Width="80"
             Style="{StaticResource regularButtons}"
             Content="Home" />
 
-        <Button 
-            Grid.Column="2" 
+            <Button 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Command="{Binding NavigateChatCommand}"
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
-            Width="60"
+            Width="80"
             Style="{StaticResource regularButtons}"
             Content="Chat" />
-        <Button 
-            Grid.Column="3" 
+            <Button 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Command="{Binding NavigateAccountCommand}"
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
-            Width="60"
+            Width="80"
             Style="{StaticResource regularButtons}"
             Content="Account" />
-        <Button 
-            Grid.Column="4" 
-            Command="{Binding NavigateLoginCommand}"
+
+            <Button
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding NavigateLoginCommand}"
+                Margin="15 10 0 0"
+                Width="80"
+                Style="{StaticResource regularButtons}"
+                Content="Login"/>
+
+            <Button 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding NavigateLogoutCommand}"
             Margin="15 10 0 0"
-            Width="60"
+            Width="80"
             Style="{StaticResource regularButtons}"
+            Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Content="Logout" />
+
+        </WrapPanel>
     </Grid>
 </UserControl>

@@ -20,11 +20,11 @@
             <TextBlock Grid.Column="0" Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center">
-                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.DisplayName}"/>
-                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email}"/>
+                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.DisplayName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
             </StackPanel>
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button  HorizontalAlignment="Center" 
                     Style="{StaticResource regularButtons}"
                     Width="100"
@@ -37,6 +37,12 @@
                     Height="50"
                     Command="{Binding NavigateHomeCommand}"
                     Content="Go Home"/>
+                <Button HorizontalAlignment="Center"
+                        Style="{StaticResource regularButtons}"
+                        Width="100"
+                        Height="50"
+                        Command="{Binding NavigateLogoutCommand}"
+                        Content="Logout"/>
             </StackPanel>
         </Grid>
     </Border>

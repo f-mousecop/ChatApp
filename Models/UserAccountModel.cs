@@ -8,10 +8,9 @@ namespace ChatApp.Models
 {
     public class UserAccountModel
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string DisplayName { get; set; }
-        public byte[] ProfilePicture { get; set; }
-        public string CurrentTime { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public byte[]? ProfilePicture { get; set; }
     }
 }

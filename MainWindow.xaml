@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChatApp" xmlns:viewmodels="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components" d:DataContext="{d:DesignInstance Type=viewmodels:WindowViewModel}"
+        xmlns:local="clr-namespace:ChatApp" xmlns:viewmodels="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components" xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl" xmlns:views="clr-namespace:ChatApp.Views" d:DataContext="{d:DesignInstance Type=viewmodels:WindowViewModel}"
         mc:Ignorable="d"
         Title="Chat App" Height="550" Width="800"
         WindowStyle="None"
@@ -11,13 +11,11 @@
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
         Style="{StaticResource CustomWindow}"
-        AllowsTransparency="True"
-         >
+        AllowsTransparency="True">
 
     <Window.Resources>
-        <local:ApplicationPageValueConverter x:Key="PageConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
-
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,21 +23,42 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+
         <Grid Grid.Row="0" Background="Transparent"
                   MouseDown="Window_MouseDown">
             <TextBlock Text="Chat App" HorizontalAlignment="Center"/>
-            <Button 
+            <WrapPanel HorizontalAlignment="Right" Margin="0 5 5 0">
+                <Button
+                    x:Name="Minimize"
+                    Content="—"
+                    FontSize="{StaticResource FontSizeSmall}"
+                    Style="{StaticResource menuButton}"
+                    Foreground="Yellow"
+                        Margin="0 0 5 0"
+                    Click="Minimize_Click"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+                <Button 
                     x:Name="Exit" 
                     Content="X" 
                     FontSize="{StaticResource FontSizeSmall}"
                     Style="{StaticResource menuButton}"
-                    Margin="0,0,10,0"
+                    Margin="0 0 20 0"
                     Foreground="Red"
                     Click="Exit_Click"
-                    HorizontalAlignment="Right" />
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </WrapPanel>
         </Grid>
 
         <!--<components:Layout Grid.Row="1" d:DataContext="{d:DesignInstance Type=viewmodels:LayoutViewModel}" DataContext="{Binding NavigationBarViewModel}"/>-->
+
+        <custom:Modal 
+            Panel.ZIndex="100" 
+            IsOpen="{Binding IsModalOpen}" 
+            Grid.Row="1">
+            <ContentControl Content="{Binding CurrentModalViewModel}"/>
+        </custom:Modal>
 
         <ContentControl
                 Grid.Row="1"
