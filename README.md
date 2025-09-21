@@ -16,7 +16,7 @@
 
 ---
 ### Chat View
-<img src="./Images/chatview__.png" alt="Chat screen" width="400">
+<img src="./Images/chatview_.png" alt="Chat screen" width="400">
 
 ---
 ### Sign Up View
