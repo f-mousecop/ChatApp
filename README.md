@@ -3,12 +3,20 @@
 ---
 ## Images
 
+### Home Screen
+<img src="./Images/homeview.png" alt="Login screen" width="400">
+
+---
 ### Login Screen
-<img src="./Images/Loginview.png" alt="Login screen" width="400">
+<img src="./Images/loginmodal.png" alt="Login screen" width="400">
+
+---
+### Account Screen
+<img src="./Images/accountview.png" alt="Login screen" width="400">
 
 ---
 ### Chat View
-<img src="./Images/Chatview.png" alt="Chat screen" width="400">
+<img src="./Images/chatview__.png" alt="Chat screen" width="400">
 
 ---
 ### Sign Up View

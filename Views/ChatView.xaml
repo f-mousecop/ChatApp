@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" FontSize="40" Text="Chat Page" HorizontalAlignment="Center"/>
 
-            <Border CornerRadius="50" BorderThickness="5" BorderBrush="Black" Grid.Row="1">
+            <Border CornerRadius="50" BorderBrush="Black" Grid.Row="1">
                 <ListBox x:Name="MessagesList" ItemsSource="{Binding Messages}" Margin="5" Background="White" Height="250">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
