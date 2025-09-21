@@ -5,7 +5,7 @@
         <ResourceDictionary Source="/Styles/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <CornerRadius x:Key="WindowCornerRadius">50</CornerRadius>
+    <CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
     <Thickness x:Key="WindowBorderThickness">2</Thickness>
 
     <Style TargetType="{x:Type Window}" x:Key="CustomWindow">
@@ -18,7 +18,8 @@
                         CornerRadius="{DynamicResource WindowCornerRadius}"
                         BorderThickness="{DynamicResource WindowBorderThickness}"
                         BorderBrush="{DynamicResource BattleshipGrayBrush}"
-                        Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}"
+                        Opacity="{TemplateBinding Opacity}">
                         <AdornerDecorator>
                             <ContentPresenter />
                         </AdornerDecorator>

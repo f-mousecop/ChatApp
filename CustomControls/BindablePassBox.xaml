@@ -9,10 +9,20 @@
 
     <PasswordBox
         x:Name="passwordBox"
-        Padding="10,5,0,0"
-        FontSize="20"
+        Height="28"
+        Padding="30 0 0 0"
+        FontSize="{StaticResource FontSizeRegular}"
         Foreground="#fff"
-        Background="Transparent"
-        BorderThickness="0"
-        MaxLength="36"/>
+        CaretBrush="LightGray"
+        BorderBrush="{StaticResource CadetGrayBrush}"
+        BorderThickness="0 0 0 1"
+        Margin="0 5 0 0"
+        VerticalContentAlignment="Center"
+        MaxLength="36">
+        <PasswordBox.Background>
+            <ImageBrush ImageSource="/Images/passico.png"
+                        Stretch="None"
+                        AlignmentX="Left"/>
+        </PasswordBox.Background>
+    </PasswordBox>
 </UserControl>

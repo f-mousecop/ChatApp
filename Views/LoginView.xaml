@@ -14,7 +14,7 @@
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
     </UserControl.Resources>
 
-    <Border Background="{DynamicResource WindowsBackgroundBrush}" CornerRadius="{StaticResource WindowCornerRadius}">
+    <Border Background="{DynamicResource WindowsBackgroundBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Border HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -38,43 +38,60 @@
                         Foreground="#fff"/>
                     <StackPanel Grid.Row="1" Margin="15">
                         <TextBlock
-                            FontSize="20"
-                            Foreground="#fff"
-                            Text="Username:" 
+                            FontSize="{StaticResource FontSizeRegular}"
+                            Foreground="{StaticResource CadetGrayBrush}"
+                            Text="Username:"
+                            Margin="0 15 0 0"
                             />
-                        <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="#333">
-                            <TextBox
-                                Name="userNameBox"
-                                Height="40"
-                                Padding="10,5,0,0"
-                                FontSize="20"
-                                Foreground="#fff"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                MaxLength="36"   
-                                Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
-                        </Border>
+
+                        <TextBox
+                            Name="userNameBox"
+                            Height="28"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            Foreground="#fff"
+                            CaretBrush="LightGray"
+                            BorderBrush="{StaticResource CadetGrayBrush}"
+                            BorderThickness="0 0 0 1"
+                            MaxLength="36"   
+                            Margin="0 5 0 0"
+                            Padding="30 0 0 0"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.Background>
+                                <ImageBrush ImageSource="/Images/loginico.png"
+                                            Stretch="None"
+                                            AlignmentX="Left"/>
+                            </TextBox.Background>
+                        </TextBox>
+
                     </StackPanel>
                     <StackPanel Grid.Row="2" Margin="15">
                         <TextBlock
-                            FontSize="20"
-                            Foreground="#fff"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            Foreground="{StaticResource CadetGrayBrush}"
                             Text="Password:"
-                            />
-                        <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="#333">
-                            <customControls:BindablePassBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                    Height="40">
-                            </customControls:BindablePassBox>
-                        </Border>
+                            Margin="0 15 0 0"/>
+
+                        <customControls:BindablePassBox 
+                                Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </customControls:BindablePassBox>
+
 
                         <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
-                            <TextBlock Padding="0,0,5,0" HorizontalAlignment="Left" FontSize="14" Foreground="LightGray">
-                        Don't have an account? <Hyperlink Command="{Binding NavigateSignUpCommand}">Sign up</Hyperlink>
+                            <TextBlock Padding="0,0,5,0" 
+                                       HorizontalAlignment="Left" 
+                                       FontSize="14" 
+                                       Foreground="LightGray">
+                                    Don't have an account? 
+                                <Hyperlink Command="{Binding NavigateSignUpCommand}"
+                                           >Sign up</Hyperlink>
                             </TextBlock>
+
                             <TextBlock Text="||" FontSize="14" Foreground="LightGray"/>
                             <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right" FontSize="14">
-                        <Hyperlink Command="{Binding NavigateToForgotPassCommand}">Forgot Password?</Hyperlink>
+                            <Hyperlink Command="{Binding NavigateToForgotPassCommand}">Forgot Password?</Hyperlink>
                             </TextBlock>
+
                         </WrapPanel>
                         <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Foreground="#d7596d"
@@ -85,6 +102,7 @@
                                  FontWeight="Medium"
                                  BorderBrush="Transparent"
                                  IsReadOnly="True"
+                                 Focusable="False"
                                  BorderThickness="0"
                                  Margin="10"
                                  TextWrapping="Wrap"/>

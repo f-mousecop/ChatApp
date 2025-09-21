@@ -55,31 +55,31 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="menuButton" BasedOn="{StaticResource regularButtons}">
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Width" Value="25"/>
+    <Style TargetType="{x:Type Button}" x:Key="menuButton">
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="border"
-                    CornerRadius="50"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Background="{TemplateBinding Background}"
-                    SnapsToDevicePixels="True">
+                            Width="25" Height="25"
+                            CornerRadius="14.5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True">
                         <TextBlock Text="{TemplateBinding Content}"
                            Focusable="False"
                            FontFamily="{TemplateBinding FontFamily}"
-                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                            Margin="{TemplateBinding Padding}"
                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                           VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkSlateGray"/>
+                            <Setter Property="Background" Value="{DynamicResource BattleshipGrayBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -98,5 +98,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="minButton" BasedOn="{StaticResource menuButton}">
+        <Setter Property="Background" Value="DarkCyan"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="closeButton" BasedOn="{StaticResource menuButton}">
+        <Setter Property="Background" Value="{StaticResource MagentaDarkBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 </ResourceDictionary>

@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local:NavigationBar Grid.Row="0" Width="780" DataContext="{Binding NavigationBarViewModel}"/>
+        <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
 
         <ContentControl 
             Grid.Row="1" 

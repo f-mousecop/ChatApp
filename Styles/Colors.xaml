@@ -7,7 +7,7 @@
         <GradientStop Offset="1" Color="#6b21a8"/>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="WindowChromeBackgroundBrush" Color="#161616"/>
+    <SolidColorBrush x:Key="WindowChromeBackgroundBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="#33FFFFFF"/>
 
     <Color x:Key="BackgroundDark">#0f172a</Color>
@@ -30,4 +30,7 @@
 
     <Color x:Key="ForegroundLight">#ffff</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
+
+    <Color x:Key="MagentaDark">#8A008A</Color>
+    <SolidColorBrush x:Key="MagentaDarkBrush" Color="{StaticResource MagentaDark}"/>
 </ResourceDictionary>

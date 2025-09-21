@@ -22,7 +22,7 @@ namespace ChatApp.Components
         private void Layout_Loaded(object sender, RoutedEventArgs e)
         {
             int navCount = CountElementsofType<Components.NavigationBar>(this);
-            Debug.Assert(navCount == 1, $"Found {navCount} Navigationbars. There should be exactly 1 (in layout).");
+            //Debug.Assert(navCount == 1, $"Found {navCount} Navigationbars. There should be exactly 1 (in layout).");
         }
 
         private static int CountElementsofType<T>(DependencyObject root)

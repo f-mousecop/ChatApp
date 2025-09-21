@@ -6,18 +6,36 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Images\Logo\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Logo\favicon_plan.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\lockico.png" />
+    <None Remove="Images\loginico.png" />
+    <None Remove="Images\Logo\favicon.ico" />
+    <None Remove="Images\Logo\favicon_plan.ico" />
+    <None Remove="Images\passico.png" />
     <None Remove="Images\Picture1.jpg" />
+    <None Remove="Images\userico.png" />
+    <None Remove="Images\userico1.png" />
+    <None Remove="Images\userico2.png" />
+    <None Remove="Images\userico3.png" />
+    <None Remove="Images\userico4.png" />
+    <None Remove="Images\userico5.png" />
+    <None Remove="Images\userico6.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\Logo\icon.ico" />
     <Content Include="Images\Loginview.png" />
     <Content Include="Images\Chatview.png" />
+    <Content Include="Images\Logo\favicon_plan.ico" />
     <Content Include="Images\Signupview.png" />
+    <Resource Include="Images\loginico.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\passico.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
