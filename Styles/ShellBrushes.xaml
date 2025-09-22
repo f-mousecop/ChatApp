@@ -17,7 +17,7 @@
                 <ImageDrawing Rect="0,0,1,1" ImageSource="/Images/Picture1.jpg"/>
                 <GeometryDrawing Geometry="M0,0 L1,0 1,1 0,1 Z">
                     <GeometryDrawing.Brush>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.6">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.8">
                             <GradientStop Offset="0" Color="#0f172a"/>
                             <GradientStop Offset="0.5" Color="#333"/>
                             <GradientStop Offset="1" Color="#6b21a8"/>

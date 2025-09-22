@@ -33,4 +33,7 @@
 
     <Color x:Key="MagentaDark">#8A008A</Color>
     <SolidColorBrush x:Key="MagentaDarkBrush" Color="{StaticResource MagentaDark}"/>
+
+    <Color x:Key="CyanDark">DarkCyan</Color>
+    <SolidColorBrush x:Key="CyanDarkBrush" Color="{StaticResource CyanDark}"/>
 </ResourceDictionary>

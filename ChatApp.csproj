@@ -28,7 +28,9 @@
   <ItemGroup>
     <Content Include="Images\Loginview.png" />
     <Content Include="Images\Chatview.png" />
-    <Content Include="Images\Logo\favicon_plan.ico" />
+    <Content Include="Images\Logo\favicon_plan.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Signupview.png" />
     <Resource Include="Images\loginico.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

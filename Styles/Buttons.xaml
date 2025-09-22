@@ -24,6 +24,8 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="True">
+
+
                         <TextBlock Text="{TemplateBinding Content}"
                                    Focusable="False"
                                    FontFamily="{TemplateBinding FontFamily}"
@@ -34,11 +36,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkSlateGray"/>
+                            <Setter TargetName="border" Property="Background" Value="DarkSlateGray"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="Gray"/>
+                            <!--<Setter Property="Background" TargetName="border" Value="Gray"/>-->
+                            <Setter Property="Opacity" Value="0.6"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform">
@@ -60,7 +63,7 @@
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
                             Width="25" Height="25"
                             CornerRadius="14.5"
@@ -79,12 +82,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BattleshipGrayBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource BattleshipGrayBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
+                        <!--<Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" TargetName="border" Value="Gray"/>
-                        </Trigger>
+                        </Trigger>-->
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>

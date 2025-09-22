@@ -6,17 +6,19 @@
     </ResourceDictionary.MergedDictionaries>
 
     <CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
-    <Thickness x:Key="WindowBorderThickness">2</Thickness>
+    <Thickness x:Key="WindowBorderThickness">5</Thickness>
 
     <Style TargetType="{x:Type Window}" x:Key="CustomWindow">
         <Setter Property="Background" Value="{DynamicResource WindowChromeBackgroundBrush}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border
                         x:Name="Root"
                         CornerRadius="{DynamicResource WindowCornerRadius}"
-                        BorderThickness="{DynamicResource WindowBorderThickness}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         BorderBrush="{DynamicResource BattleshipGrayBrush}"
                         Background="{TemplateBinding Background}"
                         Opacity="{TemplateBinding Opacity}">

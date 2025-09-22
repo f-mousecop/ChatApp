@@ -1,0 +1,123 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
+
+
+    <CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
+    <Thickness x:Key="WindowBorderThickness">5</Thickness>
+
+    <!-- Caption height for title bar -->
+    <sys:Double x:Key="CaptionHeight"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">32</sys:Double>
+
+    <!-- Core window style using WindowChrome -->
+    <Style TargetType="{x:Type Window}" x:Key="CustomWindowCh">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Background" Value="{DynamicResource WindowChromeBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BattleshipGrayBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource WindowBorderThickness}"/>
+
+        <Setter Property="shell:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <shell:WindowChrome
+                    CaptionHeight="{StaticResource CaptionHeight}"
+                    CornerRadius="{StaticResource WindowCornerRadius}"
+                    GlassFrameThickness="0"
+                    ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
+                    UseAeroCaptionButtons="False"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border
+                        x:Name="Root"
+                        CornerRadius="{DynamicResource WindowCornerRadius}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{DynamicResource BattleshipGrayBrush}"
+                        Background="{TemplateBinding Background}"
+                        Opacity="{TemplateBinding Opacity}">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Title bar -->
+                            <Grid x:Name="TitleBar"
+                                  Background="{DynamicResource WindowChromeBackgroundBrush}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <Image Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
+
+                                    <TextBlock Text="{TemplateBinding Title}"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Caption buttons -->
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Margin="0 0 6 0"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <!--<Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            ToolTip="Minimize"
+                                            Width="36" Height="24"
+                                            Padding="0"
+                                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+                                        <TextBlock Text="―" FontSize="12" VerticalAlignment="Center" TextAlignment="Center"/>
+                                    </Button>-->
+
+                                    <Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            ToolTip="Minimize"
+                                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                            Style="{DynamicResource minButton}"
+                                            Content="-"
+                                            FontSize="{StaticResource FontSizeRegular}"
+                                            FontWeight="Bold"
+                                            Foreground="#fff"
+                                            Background="{StaticResource CyanDarkBrush}"
+                                            Margin="0 0 5 0"
+                                            Padding="0 0 0 5"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    <Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            ToolTip="Close"
+                                            Command="{x:Static SystemCommands.CloseWindowCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                            Style="{DynamicResource closeButton}"/>
+
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Content -->
+                            <Border Grid.Row="1"
+                                    CornerRadius="{StaticResource WindowCornerRadius}"
+                                    Background="{TemplateBinding Background}">
+                                <AdornerDecorator>
+                                    <ContentPresenter/>
+                                </AdornerDecorator>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

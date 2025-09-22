@@ -11,44 +11,53 @@
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
-        Style="{DynamicResource CustomWindow}"
+        Style="{DynamicResource CustomWindowCh}"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="False">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
 
     <Border 
-        x:Name="HostChrome"
-        CornerRadius="{StaticResource WindowCornerRadius}"
-        BorderThickness="{StaticResource WindowBorderThickness}"
-        BorderBrush="{StaticResource WindowChromeBorderBrush}"
         Background="{Binding ShellBackground}">
         <Grid>
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
 
-            <Grid Grid.Row="0" Background="Transparent"
+            <!--<Border CornerRadius="6 6 0 0"
+                    BorderBrush="{StaticResource CitronBrush}"
+                    BorderThickness="0 0 0 1"
+                    Background="{StaticResource CadetGrayBrush}">
+                <Grid Grid.Row="0"
+                  Background="Transparent"
                   MouseDown="Window_MouseDown">
-                <Menu AllowDrop="True" Background="Transparent">
-                    <MenuItem Header="_File" Margin="8" 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
+
+                    <Menu Grid.Column="1" AllowDrop="True" Background="Transparent">
+                        <MenuItem Header="_File" Margin="8" 
                               Cursor="Hand" FontSize="{StaticResource FontSizeSmall}"
                               Foreground="{StaticResource TeaGreenBrush}"
                               BorderBrush="{StaticResource CadetGrayBrush}"
                               BorderThickness="2 0 2 0">
-                        <MenuItem Header="_Open" Foreground="Black"/>
-                        <Separator/>
-                        <MenuItem Header="_Exit" Foreground="Black"
+                            <MenuItem Header="_Open" Foreground="Black"/>
+                            <Separator/>
+                            <MenuItem Header="_Exit" Foreground="Black"
                                   Click="Exit_Click"/>
-                    </MenuItem>
-                </Menu>
-                <TextBlock Text="Chat App" HorizontalAlignment="Center"/>
-                <WrapPanel HorizontalAlignment="Right" Margin="0 5 5 0">
-                    <Button
+                        </MenuItem>
+                    </Menu>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                        <Button
                         x:Name="Minimize"
                         Content="-"
                         FontSize="{StaticResource FontSizeRegular}"
@@ -60,7 +69,7 @@
                         Click="Minimize_Click"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
-                    <Button 
+                        <Button
                         x:Name="Exit" 
                         Content="X" 
                         FontSize="{StaticResource FontSizeSmall}"
@@ -70,19 +79,22 @@
                         Click="Exit_Click"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
-                </WrapPanel>
-            </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <TextBlock Grid.Row="0" Text="Chat App" HorizontalAlignment="Center"/>-->
 
 
             <custom:Modal 
                 Panel.ZIndex="100" 
                 IsOpen="{Binding IsModalOpen}"
-                Grid.Row="1">
+                >
                 <ContentControl Content="{Binding CurrentModalViewModel}"/>
             </custom:Modal>
 
             <ContentControl
-                Grid.Row="1"
+                
                 x:Name="main"
                 Content="{Binding CurrentViewModel}">
             </ContentControl>
