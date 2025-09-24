@@ -8,12 +8,23 @@
         x:Name="mainWindow"
         Title="Chat App" Height="700" Width="800"
         WindowStyle="None"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
         Style="{DynamicResource CustomWindowCh}"
         Background="Transparent"
         AllowsTransparency="False">
+
+    <Window.CommandBindings>
+        <CommandBinding 
+            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+            CanExecute="CommandBinding_CanExecute"
+            Executed="CommandBinding_Executed"/>
+        <CommandBinding 
+            Command="{x:Static SystemCommands.CloseWindowCommand}"
+            CanExecute="CommandBinding_CanExecute"
+            Executed="CommandBinding_Executed_1"/>
+    </Window.CommandBindings>
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>

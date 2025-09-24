@@ -4,8 +4,8 @@
                     xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
 
 
-    <CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
-    <Thickness x:Key="WindowBorderThickness">5</Thickness>
+    <CornerRadius x:Key="WindowCornerRadius">20</CornerRadius>
+    <Thickness x:Key="WindowBorderThickness">0</Thickness>
 
     <!-- Caption height for title bar -->
     <sys:Double x:Key="CaptionHeight"
@@ -18,9 +18,9 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BattleshipGrayBrush}"/>
         <Setter Property="BorderThickness" Value="{StaticResource WindowBorderThickness}"/>
 
-        <Setter Property="shell:WindowChrome.WindowChrome">
+        <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome
+                <WindowChrome
                     CaptionHeight="{StaticResource CaptionHeight}"
                     CornerRadius="{StaticResource WindowCornerRadius}"
                     GlassFrameThickness="0"
@@ -36,7 +36,7 @@
                         x:Name="Root"
                         CornerRadius="{DynamicResource WindowCornerRadius}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{DynamicResource BattleshipGrayBrush}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         Background="{TemplateBinding Background}"
                         Opacity="{TemplateBinding Opacity}">
 
@@ -48,7 +48,7 @@
 
                             <!-- Title bar -->
                             <Grid x:Name="TitleBar"
-                                  Background="{DynamicResource WindowChromeBackgroundBrush}">
+                                  Background="{DynamicResource ForegroundLightBrush}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="auto"/>
@@ -70,37 +70,28 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
-                                            Margin="0 0 6 0"
-                                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <!--<Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                            ToolTip="Minimize"
-                                            Width="36" Height="24"
-                                            Padding="0"
-                                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
-                                        <TextBlock Text="―" FontSize="12" VerticalAlignment="Center" TextAlignment="Center"/>
-                                    </Button>-->
+                                            Margin="0 0 6 0">
 
-                                    <Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                    <Button
                                             ToolTip="Minimize"
                                             Command="{x:Static SystemCommands.MinimizeWindowCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             Style="{DynamicResource minButton}"
                                             Content="-"
                                             FontSize="{StaticResource FontSizeRegular}"
                                             FontWeight="Bold"
                                             Foreground="#fff"
-                                            Background="{StaticResource CyanDarkBrush}"
                                             Margin="0 0 5 0"
                                             Padding="0 0 0 5"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"/>
 
-                                    <Button shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                    <Button
                                             ToolTip="Close"
                                             Command="{x:Static SystemCommands.CloseWindowCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                            Style="{DynamicResource closeButton}"/>
+                                            Style="{DynamicResource closeButton}"
+                                            Content="X"
+                                        FontWeight="Bold"
+                                        Foreground="#fff"/>
 
                                 </StackPanel>
                             </Grid>

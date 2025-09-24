@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="/Styles/ShellBrushes.xaml"/>
                 <ResourceDictionary Source="/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="/Styles/CustomWindowChrome.xaml"/>
-                <!--<ResourceDictionary Source="/Styles/WindowStyle.xaml"/>-->
+                <ResourceDictionary Source="/Styles/WindowStyle.xaml"/>
                 <ResourceDictionary Source="/Styles/Buttons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
