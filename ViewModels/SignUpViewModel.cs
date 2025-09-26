@@ -19,10 +19,12 @@ namespace ChatApp.ViewModels
 
         public SignUpViewModel(
             AccountStore accountStore,
-            INavigationService loginNavigationService)
+            INavigationService loginNavigationService,
+            INavigationService chatNavigationService)
         {
             _accountStore = accountStore;
             NavigateBackCommand = new NavigateCommand(loginNavigationService);
+            NavigateSignUpCommand = new NavigateCommand(chatNavigationService);
         }
     }
 }

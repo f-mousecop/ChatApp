@@ -8,32 +8,36 @@
 
 
     <Style TargetType="{x:Type Button}" x:Key="regularButtons">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Background" Value="{StaticResource BackgroundGrayBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0 10"/>
-
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
                             CornerRadius="10"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter"
+                              Margin="0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Focusable="False"
+                              RecognizesAccessKey="True"/>
 
 
-                        <TextBlock Text="{TemplateBinding Content}"
+                        <!--<TextBlock Text="{TemplateBinding Content}"
                                    Focusable="False"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    Margin="{TemplateBinding Padding}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>-->
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -41,8 +45,13 @@
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <!--<Setter Property="Background" TargetName="border" Value="Gray"/>-->
                             <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CyanDarkBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CyanDarkBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform">
@@ -62,24 +71,31 @@
     <Style TargetType="{x:Type Button}" x:Key="menuButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Margin" Value="0"/>
+        <!--<Setter Property="Margin" Value="0"/>-->
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                            Width="25" Height="25"
-                            CornerRadius="14.5"
+                            Width="20" Height="20"
+                            CornerRadius="10"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="True">
-                        <TextBlock Text="{TemplateBinding Content}"
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Margin="0"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True"/>
+                        <!--<TextBlock Text="{TemplateBinding Content}"
                            Focusable="True"
                            FontFamily="{TemplateBinding FontFamily}"
                            HorizontalAlignment="Center"
                            Margin="{TemplateBinding Padding}"
                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"/>-->
 
                     </Border>
                     <ControlTemplate.Triggers>

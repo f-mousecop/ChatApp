@@ -11,9 +11,8 @@
         ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
-        Style="{DynamicResource CustomWindowCh}"
-        Background="Transparent"
-        AllowsTransparency="False">
+        Style="{StaticResource CustomWindowCh}"
+        AllowsTransparency="True">
 
     <Window.CommandBindings>
         <CommandBinding 
@@ -30,8 +29,8 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
 
-    <Border 
-        Background="{Binding ShellBackground}">
+
+    <Border Background="{Binding ShellBackground}">
         <Grid>
             <!--<Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
@@ -111,5 +110,6 @@
             </ContentControl>
         </Grid>
     </Border>
+
 
 </Window>

@@ -20,7 +20,7 @@
                     VerticalAlignment="Center"
                     BorderBrush="{StaticResource CadetGrayBrush}"
                     BorderThickness="2"
-                    CornerRadius="{StaticResource WindowCornerRadius}">
+                    CornerRadius="4">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

@@ -90,10 +90,13 @@ namespace ChatApp
 
         private INavigationService CreateSignUpNavigationService()
         {
-            return new LayoutNavigationService<SignUpViewModel>
-                (_navigationStore,
-                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService()),
-                CreateNavigationBarViewModel);
+            CompositeNavigationService navigationService1 = new CompositeNavigationService(
+                new CloseModalNavigationService(_modalNavigationStore),
+                CreateHomeNavigationService());
+
+            return new ModalNavigationService<SignUpViewModel>
+                (_modalNavigationStore,
+                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService(), navigationService1));
         }
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
