@@ -36,16 +36,16 @@ namespace ChatApp.Views
             curr_Date_Time.Text = DateTime.UtcNow.ToLocalTime().ToString();
         }
 
-        private void mainGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DependencyObject d = e.OriginalSource as DependencyObject;
-            while (d != null)
-            {
-                if (d is TextBox) return;
-                d = System.Windows.Media.VisualTreeHelper.GetParent(d);
-            }
-            Keyboard.ClearFocus();
-        }
+        //private void mainGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    DependencyObject d = e.OriginalSource as DependencyObject;
+        //    while (d != null)
+        //    {
+        //        if (d is TextBox) return;
+        //        d = System.Windows.Media.VisualTreeHelper.GetParent(d);
+        //    }
+        //    Keyboard.ClearFocus();
+        //}
 
         private void TextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -68,6 +68,16 @@ namespace ChatApp.Views
         {
             var tb = (TextBox)sender;
             if (tb.IsReadOnly) tb.Select(0, 0);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.Parent is ContextMenu cm &&
+                cm.PlacementTarget is TextBox tb)
+            {
+                var text = string.IsNullOrEmpty(tb.SelectedText) ? tb.Text : tb.SelectedText;
+                if (!string.IsNullOrEmpty(text)) Clipboard.SetText(text);
+            }
         }
     }
 }

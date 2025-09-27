@@ -26,6 +26,7 @@
             Grid.Column="0" 
             FontSize="{StaticResource FontSizeRegular}"
             Margin="5"
+            VerticalAlignment="Center"
             Text="{Binding CurrentUserAccount, UpdateSourceTrigger=PropertyChanged}"/>
 
 

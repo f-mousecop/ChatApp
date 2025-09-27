@@ -13,20 +13,75 @@
         <Style x:Key="ReadOnlyCopyTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
             <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TextBox_PreviewMouseLeftButtonDown"/>
             <EventSetter Event="GotKeyboardFocus" Handler="TextBox_GotKeyboardFocus"/>
         </Style>
+
+        <!-- One row (Label | gap | Value | Copy -->
+        <DataTemplate x:Key="FieldTemplate">
+            <Grid Margin="0,8"
+                  Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" SharedSizeGroup="LabelCol"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding Label}"
+                           VerticalAlignment="Center"
+                           FontSize="{StaticResource FontSizeRegular}"/>
+
+                <TextBox x:Name="ValueBox"
+                         Grid.Column="3"
+                         Style="{StaticResource ReadOnlyCopyTextBox}"
+                         VerticalAlignment="Center"
+                         Text="{Binding Value}"
+                         ToolTip="{Binding Value}">
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="ApplicationCommands.Copy" Click="MenuItem_Click"/>
+                            <MenuItem Command="ApplicationCommands.SelectAll"/>
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
+
+                <!-- Copy button uses CommandTarget to copy from the TextBox -->
+                <Button Grid.Column="4"
+                        Padding="10,2"
+                        Command="{x:Static ApplicationCommands.Copy}"
+                        CommandTarget="{Binding ElementName=ValueBox}"
+                        Style="{StaticResource regularButtons}"
+                        Width="40"
+                        Height="20"
+                        Margin="0 0 0 8">
+                    Copy
+                </Button>
+                <Separator Grid.ColumnSpan="5" VerticalAlignment="Bottom"
+                           Margin="0 20 0 0"
+                           BorderBrush="CadetBlue"
+                           BorderThickness="1"/>
+
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid Name="mainGrid"
           Focusable="True"
           Background="Transparent"
-          PreviewMouseDown="mainGrid_PreviewMouseDown">
+          Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -36,127 +91,77 @@
         <Grid Grid.Row="1" Margin="5 0 5 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border Width="80" Height="80" CornerRadius="40"
                     BorderThickness="1"
+                    Grid.Column="0"
                     BorderBrush="{StaticResource BattleshipGrayBrush}"
-                    Background="{StaticResource CadetGrayBrush}"
-                    Opacity="0.5">
-                <Image Grid.Column="0" Source="{Binding CurrentUserAccount.ProfilePicture, UpdateSourceTrigger=PropertyChanged}"/>
+                    Margin="0 0 0 10">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="/Images/Picture1.jpg"/>
+                </Border.Background>
             </Border>
-            <StackPanel Grid.Column="1" Margin="10 0 0 0" 
+            <StackPanel Grid.Column="2" 
+                        Margin="0 0 0 10"
                         VerticalAlignment="Center">
                 <TextBlock 
                     FontSize="18" 
-                    Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding CurrentUserAccount.Username}"/>
                 <TextBlock 
                     FontSize="{StaticResource FontSizeSmall}" 
-                    Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding CurrentUserAccount.Email}"/>
             </StackPanel>
         </Grid>
-        <Separator Grid.Row="2" 
-                   VerticalAlignment="Top" 
-                   Margin="0 10 0 0"
-                   BorderBrush="{StaticResource CyanDarkBrush}"
-                   BorderThickness="2" />
+
+        <Border Grid.Row="2" HorizontalAlignment="Stretch" Background="{StaticResource CyanDarkBrush}"
+                Height="3"
+                CornerRadius="5">
+        </Border>
+
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding AccountFields}"
+                          ItemTemplate="{StaticResource FieldTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
 
 
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Border Grid.Row="4" HorizontalAlignment="Stretch" 
+                VerticalAlignment="Top"
+                Background="{StaticResource CyanDarkBrush}"
+        Height="3"
+        CornerRadius="5">
+        </Border>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="4" Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
 
-            <TextBlock
-                    Margin="20"
-                    Grid.Column="0" Grid.Row="0"
-                    FontSize="{StaticResource FontSizeRegular}" 
-                    Text="Name"/>
-            <TextBox Style="{StaticResource ReadOnlyCopyTextBox}"
-                    Margin="20"
-                    Grid.Column="1" Grid.Row="0"
-                    FontSize="{StaticResource FontSizeRegular}" 
-                    Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <Separator Grid.Row="1" 
-                       VerticalAlignment="Top" 
-                       Grid.ColumnSpan="2"/>
-            <TextBlock
-                    Margin="20"
-                    Grid.Column="0" Grid.Row="1"
-                    FontSize="{StaticResource FontSizeRegular}"
-                    Text="Email"/>
-
-            <TextBox Style="{StaticResource ReadOnlyCopyTextBox}"
-                    Margin="20"
-                    Grid.Column="1" Grid.Row="1"
-                    FontSize="{StaticResource FontSizeRegular}"
-                    Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <Separator Grid.Row="2" 
-                       VerticalAlignment="Top" 
-                       Grid.ColumnSpan="2"/>
-
-            <TextBlock Margin="20"
-                       Grid.Column="0" Grid.Row="2"
-                       FontSize="{StaticResource FontSizeRegular}"
-                       Text="Mobile Number"/>
-
-            <TextBox Margin="20"
-                     Style="{StaticResource ReadOnlyCopyTextBox}"
-                     Grid.Column="1" Grid.Row="2"
-                     FontSize="{StaticResource FontSizeRegular}"
-                     Text="000-000-0000"/>
-
-            <Separator Grid.Row="3" 
-                       VerticalAlignment="Top" 
-                       Grid.ColumnSpan="2"/>
-
-            <TextBlock Margin="20"
-                       Grid.Column="0" Grid.Row="3"
-                       FontSize="{StaticResource FontSizeRegular}"
-                       Text="Mobile Number"/>
-
-            <TextBox Margin="20"
-                     Style="{StaticResource ReadOnlyCopyTextBox}"
-                     Grid.Column="1" Grid.Row="3"
-                     FontSize="{StaticResource FontSizeRegular}"
-                     Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
-        <Separator Grid.Row="3" 
-                   VerticalAlignment="Top" 
-                   Margin="0"
-                   BorderBrush="{StaticResource BattleshipGrayBrush}"
-                   BorderThickness="1" />
-
-        <TextBlock Grid.Row="3" Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button  HorizontalAlignment="Center" 
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
                     Command="{Binding NavigateChatCommand}"
+                     Margin="10"
                     Content="Chat Now"/>
             <Button HorizontalAlignment="Center"
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
+                     Margin="10"                    
                     Command="{Binding NavigateHomeCommand}"
                     Content="Go Home"/>
             <Button HorizontalAlignment="Center"
                         Style="{StaticResource regularButtons}"
                         Width="100"
                         Height="50"
+                     Margin="10"                   
                         Command="{Binding NavigateLogoutCommand}"
                         Content="Logout"/>
         </StackPanel>

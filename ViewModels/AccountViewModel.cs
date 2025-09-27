@@ -3,14 +3,9 @@ using ChatApp.Models;
 using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ChatApp.ViewModels
 {
@@ -20,6 +15,8 @@ namespace ChatApp.ViewModels
         private readonly AccountStore _accountStore;
         private UserAccountModel _currentUserAccount;
         private IUserRepository _userRepository;
+
+        public ObservableCollection<FieldItem> AccountFields { get; } = new();
 
         public UserAccountModel CurrentUserAccount
         {
@@ -61,15 +58,15 @@ namespace ChatApp.ViewModels
 
         }
 
-        private void OnCurrentAccountChanged()
+        private void SyncFieldsFromAccount(UserAccountModel acct)
         {
-            if (_currentUserAccount != null)
-            {
-                CurrentUserAccount.DisplayName = string.Empty;
-                CurrentUserAccount.Email = string.Empty;
-                OnPropertyChanged(nameof(CurrentUserAccount));
-                return;
-            }
+            AccountFields.Clear();
+            if (acct == null) return;
+
+            AccountFields.Add(new FieldItem("Name", acct.FullName));
+            AccountFields.Add(new FieldItem("Username", acct.Username));
+            AccountFields.Add(new FieldItem("Email", acct.Email));
+            AccountFields.Add(new FieldItem("Mobile", acct.MobileNumber));
         }
 
         private void LoadCurrentDataFromStore()
@@ -81,7 +78,23 @@ namespace ChatApp.ViewModels
                 return;
             }
             CurrentUserAccount = acct;
+            SyncFieldsFromAccount(acct);
         }
+
+        private void OnCurrentAccountChanged()
+        {
+            CurrentUserAccount = _accountStore.CurrentUserAccount;
+            SyncFieldsFromAccount(CurrentUserAccount);
+
+            //if (_currentUserAccount != null)
+            //{
+            //    CurrentUserAccount.DisplayName = string.Empty;
+            //    CurrentUserAccount.Email = string.Empty;
+            //    OnPropertyChanged(nameof(CurrentUserAccount));
+            //    return;
+            //}
+        }
+
 
         public override void Dispose()
         {
