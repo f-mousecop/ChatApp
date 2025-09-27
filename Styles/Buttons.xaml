@@ -30,14 +30,6 @@
                               Focusable="False"
                               RecognizesAccessKey="True"/>
 
-
-                        <!--<TextBlock Text="{TemplateBinding Content}"
-                                   Focusable="False"
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   Margin="{TemplateBinding Padding}"
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>-->
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -71,14 +63,13 @@
     <Style TargetType="{x:Type Button}" x:Key="menuButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Padding" Value="0" />
-        <!--<Setter Property="Margin" Value="0"/>-->
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                            Width="20" Height="20"
-                            CornerRadius="10"
+                            Width="32" Height="32"
+                            CornerRadius="0"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
@@ -89,13 +80,6 @@
                                           VerticalAlignment="Center"
                                           Focusable="False"
                                           RecognizesAccessKey="True"/>
-                        <!--<TextBlock Text="{TemplateBinding Content}"
-                           Focusable="True"
-                           FontFamily="{TemplateBinding FontFamily}"
-                           HorizontalAlignment="Center"
-                           Margin="{TemplateBinding Padding}"
-                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                           VerticalAlignment="Center"/>-->
 
                     </Border>
                     <ControlTemplate.Triggers>
@@ -121,12 +105,56 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type Button}" x:Key="closeMenuButton">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            Width="32" Height="32"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0"
+                            CornerRadius="0 5 0 0"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter"
+                              Margin="0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Focusable="False"
+                              RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="IndianRed"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                        CenterX="0" CenterY="0" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type Button}" x:Key="minButton" BasedOn="{StaticResource menuButton}">
         <Setter Property="Background" Value="DarkCyan"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
-    <Style TargetType="{x:Type Button}" x:Key="closeButton" BasedOn="{StaticResource menuButton}">
-        <Setter Property="Background" Value="{StaticResource MagentaDarkBrush}"/>
+    <Style TargetType="{x:Type Button}" x:Key="maximizeButton" BasedOn="{StaticResource menuButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="restoreButton" BasedOn="{StaticResource menuButton}">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
 </ResourceDictionary>

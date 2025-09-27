@@ -8,42 +8,157 @@
              d:DataContext="{d:DesignInstance Type=vm:AccountViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border>
 
-        <Grid Grid.Row="1">
+    <UserControl.Resources>
+        <Style x:Key="ReadOnlyCopyTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TextBox_PreviewMouseLeftButtonDown"/>
+            <EventSetter Event="GotKeyboardFocus" Handler="TextBox_GotKeyboardFocus"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Name="mainGrid"
+          Focusable="True"
+          Background="Transparent"
+          PreviewMouseDown="mainGrid_PreviewMouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
+
+        <Grid Grid.Row="1" Margin="5 0 5 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Width="80" Height="80" CornerRadius="40"
+                    BorderThickness="1"
+                    BorderBrush="{StaticResource BattleshipGrayBrush}"
+                    Background="{StaticResource CadetGrayBrush}"
+                    Opacity="0.5">
+                <Image Grid.Column="0" Source="{Binding CurrentUserAccount.ProfilePicture, UpdateSourceTrigger=PropertyChanged}"/>
+            </Border>
+            <StackPanel Grid.Column="1" Margin="10 0 0 0" 
+                        VerticalAlignment="Center">
+                <TextBlock 
+                    FontSize="18" 
+                    Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock 
+                    FontSize="{StaticResource FontSizeSmall}" 
+                    Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </Grid>
+        <Separator Grid.Row="2" 
+                   VerticalAlignment="Top" 
+                   Margin="0 10 0 0"
+                   BorderBrush="{StaticResource CyanDarkBrush}"
+                   BorderThickness="2" />
+
+
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
+                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center">
-                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.DisplayName, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Margin="5" FontSize="{StaticResource FontSizeLarge}" Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
-            </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button  HorizontalAlignment="Center" 
+            <TextBlock
+                    Margin="20"
+                    Grid.Column="0" Grid.Row="0"
+                    FontSize="{StaticResource FontSizeRegular}" 
+                    Text="Name"/>
+            <TextBox Style="{StaticResource ReadOnlyCopyTextBox}"
+                    Margin="20"
+                    Grid.Column="1" Grid.Row="0"
+                    FontSize="{StaticResource FontSizeRegular}" 
+                    Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Separator Grid.Row="1" 
+                       VerticalAlignment="Top" 
+                       Grid.ColumnSpan="2"/>
+            <TextBlock
+                    Margin="20"
+                    Grid.Column="0" Grid.Row="1"
+                    FontSize="{StaticResource FontSizeRegular}"
+                    Text="Email"/>
+
+            <TextBox Style="{StaticResource ReadOnlyCopyTextBox}"
+                    Margin="20"
+                    Grid.Column="1" Grid.Row="1"
+                    FontSize="{StaticResource FontSizeRegular}"
+                    Text="{Binding CurrentUserAccount.Email, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Separator Grid.Row="2" 
+                       VerticalAlignment="Top" 
+                       Grid.ColumnSpan="2"/>
+
+            <TextBlock Margin="20"
+                       Grid.Column="0" Grid.Row="2"
+                       FontSize="{StaticResource FontSizeRegular}"
+                       Text="Mobile Number"/>
+
+            <TextBox Margin="20"
+                     Style="{StaticResource ReadOnlyCopyTextBox}"
+                     Grid.Column="1" Grid.Row="2"
+                     FontSize="{StaticResource FontSizeRegular}"
+                     Text="000-000-0000"/>
+
+            <Separator Grid.Row="3" 
+                       VerticalAlignment="Top" 
+                       Grid.ColumnSpan="2"/>
+
+            <TextBlock Margin="20"
+                       Grid.Column="0" Grid.Row="3"
+                       FontSize="{StaticResource FontSizeRegular}"
+                       Text="Mobile Number"/>
+
+            <TextBox Margin="20"
+                     Style="{StaticResource ReadOnlyCopyTextBox}"
+                     Grid.Column="1" Grid.Row="3"
+                     FontSize="{StaticResource FontSizeRegular}"
+                     Text="{Binding CurrentUserAccount.Username, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Separator Grid.Row="3" 
+                   VerticalAlignment="Top" 
+                   Margin="0"
+                   BorderBrush="{StaticResource BattleshipGrayBrush}"
+                   BorderThickness="1" />
+
+        <TextBlock Grid.Row="3" Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button  HorizontalAlignment="Center" 
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
                     Command="{Binding NavigateChatCommand}"
                     Content="Chat Now"/>
-                <Button HorizontalAlignment="Center"
+            <Button HorizontalAlignment="Center"
                     Style="{StaticResource regularButtons}"
                     Width="100"
                     Height="50"
                     Command="{Binding NavigateHomeCommand}"
                     Content="Go Home"/>
-                <Button HorizontalAlignment="Center"
+            <Button HorizontalAlignment="Center"
                         Style="{StaticResource regularButtons}"
                         Width="100"
                         Height="50"
                         Command="{Binding NavigateLogoutCommand}"
                         Content="Logout"/>
-            </StackPanel>
-        </Grid>
-    </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>

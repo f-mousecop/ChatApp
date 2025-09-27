@@ -37,6 +37,7 @@
             Command="{Binding NavigateHomeCommand}"
             Margin="15 10 0 0"
             Width="80"
+            Height="30"
             Style="{StaticResource regularButtons}"
             Content="Home" />
 
@@ -47,6 +48,7 @@
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
             Width="80"
+                Height="30"
             Style="{StaticResource regularButtons}"
             Content="Chat" />
             <Button 
@@ -56,6 +58,7 @@
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="15 10 0 0"
             Width="80"
+                Height="30"
             Style="{StaticResource regularButtons}"
             Content="Account" />
 
@@ -65,6 +68,7 @@
                 Command="{Binding NavigateLoginCommand}"
                 Margin="15 10 0 0"
                 Width="80"
+                Height="30"
                 Style="{StaticResource regularButtons}"
                 Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
                 Content="Login"/>
@@ -75,6 +79,7 @@
             Command="{Binding NavigateLogoutCommand}"
             Margin="15 10 0 0"
             Width="80"
+                Height="30"
             Style="{StaticResource regularButtons}"
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"
             Content="Logout" />

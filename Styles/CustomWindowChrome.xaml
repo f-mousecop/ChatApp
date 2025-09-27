@@ -4,8 +4,9 @@
                     xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
 
 
-    <CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="WindowCornerRadius">0</CornerRadius>
     <Thickness x:Key="WindowBorderThickness">1</Thickness>
+
 
     <!-- Caption height for title bar -->
     <sys:Double x:Key="CaptionHeight"
@@ -14,9 +15,13 @@
     <!-- Core window style using WindowChrome -->
     <Style TargetType="{x:Type Window}" x:Key="CustomWindowCh">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Background" Value="{DynamicResource WindowChromeBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource CadetGrayBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CadetGrayBrush}"/>
         <Setter Property="BorderThickness" Value="{StaticResource WindowBorderThickness}"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="False"/>
+        <Setter Property="ResizeMode" Value="CanResize"/>
 
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -24,116 +29,118 @@
                     CaptionHeight="32"
                     CornerRadius="{StaticResource WindowCornerRadius}"
                     GlassFrameThickness="0"
-                    ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
-                    UseAeroCaptionButtons="False"/>
+                    ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"/>
             </Setter.Value>
         </Setter>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
-                    <!--<Border
+                    <Border
                         x:Name="Root"
-                        CornerRadius="{DynamicResource WindowCornerRadius}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{StaticResource WindowCornerRadius}"
+                        BorderThickness="{StaticResource WindowBorderThickness}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        Background="{TemplateBinding Background}"
-                        Opacity="{TemplateBinding Opacity}">-->
+                        Background="{TemplateBinding Background}">
 
-                    <Grid Background="LightGray">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
 
-                        <!-- Title bar -->
-                        <Grid x:Name="TitleBar">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid Background="LightGray">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                            <Image Grid.Column="0" Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
+                            <!-- Title bar -->
+                            <Grid x:Name="TitleBar">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"
+                                <Image Grid.Column="0" Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
+
+                                <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"
                                    FontWeight="SemiBold"
                                    TextTrimming="CharacterEllipsis"
                                    VerticalAlignment="Center"/>
 
-                            <Button
+
+                                <Button
                                     ToolTip="Minimize"
                                     Grid.Column="2"
                                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                                     Style="{DynamicResource minButton}"
-                                Margin="0 0 5 0">
-                                <Path Margin="0 0 0 5" Stroke="#fff" StrokeThickness="1.5"
-                                          Data="M0,6 H10"/>
-                            </Button>
+                                    >
+                                    <Path Margin="0 0 0 5" Stroke="#fff" StrokeThickness="1"
+                                          Data="M0,6 H10"
+                                          RenderOptions.EdgeMode="Aliased"/>
+                                </Button>
 
-                            <Button
+                                <Button ToolTip="Restore"
+                                        x:Name="Restore"
+                                        Grid.Column="3"
+                                        Command="{x:Static SystemCommands.RestoreWindowCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Style="{DynamicResource restoreButton}"
+                                        >
+                                    <Path Data="M2,0 L10,0 L10,8 M0,3 L8,3 M0,2 L8,2 L8,10 L0,10 Z"
+                                          Width="10" Height="10"
+                                          VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}"
+                                          StrokeThickness="1"
+                                          RenderOptions.EdgeMode="Aliased"/>
+                                </Button>
+
+                                <Button ToolTip="Maximize"
+                                        x:Name="Maximize"
+                                        Grid.Column="3"
+                                        Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Style="{DynamicResource maximizeButton}"
+                                        >
+                                    <Path
+                                        Data="M0,1 L10,1 L10,9 L0,9 Z"
+                                        Width="10" Height="9"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}" 
+                                        StrokeThickness="2"/>
+                                </Button>
+
+                                <Button
                                     ToolTip="Close"
-                                    Grid.Column="3"
+                                    Grid.Column="4"
                                     Command="{x:Static SystemCommands.CloseWindowCommand}"
-                                    Style="{DynamicResource closeButton}"
-                                    Margin="0 0 5 0">
-                                <Path Stroke="#fff" StrokeThickness="1.5"
-                                          Data="M0,0 L8,8 M0,8 L8,0"/>
-                            </Button>
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Style="{DynamicResource closeMenuButton}"
+                                    >
+                                    <Path
+                                        Width="10" Height="10"
+                                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}"                                         
+                                        StrokeThickness="1.5"
+                                        Data="M0,0 L10,10 M0,10 L10,0"/>
+                                </Button>
+                            </Grid>
 
-
-
-                            <!--<StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center"
-                                            Margin="10 0 0 0">
-                                    <Image Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
-
-                                    <TextBlock Text="{TemplateBinding Title}"
-                                               FontWeight="SemiBold"
-                                               TextTrimming="CharacterEllipsis"
-                                               VerticalAlignment="Center"/>
-                                </StackPanel>
-
-                                -->
-                            <!-- Caption buttons -->
-                            <!--
-                                <StackPanel Grid.Column="1"
-                                            Orientation="Horizontal"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Right"
-                                            Margin="0 0 6 0">
-
-                                    <Button
-                                            ToolTip="Minimize"
-                                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
-                                            Style="{DynamicResource minButton}"
-                                            Content="-"
-                                            Foreground="#fff"
-                                            FontSize="{StaticResource FontSizeRegular}"
-                                            FontWeight="Bold"
-                                        Margin="0 0 5 0"/>
-                                    <Button
-                                            ToolTip="Close"
-                                            Command="{x:Static SystemCommands.CloseWindowCommand}"
-                                            Style="{DynamicResource closeButton}"
-                                            Content="X"
-                                        FontWeight="Bold"
-                                        Foreground="#fff"/>
-
-                                </StackPanel>-->
+                            <!-- Content -->
+                            <ContentPresenter Grid.Row="1" />
                         </Grid>
-
-                        <!-- Content -->
-                        <ContentPresenter Grid.Row="1"/>
-                        <!--<Border Grid.Row="1" Background="{Binding ShellBackground}">
-                                <AdornerDecorator >
-                                    <ContentPresenter/>
-                                </AdornerDecorator>
-                            </Border>-->
-                    </Grid>
-                    <!--</Border>-->
-
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="Maximize" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Restore" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Root" Property="Padding" Value="10"/>
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Normal">
+                            <Setter TargetName="Maximize" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Restore" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Root" Property="Padding" Value="0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
