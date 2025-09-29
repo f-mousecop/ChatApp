@@ -1,15 +1,18 @@
 ﻿using System.Net;
+using System.Security;
 
 namespace ChatApp.Models
 {
     public interface IUserRepository
     {
-        Task<bool> AuthenticateUser(NetworkCredential credential);
-        void Add(UserModel users);
-        void Edit(UserModel users);
-        void Remove(int id);
-        UserModel GetByInt(int id);
-        UserModel GetByUsername(string username);
-        IEnumerable<UserModel> GetByAll();
+        Task<bool> AuthenticateUserAsync(string username, SecureString securePassword);
+        Task AddAsync(UserModel users);
+        Task<UserModel?> GetByUsernameAsync(string username);
+        Task<UserModel?> GetByIntAsync(int id);
+        Task<UserModel?> GetByEmailAsync(string email);
+        Task UpdateAvatarPathAsync(int id, string? avatarUrl);
+        Task EditAsync(UserModel users);
+        Task RemoveAsync(int id);
+        Task<IEnumerable<UserModel>> GetByAllAsync();
     }
 }

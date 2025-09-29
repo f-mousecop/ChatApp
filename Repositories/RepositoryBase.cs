@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.Extensions.Configuration;
+using MySqlConnector;
 
 namespace ChatApp.Repositories
 {
@@ -7,11 +8,11 @@ namespace ChatApp.Repositories
         private readonly string _connectionString;
         public RepositoryBase()
         {
-            _connectionString = "Server = localhost; Port = 3306; Database = chatapp_dev; User ID = chatapp; Password = dev_password123!; SslMode = None; AllowPublicKeyRetrieval = True; ";
+            _connectionString =
+                Environment.GetEnvironmentVariable("CHATAPP_MYSQL")
+                ?? App.Configuration.GetConnectionString("ChatAppDb")
+                ?? throw new InvalidOperationException("Database connection string not configured.");
         }
-        protected MySqlConnection GetConnection()
-        {
-            return new MySqlConnection(_connectionString);
-        }
+        protected MySqlConnection GetConnection() => new MySqlConnection(_connectionString);
     }
 }

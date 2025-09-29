@@ -1,6 +1,7 @@
 ﻿using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.ViewModels;
+using Microsoft.Extensions.Configuration;
 using System.Windows;
 
 namespace ChatApp
@@ -10,6 +11,7 @@ namespace ChatApp
     /// </summary>
     public partial class App : Application
     {
+        public static IConfiguration Configuration { get; private set; }
         private readonly AccountStore _accountStore = new();
         private readonly NavigationStore _navigationStore = new();
         private readonly ModalNavigationStore _modalNavigationStore = new();
@@ -27,6 +29,12 @@ namespace ChatApp
             //// Creating one nav bar VM using those services
             //_navigationBarViewModel = new NavigationBarViewModel(
             //    _accountStore, homeSvc, chatSvc, accountSvc, loginSvc, signUpSvc);
+
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
 
             //// Nav to home
             var homeSvc = CreateHomeNavigationService();

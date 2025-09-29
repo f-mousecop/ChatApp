@@ -19,8 +19,8 @@ namespace ChatApp.ViewModels
     {
         private string _username = string.Empty;
         private SecureString _password;
-        private string _errorMessage;
-        public bool ShowErrorMessage => _errorMessage != string.Empty;
+        private string _errorMessage = string.Empty;
+        public bool ShowErrorMessage => !string.IsNullOrEmpty(_errorMessage);
 
         private readonly AccountStore _accountStore;
         private IUserRepository _userRepository;
@@ -51,7 +51,7 @@ namespace ChatApp.ViewModels
             set
             {
                 if (SetProperty(ref _errorMessage, value))
-                    ((RelayCommand)LoginCommand).RaiseCanExecuteChanged();
+                    OnPropertyChanged(nameof(ShowErrorMessage));
             }
         }
 
@@ -95,45 +95,53 @@ namespace ChatApp.ViewModels
 
         public bool CanExecuteLoginCommand()
         {
-            bool validData;
-            if (string.IsNullOrEmpty(Username) || Username.Length < 3 ||
-                Password == null || Password.Length < 3)
-            {
-                validData = false;
-            }
-            else validData = true;
-            return validData;
+            if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3) return false;
+            if (Password == null || Password.Length < 3) return false;
+
+            return true;
         }
 
 
         private async Task ExecuteLoginCommand()
         {
+            ErrorMessage = string.Empty;
+
             try
             {
-                var isValidUser = await _userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
-                if (isValidUser)
+                var isValidUser = await _userRepository.AuthenticateUserAsync(Username, Password);
+                if (!isValidUser)
                 {
-                    var user = _userRepository.GetByUsername(Username);
-                    _accountStore.CurrentUserAccount = new UserAccountModel
-                    {
-                        Username = user?.Username ?? Username,
-                        Email = user?.Email ?? "",
-                        DisplayName = $"Welcome, {Username}",
-                    };
-                    NavigateAccountCommand.Execute(null);
+                    ErrorMessage = "Invalid username or password.";
+                    return;
+                }
 
-                }
-                else
+                var user = await _userRepository.GetByUsernameAsync(Username);
+
+                string fullName = string.Join(" ",
+                    new[] { user?.FirstName, user?.LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
+                _accountStore.CurrentUserAccount = new UserAccountModel
                 {
-                    ErrorMessage = "Invalid Username or Password";
-                }
+                    Id = int.TryParse(user?.Id, out var id) ? id : 0,
+                    Username = user?.Username ?? Username,
+                    Email = user?.Email ?? "",
+                    FirstName = user?.FirstName ?? "",
+                    LastName = user?.LastName ?? "",
+                    FullName = string.IsNullOrWhiteSpace(fullName) ? "" : fullName,
+                    MobileNumber = user?.MobileNumber ?? "",
+                    DisplayName = string.IsNullOrWhiteSpace(user?.FirstName)
+                                    ? $"Welcome, {Username}"
+                                    : $"Welcome, {user!.FirstName}",
+                };
+
+                NavigateAccountCommand.Execute(null);
 
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ErrorMessage = e.Message;
-                Debug.WriteLine(e.Message);
             }
 
 

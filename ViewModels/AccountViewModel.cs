@@ -63,7 +63,11 @@ namespace ChatApp.ViewModels
             AccountFields.Clear();
             if (acct == null) return;
 
-            AccountFields.Add(new FieldItem("Name", acct.FullName));
+            var name = !string.IsNullOrWhiteSpace(acct.FullName)
+                ? acct.FullName
+                : string.Join(" ", new[] { acct.FirstName, acct.LastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
+            AccountFields.Add(new FieldItem("Name", name));
             AccountFields.Add(new FieldItem("Username", acct.Username));
             AccountFields.Add(new FieldItem("Email", acct.Email));
             AccountFields.Add(new FieldItem("Mobile", acct.MobileNumber));
