@@ -51,24 +51,29 @@
                                 <Label Content="Password:" />
 
                                 <customControls:SignupBindablePassBox
-                                    Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    PasswordsMatch="{Binding PasswordsMatch, Mode=OneWay}">
                                 </customControls:SignupBindablePassBox>
 
                                 <Label Content="Confirm Password:" />
-                                <customControls:SignupBindablePassBox
-                                    Password="{Binding ConfirmPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <customControls:SignupBindablePassBox            
+                                    Password="{Binding ConfirmPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    PasswordsMatch="{Binding PasswordsMatch, Mode=OneWay}">
                                 </customControls:SignupBindablePassBox>
+
+                                <TextBlock Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"
+                                           FontSize="{StaticResource FontSizeSmall}"/>
 
                                 <WrapPanel HorizontalAlignment="Center">
                                     <Button
                                         x:Name="UserSignup"
                                         Content="Create Account" Margin="10" 
                                         Style="{StaticResource regularButtons}"
-                                        Width="80" Height="40" 
+                                        Width="100" Height="40" 
                                         Command="{Binding SubmitCommand}"/>
                                     <Button Name="GoBack" Content="Go Back" 
                                         Style="{StaticResource regularButtons}"
-                                        Margin="10" Width="80" 
+                                        Margin="10" Width="100" 
                                         Height="40" 
                                         Command="{Binding NavigateBackCommand}"/>
                                 </WrapPanel>

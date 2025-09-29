@@ -61,6 +61,14 @@ namespace ChatApp
                     CreateNavigationBarViewModel);
         }
 
+        private new INavigationService CreateAdminPanelNavigationService()
+        {
+            return new LayoutNavigationService<AdminPanelViewModel>
+                (_navigationStore,
+                () => new AdminPanelViewModel(
+                    _accountStore), CreateNavigationBarViewModel);
+        }
+
 
         private INavigationService CreateAccountNavigationService()
         {
@@ -98,17 +106,14 @@ namespace ChatApp
 
         private INavigationService CreateSignUpNavigationService()
         {
-            CompositeNavigationService navigationService1 = new CompositeNavigationService(
-                new CloseModalNavigationService(_modalNavigationStore),
-                CreateHomeNavigationService());
-
             return new ModalNavigationService<SignUpViewModel>
                 (_modalNavigationStore,
-                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService(), navigationService1));
+                () => new SignUpViewModel(_accountStore, CreateLoginNavigationService()));
         }
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             return new NavigationBarViewModel(_accountStore,
+                CreateAdminPanelNavigationService(),
                 CreateHomeNavigationService(),
                 CreateChatNavigationService(),
                 CreateAccountNavigationService(),

@@ -74,8 +74,42 @@ namespace ChatApp.ViewModels
             }
         }
 
-        public SecureString Password { get; set; }
-        public SecureString ConfirmPass { get; set; }
+        private bool _passwordsMatch;
+        public bool PasswordsMatch
+        {
+            get => _passwordsMatch;
+            private set => SetProperty(ref _passwordsMatch, value);
+        }
+
+        private SecureString _password;
+        public SecureString Password
+        {
+            get => _password;
+            set
+            {
+                if (SetProperty(ref _password, value))
+                {
+                    UpdatePasswordsMatch();
+                    ((RelayCommand)SubmitCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+
+        private SecureString _confirmPass;
+        public SecureString ConfirmPass
+        {
+            get => _confirmPass;
+            set
+            {
+                if (SetProperty(ref _confirmPass, value))
+                {
+                    UpdatePasswordsMatch();
+                    ((RelayCommand)SubmitCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
+
 
         private string _error = "";
         public string Error
@@ -83,7 +117,8 @@ namespace ChatApp.ViewModels
             get => _error;
             set
             {
-                SetProperty(ref _error, value);
+                if (SetProperty(ref _error, value))
+                    OnPropertyChanged(nameof(Error));
             }
         }
 
@@ -94,8 +129,7 @@ namespace ChatApp.ViewModels
 
         public SignUpViewModel(
             AccountStore accountStore,
-            INavigationService loginNavigationService,
-            INavigationService chatNavigationService)
+            INavigationService loginNavigationService)
         {
             _accountStore = accountStore;
             _userRepository = new UserRepository();
@@ -104,22 +138,24 @@ namespace ChatApp.ViewModels
             SubmitCommand = new RelayCommand(async _ => await SubmitAsync(), _ => CanSubmit());
         }
 
+        private void UpdatePasswordsMatch()
+        {
+            var p = Password?.ToUnsecureString() ?? string.Empty;
+            var c = ConfirmPass?.ToUnsecureString() ?? string.Empty;
+
+            PasswordsMatch = p.Length >= 6 && c.Length >= 6 && p == c;
+
+            p = c = string.Empty;
+        }
+
         private bool CanSubmit()
         {
             if (string.IsNullOrWhiteSpace(Firstname)) return false;
             if (string.IsNullOrWhiteSpace(Lastname)) return false;
             if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3) return false;
             if (string.IsNullOrWhiteSpace(Email)) return false;
-            if (Password == null || Password.Length < 6) return false;
-            if (ConfirmPass == null || ConfirmPass.Length < 6) return false;
 
-            // Compare passwords and check if match
-            var pass = Password.ToUnsecureString();
-            var confPass = ConfirmPass.ToUnsecureString();
-            var match = pass == confPass;
-            pass = confPass = string.Empty;
-
-            return match;
+            return true;
         }
 
         //private bool IsEmail(string email) =>
@@ -160,7 +196,7 @@ namespace ChatApp.ViewModels
             }
             catch (Exception ex)
             {
-                Error = "Sign up failed. Please try again.";
+                Error = ex.Message;
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }

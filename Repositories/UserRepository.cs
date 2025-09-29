@@ -28,8 +28,6 @@ namespace ChatApp.Repositories
 
             var storedHash = (string)result;
             var plain = securePassword.ToUnsecureString();
-            //var hash = BCrypt.Net.BCrypt.HashPassword("MyTestPassword!", workFactor: 12);
-            //Console.WriteLine(hash);
             try
             {
 
@@ -48,8 +46,9 @@ namespace ChatApp.Repositories
                 string.IsNullOrWhiteSpace(users.LastName) ||
                 string.IsNullOrWhiteSpace(users.Username) ||
                 string.IsNullOrWhiteSpace(users.Email) ||
+                string.IsNullOrWhiteSpace(users.MobileNumber) ||
                 string.IsNullOrWhiteSpace(users.Password))
-                throw new ArgumentException("All fields are required.");
+                throw new ArgumentException("All fields are required");
 
 
             // Normalize / trim
@@ -77,7 +76,7 @@ namespace ChatApp.Repositories
                 existsCmd.Parameters.Add("@u", MySqlDbType.VarChar).Value = users.Username;
                 existsCmd.Parameters.Add("@e", MySqlDbType.VarChar).Value = users.Email;
                 var count = (long)await existsCmd.ExecuteScalarAsync();
-                if (count > 0) throw new InvalidOperationException("Username or email already taken.");
+                if (count > 0) throw new InvalidOperationException("Username or email already taken");
             }
 
             try
@@ -103,7 +102,7 @@ namespace ChatApp.Repositories
             }
             catch (MySqlException ex) when (ex.Number == 1062) // duplicates
             {
-                throw new InvalidOperationException("Username or email already taken.");
+                throw new InvalidOperationException("Username or email already taken");
             }
         }
 
@@ -165,74 +164,5 @@ namespace ChatApp.Repositories
         {
             throw new NotImplementedException();
         }
-
-        //public void Add(UserModel users)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<bool> AuthenticateUser(NetworkCredential credential)
-        //{
-        //    bool validateUser;
-        //    using (var connection = GetConnection())
-        //    using (var command = new MySqlCommand())
-        //    {
-        //        connection.Open();
-        //        command.Connection = connection;
-        //        command.CommandText = "SELECT password_hash FROM users WHERE username = @username LIMIT 1;";
-        //        command.Parameters.Add("@username", MySqlDbType.VarChar).Value = credential.UserName;
-        //        command.Parameters.Add("@password", MySqlDbType.VarChar).Value = credential.Password;
-        //        validateUser = command.ExecuteScalar() == null ? false : true;
-        //    }
-        //    return Task.FromResult(validateUser);
-        //}
-
-        //public void Edit(UserModel users)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public IEnumerable<UserModel> GetByAll()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public UserModel GetByInt(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public UserModel GetByUsername(string username)
-        //{
-        //    UserModel user = null;
-        //    using (var connection = GetConnection())
-        //    using (var command = new MySqlCommand())
-        //    {
-        //        connection.Open();
-        //        command.Connection = connection;
-        //        command.CommandText = "SELECT * FROM users WHERE username = @username LIMIT 1;";
-        //        command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
-        //        using (var reader = command.ExecuteReader())
-        //        {
-        //            if (reader.Read())
-        //            {
-        //                user = new UserModel()
-        //                {
-        //                    Id = reader[0].ToString(),
-        //                    Username = reader[1].ToString(),
-        //                    Password = string.Empty,
-        //                    Email = reader[2].ToString(),
-        //                };
-        //            }
-        //        }
-        //    }
-        //    return user;
-        //}
-
-        //public void Remove(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
     }
 }

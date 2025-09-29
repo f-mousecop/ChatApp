@@ -46,5 +46,16 @@ namespace ChatApp.CustomControls
         {
             Password = signupPasswordBox.SecurePassword;
         }
+
+        // DP to control borderbrush whether passwords match
+        public bool PasswordsMatch
+        {
+            get => (bool)GetValue(PasswordsMatchProperty);
+            set => SetValue(PasswordsMatchProperty, value);
+        }
+
+        public static readonly DependencyProperty PasswordsMatchProperty =
+            DependencyProperty.Register(nameof(PasswordsMatch), typeof(bool), typeof(SignupBindablePassBox),
+                new PropertyMetadata(false));
     }
 }
