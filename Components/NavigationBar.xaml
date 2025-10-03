@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
+
     <Grid Margin="5 0 5 0" MaxWidth="1000">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -26,7 +27,8 @@
         <Menu Grid.Column="0" Background="Transparent"
               VerticalAlignment="Center">
             <MenuItem Header="_File" AllowDrop="False">
-                <MenuItem Header="_Admin Panel" Command="{Binding NavigateAdminPanelCommand}"/>
+                <MenuItem Header="_Admin Panel" Command="{Binding NavigateAdminPanelCommand}"
+                          Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </MenuItem>
         </Menu>
 

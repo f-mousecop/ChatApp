@@ -12,7 +12,7 @@ namespace ChatApp.Models
         Task<UserModel?> GetByEmailAsync(string email);
         Task UpdateAvatarPathAsync(int id, string? avatarUrl);
         Task EditAsync(UserModel users);
-        Task RemoveAsync(int id);
-        Task<IEnumerable<UserModel>> GetByAllAsync();
+        Task<int> RemoveAsync(int id);
+        Task<IReadOnlyList<UserModel>> GetByAllAsync();
     }
 }

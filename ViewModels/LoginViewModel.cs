@@ -122,7 +122,7 @@ namespace ChatApp.ViewModels
 
                 _accountStore.CurrentUserAccount = new UserAccountModel
                 {
-                    Id = int.TryParse(user?.Id, out var id) ? id : 0,
+                    Id = Convert.ToInt32(user?.Id),
                     Username = user?.Username ?? Username,
                     Email = user?.Email ?? "",
                     FirstName = user?.FirstName ?? "",

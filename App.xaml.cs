@@ -1,4 +1,6 @@
-﻿using ChatApp.Services;
+﻿using ChatApp.Models;
+using ChatApp.Repositories;
+using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -13,22 +15,13 @@ namespace ChatApp
     {
         public static IConfiguration Configuration { get; private set; }
         private readonly AccountStore _accountStore = new();
+        private IUserRepository? _userRepository;
         private readonly NavigationStore _navigationStore = new();
         private readonly ModalNavigationStore _modalNavigationStore = new();
 
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Build services using GetNavBar (no direct nav - bar dependency yet
-
-            //var chatSvc = CreateChatNavigationService();
-            //var accountSvc = CreateAccountNavigationService();
-            //var loginSvc = CreateLoginNavigationService();
-            //var signUpSvc = CreateSignUpNavigationService();
-
-            //// Creating one nav bar VM using those services
-            //_navigationBarViewModel = new NavigationBarViewModel(
-            //    _accountStore, homeSvc, chatSvc, accountSvc, loginSvc, signUpSvc);
 
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
@@ -36,7 +29,9 @@ namespace ChatApp
                 .AddEnvironmentVariables()
                 .Build();
 
-            //// Nav to home
+            _userRepository = new UserRepository();
+
+            // Nav to home
             var homeSvc = CreateHomeNavigationService();
             homeSvc.Navigate();
 
@@ -61,12 +56,12 @@ namespace ChatApp
                     CreateNavigationBarViewModel);
         }
 
-        private new INavigationService CreateAdminPanelNavigationService()
+        private INavigationService CreateAdminPanelNavigationService()
         {
             return new LayoutNavigationService<AdminPanelViewModel>
                 (_navigationStore,
                 () => new AdminPanelViewModel(
-                    _accountStore), CreateNavigationBarViewModel);
+                    _accountStore, _userRepository), CreateNavigationBarViewModel);
         }
 
 

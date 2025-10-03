@@ -2,6 +2,9 @@
 using ChatApp.Utils;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using MySqlConnector;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Net;
 using System.Security;
 
@@ -112,10 +115,50 @@ namespace ChatApp.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserModel>> GetByAllAsync()
+        public async Task<IReadOnlyList<UserModel>> GetByAllAsync()
         {
-            throw new NotImplementedException();
+            const string sql = @"
+                SELECT
+                    id, username, first_name, last_name, email, avatar_url, mobile_number, is_email_verified
+                FROM users
+                ORDER BY id;";
+
+            var users = new List<UserModel>();
+
+            await using var conn = GetConnection();
+            await conn.OpenAsync();
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                int idOrd = reader.GetOrdinal("id");
+                int unOrd = reader.GetOrdinal("username");
+                int fnOrd = reader.GetOrdinal("first_name");
+                int lnOrd = reader.GetOrdinal("last_name");
+                int emailOrd = reader.GetOrdinal("email");
+                int avUrlOrd = reader.GetOrdinal("avatar_url");
+                int mnumOrd = reader.GetOrdinal("mobile_number");
+                int verifiedOrd = reader.GetOrdinal("is_email_verified");
+
+                users.Add(new UserModel
+                {
+                    Id = reader.GetInt32(idOrd),
+                    Username = reader.GetString(unOrd),
+                    FirstName = reader.GetString(fnOrd),
+                    LastName = reader.GetString(lnOrd),
+                    Email = reader.GetString(emailOrd),
+                    AvatarUrl = reader.IsDBNull(avUrlOrd) ? string.Empty : reader.GetString(avUrlOrd),
+                    MobileNumber = reader.IsDBNull(mnumOrd) ? string.Empty : reader.GetString(mnumOrd),
+                    IsEmailVerified = reader.GetBoolean(verifiedOrd),
+
+                    Password = string.Empty
+                });
+            }
+            return users;
         }
+
 
         public Task<UserModel?> GetByEmailAsync(string email)
         {
@@ -143,7 +186,7 @@ namespace ChatApp.Repositories
 
             return new UserModel
             {
-                Id = reader["id"].ToString()!,
+                Id = Convert.ToInt32(reader["id"]),
                 Username = reader["username"].ToString()!,
                 Email = reader["email"].ToString()!,
                 FirstName = reader["first_name"] is DBNull ? "" : reader["first_name"].ToString()!,
@@ -155,9 +198,17 @@ namespace ChatApp.Repositories
             };
         }
 
-        public Task RemoveAsync(int id)
+        public async Task<int> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            const string sql = "DELETE FROM users WHERE id = @id;";
+
+            await using var conn = GetConnection();
+            await conn.OpenAsync();
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            return await cmd.ExecuteNonQueryAsync();
         }
 
         public Task UpdateAvatarPathAsync(int id, string? avatarUrl)
