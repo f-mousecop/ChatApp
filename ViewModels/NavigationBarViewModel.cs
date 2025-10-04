@@ -1,5 +1,6 @@
 ﻿using ChatApp.Commands;
 using ChatApp.Models;
+using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ namespace ChatApp.ViewModels
         public bool IsLoggedIn => _accountStore.IsLoggedIn;
         public bool IsNotLoggedIn => _accountStore.IsNotLoggedIn;
         public string? CurrentUserAccount => _accountStore.Username;
+        public bool IsAdmin => _accountStore.IsAdmin;
 
         public NavigationBarViewModel(
             AccountStore accountStore,
@@ -45,8 +47,8 @@ namespace ChatApp.ViewModels
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
-        }
 
+        }
 
 
         private void OnCurrentAccountChanged()

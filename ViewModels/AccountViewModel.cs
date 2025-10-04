@@ -69,6 +69,7 @@ namespace ChatApp.ViewModels
 
             AccountFields.Add(new FieldItem("Name", name));
             AccountFields.Add(new FieldItem("Username", acct.Username));
+            AccountFields.Add(new FieldItem("Role", acct.Role));
             AccountFields.Add(new FieldItem("Email", acct.Email));
             AccountFields.Add(new FieldItem("Mobile", acct.MobileNumber));
         }
@@ -84,6 +85,7 @@ namespace ChatApp.ViewModels
             CurrentUserAccount = acct;
             SyncFieldsFromAccount(acct);
         }
+
 
         private void OnCurrentAccountChanged()
         {

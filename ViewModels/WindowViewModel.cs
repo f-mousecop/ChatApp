@@ -10,6 +10,7 @@ namespace ChatApp.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalStore;
+        private readonly IUserRepository _userRepository;
         private Brush _shellBackground = Brushes.Transparent;
         public Brush ShellBackground
         {
@@ -31,6 +32,7 @@ namespace ChatApp.ViewModels
 
             ApplyHostBackground(GetLeafViewModel(_navigationStore.CurrentViewModel));
         }
+
 
         private void OnCurrentViewModelChanged()
         {

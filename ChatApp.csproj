@@ -28,6 +28,7 @@
     <None Remove="Images\userico4.png" />
     <None Remove="Images\userico5.png" />
     <None Remove="Images\userico6.png" />
+    <None Remove="Images\visibility_26dp.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +73,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\signupview_modal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\visibility_26dp.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

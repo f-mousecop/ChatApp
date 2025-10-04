@@ -1,5 +1,7 @@
 ﻿
 
+using System.Security;
+
 namespace ChatApp.Models.Auth
 {
     /// <summary>
@@ -7,7 +9,8 @@ namespace ChatApp.Models.Auth
     /// </summary>
     public interface IAuthService
     {
-        Task<AuthResult> LoginAsync(string username, string password);
-        Task<AuthResult> RegisterAsync(string username, string password); // For Sign Up Page later
+        Task<AuthResult> LoginAsync(string username, SecureString password, CancellationToken ct = default);
+        Task<AuthResult> RegisterAsync(UserModel newUser, CancellationToken ct = default); // For Sign Up Page later
+        Task<AuthResult> ChangePasswordAsync(int userId, SecureString oldPassword, SecureString newPassword, CancellationToken ct = default);
     }
 }

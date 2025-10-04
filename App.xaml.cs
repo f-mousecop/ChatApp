@@ -88,14 +88,21 @@ namespace ChatApp
 
         private INavigationService CreateLoginNavigationService()
         {
-            CompositeNavigationService navigationService = new CompositeNavigationService(
-                new CloseModalNavigationService(_modalNavigationStore),
-                CreateAccountNavigationService()
-                );
+            //CompositeNavigationService navigationService = new CompositeNavigationService(
+            //    new CloseModalNavigationService(_modalNavigationStore),
+            //    CreateAccountNavigationService()
+            //    );
+
+            var closeModalSvc = new CloseModalNavigationService(_modalNavigationStore);
 
             return new ModalNavigationService<LoginViewModel>
                 (_modalNavigationStore,
-                () => new LoginViewModel(_accountStore, navigationService, CreateSignUpNavigationService()));
+                () => new LoginViewModel(
+                    _accountStore,
+                    closeModalSvc,
+                    CreateAccountNavigationService(),
+                    CreateAdminPanelNavigationService(),
+                    CreateSignUpNavigationService()));
 
         }
 

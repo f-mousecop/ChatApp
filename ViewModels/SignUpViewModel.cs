@@ -6,6 +6,7 @@ using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.Utils;
+using System.Diagnostics;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -186,6 +187,7 @@ namespace ChatApp.ViewModels
 
                     MessageBox.Show("Account created! Please log in.", "Sign Up", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     NavigateBackCommand.Execute(null);
+
                 }
 
                 finally { plain = string.Empty; }

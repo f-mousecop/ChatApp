@@ -1,4 +1,6 @@
 ﻿using ChatApp.Models;
+using ChatApp.Repositories;
+using ChatApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,9 @@ namespace ChatApp.Stores
     {
         // Fields
         private UserAccountModel? _currentUserAccount;
-        private IUserRepository? _userRepository;
+        private readonly IUserRepository? _userRepository;
 
+        public event Action? CurrentAccountChanged;
         public UserAccountModel? CurrentUserAccount
         {
             get => _currentUserAccount;
@@ -27,7 +30,9 @@ namespace ChatApp.Stores
         public bool IsLoggedIn => CurrentUserAccount != null;
         public bool IsNotLoggedIn => CurrentUserAccount == null;
 
-        public event Action CurrentAccountChanged;
+        // Check if user has the role "Admin"
+        public bool IsAdmin => CurrentUserAccount != null && string.Equals(CurrentUserAccount.Role, "Admin", StringComparison.OrdinalIgnoreCase);
+
 
         public void Logout()
         {

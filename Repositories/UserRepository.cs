@@ -13,6 +13,23 @@ namespace ChatApp.Repositories
     public class UserRepository : RepositoryBase, IUserRepository
     {
         // Auth
+        public async Task<(int UserId, string PasswordHash)?> GetAuthByUsernameAsync(string username, CancellationToken ct = default)
+        {
+            const string sql = "SELECT id, password_hash FROM users WHERE username=@u LIMIT 1;";
+            await using var conn = GetConnection();
+            await conn.OpenAsync(ct);
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.Add("@u", MySqlDbType.VarChar).Value = username;
+
+            await using var reader = await cmd.ExecuteReaderAsync(ct);
+            if (!await reader.ReadAsync(ct)) return null;
+
+            return (reader.GetInt32(reader.GetOrdinal("id")),
+                    reader.GetString(reader.GetOrdinal("password_hash")));
+        }
+
+
         public async Task<bool> AuthenticateUserAsync(string username, SecureString securePassword)
         {
             if (string.IsNullOrWhiteSpace(username) || securePassword is null || securePassword.Length < 3)
@@ -65,8 +82,8 @@ namespace ChatApp.Repositories
 
             const string existsSql = "SELECT COUNT(*) FROM users where username=@u or email=@e;";
             const string insertSql = @"
-                INSERT INTO users (username, email, password_hash, first_name, last_name, avatar_url, mobile_number, is_email_verified)
-                VALUES (@u, @e, @ph, @fn, @ln, @av, @mob, @ver);";
+                INSERT INTO users (username, email, password_hash, first_name, last_name, role, avatar_url, mobile_number, is_email_verified)
+                VALUES (@u, @e, @ph, @fn, @ln, @role, @av, @mob, @ver);";
 
             var hash = BCrypt.Net.BCrypt.HashPassword(users.Password, workFactor: 12);
 
@@ -92,6 +109,7 @@ namespace ChatApp.Repositories
                     insertCmd.Parameters.Add("@ph", MySqlDbType.VarChar).Value = hash;
                     insertCmd.Parameters.Add("@fn", MySqlDbType.VarChar).Value = users.FirstName;
                     insertCmd.Parameters.Add("@ln", MySqlDbType.VarChar).Value = users.LastName;
+                    insertCmd.Parameters.Add("@role", MySqlDbType.VarChar).Value = users.Role = "User";
                     insertCmd.Parameters.Add("@av", MySqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(users.AvatarUrl) ? DBNull.Value : users.AvatarUrl;
                     insertCmd.Parameters.Add("@mob", MySqlDbType.VarChar).Value = users.MobileNumber;
                     insertCmd.Parameters.Add("@ver", MySqlDbType.Bool).Value = users.IsEmailVerified;
@@ -119,7 +137,7 @@ namespace ChatApp.Repositories
         {
             const string sql = @"
                 SELECT
-                    id, username, first_name, last_name, email, avatar_url, mobile_number, is_email_verified
+                    id, username, first_name, last_name, role, email, avatar_url, mobile_number, is_email_verified
                 FROM users
                 ORDER BY id;";
 
@@ -137,6 +155,7 @@ namespace ChatApp.Repositories
                 int unOrd = reader.GetOrdinal("username");
                 int fnOrd = reader.GetOrdinal("first_name");
                 int lnOrd = reader.GetOrdinal("last_name");
+                int roleOrd = reader.GetOrdinal("role");
                 int emailOrd = reader.GetOrdinal("email");
                 int avUrlOrd = reader.GetOrdinal("avatar_url");
                 int mnumOrd = reader.GetOrdinal("mobile_number");
@@ -148,6 +167,7 @@ namespace ChatApp.Repositories
                     Username = reader.GetString(unOrd),
                     FirstName = reader.GetString(fnOrd),
                     LastName = reader.GetString(lnOrd),
+                    Role = reader.GetString(roleOrd),
                     Email = reader.GetString(emailOrd),
                     AvatarUrl = reader.IsDBNull(avUrlOrd) ? string.Empty : reader.GetString(avUrlOrd),
                     MobileNumber = reader.IsDBNull(mnumOrd) ? string.Empty : reader.GetString(mnumOrd),
@@ -165,14 +185,40 @@ namespace ChatApp.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<UserModel?> GetByIntAsync(int id)
+        public async Task<UserModel?> GetByIntAsync(int id)
         {
-            throw new NotImplementedException();
+            const string sql = @"SELECT id, username, role FROM users WHERE id=@id LIMIT 1;";
+
+            await using var conn = GetConnection();
+            await conn.OpenAsync();
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                int idOrd = reader.GetOrdinal("id");
+                int unOrd = reader.GetOrdinal("username");
+                int roleOrd = reader.GetOrdinal("role");
+
+                return new UserModel
+                {
+                    Id = reader.GetInt32(idOrd),
+                    Username = reader.GetString(unOrd),
+                    Role = reader.GetString(roleOrd),
+
+                    Password = string.Empty
+                };
+            }
+
+            return null;
         }
 
         public async Task<UserModel?> GetByUsernameAsync(string username)
         {
-            const string sql = @"SELECT id, username, email, first_name, last_name, avatar_url, mobile_number, is_email_verified
+            const string sql = @"SELECT id, username, email, first_name, last_name, role, avatar_url, mobile_number, is_email_verified
                                 FROM users WHERE username=@u LIMIT 1;";
 
             await using var conn = GetConnection();
@@ -191,6 +237,7 @@ namespace ChatApp.Repositories
                 Email = reader["email"].ToString()!,
                 FirstName = reader["first_name"] is DBNull ? "" : reader["first_name"].ToString()!,
                 LastName = reader["last_name"] is DBNull ? "" : reader["last_name"].ToString()!,
+                Role = reader["role"].ToString()!,
                 AvatarUrl = reader["avatar_url"] is DBNull ? "" : reader["avatar_url"].ToString()!,
                 MobileNumber = reader["mobile_number"] is DBNull ? "" : reader["mobile_number"].ToString()!,
                 IsEmailVerified = reader["is_email_verified"] is DBNull ? false : Convert.ToBoolean(reader["is_email_verified"]),

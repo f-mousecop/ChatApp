@@ -37,6 +37,7 @@
                 <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
                 <DataGridTextColumn Header="First" Binding="{Binding FirstName}" Width="*"/>
                 <DataGridTextColumn Header="Last" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
                 <DataGridTextColumn Header="Mobile" Binding="{Binding MobileNumber}" Width="*"/>
                 <DataGridTextColumn Header="Verified" Binding="{Binding IsEmailVerified}" Width="Auto"/>

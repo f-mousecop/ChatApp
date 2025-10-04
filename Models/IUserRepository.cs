@@ -5,6 +5,7 @@ namespace ChatApp.Models
 {
     public interface IUserRepository
     {
+        Task<(int UserId, string PasswordHash)?> GetAuthByUsernameAsync(string username, CancellationToken ct = default);
         Task<bool> AuthenticateUserAsync(string username, SecureString securePassword);
         Task AddAsync(UserModel users);
         Task<UserModel?> GetByUsernameAsync(string username);
