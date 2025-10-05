@@ -95,15 +95,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Width="80" Height="80" CornerRadius="40"
+            <StackPanel Grid.Column="0">
+                <Border Width="80" Height="80" CornerRadius="40"
                     BorderThickness="1"
-                    Grid.Column="0"
                     BorderBrush="{StaticResource BattleshipGrayBrush}"
-                    Margin="0 0 0 10">
-                <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="/Images/Picture1.jpg"/>
-                </Border.Background>
-            </Border>
+                    Margin="0 0 0 5">
+                    <Border.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="{Binding CurrentUserAccount.AvatarImage}"/>
+                    </Border.Background>
+                </Border>
+                <Button Content="Change Avatar"
+                        Command="{Binding ChangeAvatarCommand}"/>
+            </StackPanel>
             <StackPanel Grid.Column="2" 
                         Margin="0 0 0 10"
                         VerticalAlignment="Center">

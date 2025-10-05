@@ -258,9 +258,15 @@ namespace ChatApp.Repositories
             return await cmd.ExecuteNonQueryAsync();
         }
 
-        public Task UpdateAvatarPathAsync(int id, string? avatarUrl)
+        public async Task UpdateAvatarPathAsync(int id, string? avatarUrl)
         {
-            throw new NotImplementedException();
+            const string sql = "UPDATE users SET avatar_url=@p WHERE id=@id;";
+            await using var conn = GetConnection();
+            await conn.OpenAsync();
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.Add("@p", MySqlDbType.VarChar).Value = (object?)avatarUrl ?? DBNull.Value;
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+            await cmd.ExecuteNonQueryAsync();
         }
     }
 }

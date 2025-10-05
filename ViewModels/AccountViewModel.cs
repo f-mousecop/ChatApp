@@ -3,6 +3,7 @@ using ChatApp.Models;
 using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -32,6 +33,7 @@ namespace ChatApp.ViewModels
         public ICommand CloseAccountCommand { get; }
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateLogoutCommand { get; }
+        public ICommand ChangeAvatarCommand { get; }
 
         public AccountViewModel(
             AccountStore accountStore,
@@ -48,15 +50,43 @@ namespace ChatApp.ViewModels
             //CloseAccountCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
 
             NavigateHomeCommand = new NavigateCommand(homeNavigationService);
-            NavigateLogoutCommand = new LogoutCommand(_accountStore);
+            NavigateLogoutCommand = new RelayCommand(
+                _ => { _accountStore.Logout(); homeNavigationService.Navigate(); });
+
+            ChangeAvatarCommand = new RelayCommand(async _ => await ExecuteChangeAvatarAsync(), _ => CurrentUserAccount?.Id > 0);
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
 
-        ~AccountViewModel()
+        private async Task ExecuteChangeAvatarAsync()
         {
+            var dlg = new OpenFileDialog
+            {
+                Title = "Choose an avatar image",
+                Filter = "Image files|*.jpg;*.jpeg;*.png;*.bmp;*.gif",
+                Multiselect = false
+            };
 
+            if (dlg.ShowDialog() != true) return;
+
+            try
+            {
+                // 1) Save copy to app folder and resize
+                var relPath = await AvatarService.SaveAvatarAsync(CurrentUserAccount.Id, dlg.FileName);
+
+                // 2) Update DB
+                await _userRepository.UpdateAvatarPathAsync(CurrentUserAccount.Id, relPath);
+
+                // 3) Update in-memory model so UI refreshes
+                CurrentUserAccount.AvatarUrl = relPath;
+                LoadCurrentDataFromStore();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to set avatar: {ex.Message}", "Avatar", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void SyncFieldsFromAccount(UserAccountModel acct)
         {

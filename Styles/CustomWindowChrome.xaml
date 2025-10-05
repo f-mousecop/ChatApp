@@ -62,7 +62,8 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
+                                <Image Grid.Column="0" 
+                                       Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
 
                                 <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"
                                    FontWeight="SemiBold"

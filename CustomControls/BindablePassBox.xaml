@@ -7,22 +7,44 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
 
-    <PasswordBox
-        x:Name="passwordBox"
-        Height="28"
-        Padding="30 0 0 0"
-        FontSize="{StaticResource FontSizeRegular}"
-        Foreground="#fff"
-        CaretBrush="LightGray"
-        BorderBrush="{StaticResource CadetGrayBrush}"
-        BorderThickness="0 0 0 1"
-        Margin="0 5 0 0"
-        VerticalContentAlignment="Center"
-        MaxLength="36">
-        <PasswordBox.Background>
-            <ImageBrush ImageSource="/Images/passico.png"
+    <Grid>
+        <PasswordBox
+            x:Name="passwordBox"
+            Height="28"
+            Padding="30 0 0 0"
+            FontSize="{StaticResource FontSizeRegular}"
+            Foreground="#fff"
+            CaretBrush="LightGray"
+            BorderBrush="{StaticResource CadetGrayBrush}"
+            BorderThickness="0 0 0 1"
+            Margin="0 5 0 0"
+            VerticalContentAlignment="Center"
+            MaxLength="36">
+            <PasswordBox.Background>
+                <ImageBrush ImageSource="/Images/passico.png"
                         Stretch="None"
                         AlignmentX="Left"/>
-        </PasswordBox.Background>
-    </PasswordBox>
+            </PasswordBox.Background>
+        </PasswordBox>
+
+        <TextBox
+            x:Name="clearBox"
+            Height="28"
+            Padding="30 0 0 0"
+            FontSize="{StaticResource FontSizeRegular}"
+            Foreground="#fff"
+            CaretBrush="LightGray"
+            BorderBrush="{StaticResource CadetGrayBrush}"
+            BorderThickness="0 0 0 1"
+            Margin="0 5 0 0"
+            VerticalContentAlignment="Center"
+            MaxLength="36"
+            Visibility="Collapsed">
+            <TextBox.Background>
+                <ImageBrush ImageSource="/Images/passico.png"
+                            Stretch="None"
+                            AlignmentX="Left"/>
+            </TextBox.Background>
+        </TextBox>
+    </Grid>
 </UserControl>

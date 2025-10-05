@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\accountview_update.png" />
     <None Remove="Images\chatview_update.png" />
     <None Remove="Images\homeview_loggedin.png" />
     <None Remove="Images\homeview_update.png" />
@@ -20,7 +19,6 @@
     <None Remove="Images\Logo\favicon_plan.ico" />
     <None Remove="Images\passico.png" />
     <None Remove="Images\Picture1.jpg" />
-    <None Remove="Images\signupview_modal.png" />
     <None Remove="Images\userico.png" />
     <None Remove="Images\userico1.png" />
     <None Remove="Images\userico2.png" />
@@ -28,19 +26,15 @@
     <None Remove="Images\userico4.png" />
     <None Remove="Images\userico5.png" />
     <None Remove="Images\userico6.png" />
+    <None Remove="Images\visibility_22dp.png" />
     <None Remove="Images\visibility_26dp.png" />
+    <None Remove="Images\visibility_off_22dp.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\Loginview.png" />
-    <Content Include="Images\Chatview.png" />
     <Content Include="Images\Logo\favicon_plan.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Signupview.png" />
-    <Resource Include="Images\accountview_update.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\chatview_update.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -72,10 +66,13 @@
     <Resource Include="Images\Picture1.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\signupview_modal.png">
+    <Resource Include="Images\visibility_22dp.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\visibility_26dp.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\visibility_off_22dp.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

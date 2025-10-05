@@ -11,6 +11,7 @@ using System.Security;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -25,6 +26,13 @@ namespace ChatApp.ViewModels
 
         public bool ShowErrorMessage => !string.IsNullOrEmpty(_errorMessage);
         public bool IsAdmin => _accountStore.IsAdmin;
+
+        private bool _showPassword;
+        public bool ShowPassword
+        {
+            get => _showPassword;
+            set => SetProperty(ref _showPassword, value);
+        }
 
         private readonly AccountStore _accountStore;
         //private readonly IAuthService _authService;
@@ -98,10 +106,11 @@ namespace ChatApp.ViewModels
             NavigateSignUpCommand = new NavigateCommand(signUpNavigationService);
 
             RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
-            ShowPasswordCommand = new RelayCommand(_ => { /* TODO */ });
+            ShowPasswordCommand = new RelayCommand(_ => ExecuteShowPasswordCommand());
             QuitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
 
         }
+
 
 
         public bool CanExecuteLoginCommand()
@@ -146,6 +155,7 @@ namespace ChatApp.ViewModels
                     DisplayName = string.IsNullOrWhiteSpace(user?.FirstName)
                                     ? $"Welcome, {Username}"
                                     : $"Welcome, {user!.FirstName}",
+                    AvatarUrl = string.IsNullOrWhiteSpace(user?.AvatarUrl) ? null : user!.AvatarUrl,
                 };
 
                 OnPropertyChanged(nameof(IsAdmin));
@@ -173,26 +183,33 @@ namespace ChatApp.ViewModels
 
         }
 
+        private bool CanSHowPass()
+        {
+            return true;
+        }
 
-        //private Action<object> ExecuteShowPasswordCommand()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void ExecuteShowPasswordCommand()
+        {
+            Debug.WriteLine($"Can show pass {ShowPassword}");
+            ShowPassword = !ShowPassword;
+            Debug.WriteLine($"Can show pass {ShowPassword}");
 
-        //private void ApplyTheme(object obj)
-        //{
-        //    var gradient = new LinearGradientBrush
-        //    {
-        //        StartPoint = new Point(0, 0),
-        //        EndPoint = new Point(1, 1),
-        //        GradientStops = {
-        //            new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
-        //            new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
-        //        }
-        //    };
+        }
 
-        //    ThemeService.SetWindowTheme(gradient);
-        //}
+        private void ApplyTheme(object obj)
+        {
+            var gradient = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 1),
+                GradientStops = {
+                    new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
+                    new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
+                }
+            };
+
+            ThemeService.SetWindowTheme(gradient);
+        }
 
 
 

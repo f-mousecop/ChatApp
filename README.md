@@ -8,11 +8,11 @@
 
 ---
 ### Login Screen
-<img src="./Images/loginmodal.png" alt="Login screen" width="400">
+<img src="./Images/login_view_new.png" alt="Login screen" width="400">
 
 ---
 ### Account Screen
-<img src="./Images/accountview_update.png" alt="Login screen" width="400">
+<img src="./Images/account_view_new.png" alt="Login screen" width="400">
 
 ---
 ### Home Screen While Logged In
@@ -24,4 +24,8 @@
 
 ---
 ### Sign Up View
-<img src="./Images/signupview_modal.png" alt="Signup screen" width="400">
+<img src="./Images/signup_view_new.png" alt="Signup screen" width="400">
+
+---
+### Admin Panel View
+<img src="./Images/admin_panel_view.png" alt="Admin panel screen" width="400">
