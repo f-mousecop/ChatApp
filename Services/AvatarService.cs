@@ -23,7 +23,7 @@ namespace ChatApp.Services
         /// <param name="sourcePath"></param>
         /// <param name="maxSizePx"></param>
         /// <returns></returns>
-        public static async Task<string> SaveAvatarAsync(int userId, string sourcePath, int maxSizePx = 256)
+        public static async Task<string> SaveAvatarAsync(int userId, string sourcePath, int maxSizePx = 512)
         {
             Directory.CreateDirectory(AvatarsBaseDir);
 

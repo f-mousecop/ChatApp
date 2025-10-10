@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.Views"
-             xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components"
+             xmlns:vm="clr-namespace:ChatApp.ViewModels" 
+             xmlns:components="clr-namespace:ChatApp.Components"
              d:DataContext="{d:DesignInstance Type=vm:AccountViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -56,7 +57,6 @@
 
                 <!-- Copy button uses CommandTarget to copy from the TextBox -->
                 <Button Grid.Column="4"
-                        Padding="10,2"
                         Command="{x:Static ApplicationCommands.Copy}"
                         CommandTarget="{Binding ElementName=ValueBox}"
                         Style="{StaticResource regularButtons}"
@@ -96,19 +96,26 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <Border Width="80" Height="80" CornerRadius="40"
-                    BorderThickness="1"
-                    BorderBrush="{StaticResource BattleshipGrayBrush}"
-                    Margin="0 0 0 5">
-                    <Border.Background>
-                        <ImageBrush Stretch="Fill" ImageSource="{Binding CurrentUserAccount.AvatarImage}"/>
-                    </Border.Background>
-                </Border>
+                <Button Style="{StaticResource avatarButton}"
+                        BorderThickness="1"
+                        Command="{Binding OpenAvatarPopup}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="{Binding CurrentUserAccount.AvatarImage}"
+                                    Stretch="Fill"/>
+                    </Button.Background>
+                </Button>
+
                 <Button Content="Change Avatar"
+                        Background="{StaticResource CitronBrush}"
+                        Foreground="Black"
+                        FontSize="12"
+                        Padding="5"
+                        Style="{StaticResource regularButtons}"
                         Command="{Binding ChangeAvatarCommand}"/>
             </StackPanel>
+
             <StackPanel Grid.Column="2" 
-                        Margin="0 0 0 10"
+                        Margin="0 0 0 30"
                         VerticalAlignment="Center">
                 <TextBlock 
                     FontSize="18" 
@@ -139,8 +146,8 @@
         <Border Grid.Row="4" HorizontalAlignment="Stretch" 
                 VerticalAlignment="Top"
                 Background="{StaticResource CyanDarkBrush}"
-        Height="3"
-        CornerRadius="5">
+                Height="3"
+                CornerRadius="5">
         </Border>
 
         <TextBlock Grid.Row="4" Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />

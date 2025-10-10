@@ -36,6 +36,7 @@ namespace ChatApp.ViewModels
         public ICommand NavigateChatCommand { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateAccountCommand { get; }
+
         public HomeViewModel(
             AccountStore accountStore,
             INavigationService loginNavigationService,
@@ -52,6 +53,7 @@ namespace ChatApp.ViewModels
             NavigateAccountCommand = new NavigateCommand(accountNavigationService);
 
         }
+
 
         private void LoadCurrentDataFromStore()
         {

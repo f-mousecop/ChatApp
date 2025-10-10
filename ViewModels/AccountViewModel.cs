@@ -6,6 +6,7 @@ using ChatApp.Stores;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace ChatApp.ViewModels
@@ -29,16 +30,18 @@ namespace ChatApp.ViewModels
             }
         }
 
+
         public ICommand NavigateChatCommand { get; }
-        public ICommand CloseAccountCommand { get; }
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateLogoutCommand { get; }
         public ICommand ChangeAvatarCommand { get; }
+        public ICommand OpenAvatarPopup { get; }
 
         public AccountViewModel(
             AccountStore accountStore,
             INavigationService homeNavigationService,
-            INavigationService chatNavigationService)
+            INavigationService chatNavigationService,
+            INavigationService avatarViewNavigationService)
         {
             _accountStore = accountStore;
             _userRepository = new UserRepository();
@@ -54,9 +57,11 @@ namespace ChatApp.ViewModels
                 _ => { _accountStore.Logout(); homeNavigationService.Navigate(); });
 
             ChangeAvatarCommand = new RelayCommand(async _ => await ExecuteChangeAvatarAsync(), _ => CurrentUserAccount?.Id > 0);
+            OpenAvatarPopup = new NavigateCommand(avatarViewNavigationService);
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
+
 
         private async Task ExecuteChangeAvatarAsync()
         {

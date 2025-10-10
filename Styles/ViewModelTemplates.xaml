@@ -25,4 +25,7 @@
     <DataTemplate DataType="{x:Type vm:LayoutViewModel}">
         <components:Layout/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:AvatarViewModel}">
+        <views:AvatarView/>
+    </DataTemplate>
 </ResourceDictionary>

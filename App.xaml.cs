@@ -73,7 +73,8 @@ namespace ChatApp
                     (
                     _accountStore,
                     CreateHomeNavigationService(),
-                    CreateChatNavigationService()),
+                    CreateChatNavigationService(),
+                    CreateAvatarViewNavigationService()),
                 CreateNavigationBarViewModel);
         }
         private INavigationService CreateChatNavigationService()
@@ -112,6 +113,16 @@ namespace ChatApp
                 (_modalNavigationStore,
                 () => new SignUpViewModel(_accountStore, CreateLoginNavigationService()));
         }
+
+        private INavigationService CreateAvatarViewNavigationService()
+        {
+            var closeModalSvc = new CloseModalNavigationService(_modalNavigationStore);
+
+            return new ModalNavigationService<AvatarViewModel>
+                (_modalNavigationStore,
+                () => new AvatarViewModel(_accountStore, closeModalSvc, CreateAccountNavigationService()));
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             return new NavigationBarViewModel(_accountStore,

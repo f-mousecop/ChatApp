@@ -35,7 +35,6 @@ namespace ChatApp.ViewModels
         }
 
         private readonly AccountStore _accountStore;
-        //private readonly IAuthService _authService;
         private readonly INavigationService _closeModalService;
         private readonly INavigationService _userDestination;
         private readonly INavigationService _adminDestination;
@@ -76,8 +75,7 @@ namespace ChatApp.ViewModels
         public ICommand ApplyThemeCommand { get; }
         public ICommand LoginCommand { get; }
         public ICommand NavigateSignUpCommand { get; }
-        public ICommand RecoverPasswordCommand { get; }
-        public ICommand ShowPasswordCommand { get; }
+        public ICommand NavigateToForgotPassCommand { get; }
         public ICommand QuitCommand { get; }
         public ICommand CloseModalCommand { get; }
         public NavigationBarViewModel NavigationBarViewModel { get; }
@@ -99,14 +97,12 @@ namespace ChatApp.ViewModels
             _userDestination = userDestination;
             _adminDestination = adminDestination;
             _userRepository = new UserRepository();
-            //_authService = new AuthService(_userRepository);
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
             CloseModalCommand = new RelayCommand(_ => _closeModalService.Navigate());
             NavigateSignUpCommand = new NavigateCommand(signUpNavigationService);
 
-            RecoverPasswordCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
-            ShowPasswordCommand = new RelayCommand(_ => ExecuteShowPasswordCommand());
+            NavigateToForgotPassCommand = new RelayCommand(_ => ExecuteRecoverPassCommand("", ""));
             QuitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
 
         }
@@ -183,18 +179,6 @@ namespace ChatApp.ViewModels
 
         }
 
-        private bool CanSHowPass()
-        {
-            return true;
-        }
-
-        private void ExecuteShowPasswordCommand()
-        {
-            Debug.WriteLine($"Can show pass {ShowPassword}");
-            ShowPassword = !ShowPassword;
-            Debug.WriteLine($"Can show pass {ShowPassword}");
-
-        }
 
         private void ApplyTheme(object obj)
         {
@@ -215,7 +199,7 @@ namespace ChatApp.ViewModels
 
         private void ExecuteRecoverPassCommand(string username, string email)
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Need to implement", "Implement", MessageBoxButton.OK, MessageBoxImage.Hand);
         }
     }
 }
