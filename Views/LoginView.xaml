@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.Views" 
              xmlns:customControls="clr-namespace:ChatApp.CustomControls"
-             xmlns:vm="clr-namespace:ChatApp.ViewModels"
+             xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -44,18 +44,14 @@
                         FontSize="40"
                         Foreground="#fff"/>
 
-                        <Button Grid.Column="2" 
-                                Style="{StaticResource modalMenuButton}"
+                        <Button Grid.Column="2"
                                 ToolTip="Close"
-                                Width="24" Height="24"
                                 Command="{Binding CloseModalCommand}"
-                                Background="{StaticResource MagentaDarkBrush}"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
-                                BorderThickness="0"
-                                Margin="5">
-                            <Path Stroke="#fff" StrokeThickness="1.5"
-                                  Data="M0,0 L8,8 M0,8 L8,0"/>
+                                Margin="5"
+                                Padding="5">
+                            <materialDesign:PackIcon Kind="Close"/>
                         </Button>
 
                     </Grid>
@@ -75,7 +71,6 @@
                             Foreground="#fff"
                             CaretBrush="LightGray"
                             BorderBrush="{StaticResource CadetGrayBrush}"
-                            BorderThickness="0 0 0 1"
                             MaxLength="36"   
                             Margin="0 5 22 0"
                             Padding="30 0 0 0"
@@ -141,7 +136,7 @@
                         </Grid>
 
 
-                        <WrapPanel HorizontalAlignment="Center" Margin="0,5,10,0">
+                        <WrapPanel HorizontalAlignment="Center" Margin="0,15,10,0">
                             <TextBlock Padding="0,0,5,0" 
                                        HorizontalAlignment="Left" 
                                        FontSize="14" 
@@ -179,7 +174,6 @@
                         <Button
                             x:Name="UserLogin"
                             Content="Login"
-                            Style="{StaticResource regularButtons}"
                             Command="{Binding LoginCommand}"
                             Height="40"
                             Width="100"
@@ -188,8 +182,7 @@
                         <Button
                             x:Name="Quit"
                             Command="{Binding QuitCommand}"
-                            Content="Quit"   
-                            Style="{StaticResource regularButtons}"
+                            Content="Quit"
                             Height="40"
                             Width="100"
                             Margin="5">

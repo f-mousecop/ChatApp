@@ -2,6 +2,7 @@
 using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
+using ChatApp.Utils;
 using ChatApp.ViewModels;
 using Microsoft.Extensions.Configuration;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace ChatApp
         private readonly NavigationStore _navigationStore = new();
         private readonly ModalNavigationStore _modalNavigationStore = new();
 
+        private ThemeService _themeService;
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -30,6 +33,8 @@ namespace ChatApp
                 .Build();
 
             _userRepository = new UserRepository();
+
+            _themeService = new ThemeService();
 
             // Nav to home
             var homeSvc = CreateHomeNavigationService();
@@ -131,7 +136,8 @@ namespace ChatApp
                 CreateChatNavigationService(),
                 CreateAccountNavigationService(),
                 CreateLoginNavigationService(),
-                CreateSignUpNavigationService());
+                CreateSignUpNavigationService(),
+                _themeService);
         }
     }
 }

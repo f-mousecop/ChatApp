@@ -73,11 +73,9 @@
                                     <Button
                                         x:Name="UserSignup"
                                         Content="Create Account" Margin="10" 
-                                        Style="{StaticResource regularButtons}"
                                         Width="100" Height="40" 
                                         Command="{Binding SubmitCommand}"/>
                                     <Button Name="GoBack" Content="Go Back" 
-                                        Style="{StaticResource regularButtons}"
                                         Margin="10" Width="100" 
                                         Height="40" 
                                         Command="{Binding NavigateBackCommand}"/>

@@ -36,6 +36,7 @@ namespace ChatApp.ViewModels
         public ICommand NavigateLogoutCommand { get; }
         public ICommand ChangeAvatarCommand { get; }
         public ICommand OpenAvatarPopup { get; }
+        public ICommand CopyCommand { get; }
 
         public AccountViewModel(
             AccountStore accountStore,
@@ -58,6 +59,12 @@ namespace ChatApp.ViewModels
 
             ChangeAvatarCommand = new RelayCommand(async _ => await ExecuteChangeAvatarAsync(), _ => CurrentUserAccount?.Id > 0);
             OpenAvatarPopup = new NavigateCommand(avatarViewNavigationService);
+
+            CopyCommand = new RelayCommand(param =>
+            {
+                var text = param as string ?? string.Empty;
+                try { System.Windows.Clipboard.SetText(text); } catch { }
+            });
 
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }

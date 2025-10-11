@@ -6,23 +6,12 @@
              xmlns:local="clr-namespace:ChatApp.Views"
              xmlns:vm="clr-namespace:ChatApp.ViewModels" 
              xmlns:components="clr-namespace:ChatApp.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=vm:AccountViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="ReadOnlyCopyTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
-            <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TextBox_PreviewMouseLeftButtonDown"/>
-            <EventSetter Event="GotKeyboardFocus" Handler="TextBox_GotKeyboardFocus"/>
-        </Style>
 
         <!-- One row (Label | gap | Value | Copy -->
         <DataTemplate x:Key="FieldTemplate">
@@ -41,33 +30,26 @@
                            VerticalAlignment="Center"
                            FontSize="{StaticResource FontSizeRegular}"/>
 
-                <TextBox x:Name="ValueBox"
-                         Grid.Column="3"
-                         Style="{StaticResource ReadOnlyCopyTextBox}"
+                <TextBox Grid.Column="3"
+                         IsReadOnly="True"
+                         FontSize="{StaticResource FontSizeRegular}"
+                         BorderThickness="0"
                          VerticalAlignment="Center"
                          Text="{Binding Value}"
-                         ToolTip="{Binding Value}">
-                    <TextBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Command="ApplicationCommands.Copy" Click="MenuItem_Click"/>
-                            <MenuItem Command="ApplicationCommands.SelectAll"/>
-                        </ContextMenu>
-                    </TextBox.ContextMenu>
+                         materialDesign:TransitionAssist.DisableTransitions="True">
                 </TextBox>
 
                 <!-- Copy button uses CommandTarget to copy from the TextBox -->
                 <Button Grid.Column="4"
-                        Command="{x:Static ApplicationCommands.Copy}"
-                        CommandTarget="{Binding ElementName=ValueBox}"
-                        Style="{StaticResource regularButtons}"
-                        Width="40"
-                        Height="20"
-                        Margin="0 0 0 8">
+                        Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding Value}"
+                        Margin="0 0 0 8"
+                        Padding="5">
                     Copy
                 </Button>
                 <Separator Grid.ColumnSpan="5" VerticalAlignment="Bottom"
                            Margin="0 20 0 0"
-                           BorderBrush="CadetBlue"
+                           BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}"
                            BorderThickness="1"/>
 
             </Grid>
@@ -82,8 +64,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" FontSize="28" Text="Account" HorizontalAlignment="Center"/>
@@ -98,7 +80,8 @@
             <StackPanel Grid.Column="0">
                 <Button Style="{StaticResource avatarButton}"
                         BorderThickness="1"
-                        Command="{Binding OpenAvatarPopup}">
+                        Command="{Binding OpenAvatarPopup}"
+                        Margin="0 0 0 5">
                     <Button.Background>
                         <ImageBrush ImageSource="{Binding CurrentUserAccount.AvatarImage}"
                                     Stretch="Fill"/>
@@ -106,11 +89,8 @@
                 </Button>
 
                 <Button Content="Change Avatar"
-                        Background="{StaticResource CitronBrush}"
-                        Foreground="Black"
                         FontSize="12"
-                        Padding="5"
-                        Style="{StaticResource regularButtons}"
+                        Height="30"
                         Command="{Binding ChangeAvatarCommand}"/>
             </StackPanel>
 
@@ -126,7 +106,7 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="2" HorizontalAlignment="Stretch" Background="{StaticResource CyanDarkBrush}"
+        <Border Grid.Row="2" HorizontalAlignment="Stretch" Background="{StaticResource MaterialDesignShadowBrush}"
                 Height="3"
                 CornerRadius="5">
         </Border>
@@ -145,35 +125,37 @@
 
         <Border Grid.Row="4" HorizontalAlignment="Stretch" 
                 VerticalAlignment="Top"
-                Background="{StaticResource CyanDarkBrush}"
+                Background="{StaticResource MaterialDesignShadowBrush}"
                 Height="3"
                 CornerRadius="5">
         </Border>
 
         <TextBlock Grid.Row="4" Margin="5" FontSize="{StaticResource FontSizeRegular}" Name="curr_Date_Time" />
 
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button  HorizontalAlignment="Center" 
-                    Style="{StaticResource regularButtons}"
-                    Width="100"
-                    Height="50"
-                    Command="{Binding NavigateChatCommand}"
-                     Margin="10"
-                    Content="Chat Now"/>
-            <Button HorizontalAlignment="Center"
-                    Style="{StaticResource regularButtons}"
-                    Width="100"
-                    Height="50"
-                     Margin="10"                    
-                    Command="{Binding NavigateHomeCommand}"
-                    Content="Go Home"/>
-            <Button HorizontalAlignment="Center"
-                        Style="{StaticResource regularButtons}"
-                        Width="100"
-                        Height="50"
-                     Margin="10"                   
-                        Command="{Binding NavigateLogoutCommand}"
-                        Content="Logout"/>
-        </StackPanel>
+
+        <materialDesign:ColorZone Grid.Row="4"
+                                  Mode="PrimaryDark">
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  HorizontalAlignment="Center" 
+            Width="100"
+            Height="50"
+            Command="{Binding NavigateChatCommand}"
+             Margin="10"
+            Content="Chat Now"/>
+                <Button HorizontalAlignment="Center"
+            Width="100"
+            Height="50"
+             Margin="10"                    
+            Command="{Binding NavigateHomeCommand}"
+            Content="Go Home"/>
+                <Button HorizontalAlignment="Center"
+                Width="100"
+                Height="50"
+             Margin="10"                   
+                Command="{Binding NavigateLogoutCommand}"
+                Content="Logout"/>
+            </StackPanel>
+        </materialDesign:ColorZone>
+
     </Grid>
 </UserControl>

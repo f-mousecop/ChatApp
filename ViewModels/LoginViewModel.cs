@@ -179,24 +179,6 @@ namespace ChatApp.ViewModels
 
         }
 
-
-        private void ApplyTheme(object obj)
-        {
-            var gradient = new LinearGradientBrush
-            {
-                StartPoint = new Point(0, 0),
-                EndPoint = new Point(1, 1),
-                GradientStops = {
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
-                }
-            };
-
-            ThemeService.SetWindowTheme(gradient);
-        }
-
-
-
         private void ExecuteRecoverPassCommand(string username, string email)
         {
             MessageBox.Show("Need to implement", "Implement", MessageBoxButton.OK, MessageBoxImage.Hand);

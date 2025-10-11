@@ -1,6 +1,7 @@
 ﻿using ChatApp.Commands;
 using ChatApp.Services;
 using ChatApp.Stores;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -57,6 +58,8 @@ namespace ChatApp.ViewModels
             }
         }
 
+        public ObservableCollection<string> Messages { get; set; }
+
 
         public ICommand GetUserNameCommand { get; }
         public ICommand GetUserMessageCommand { get; }
@@ -65,6 +68,8 @@ namespace ChatApp.ViewModels
         public ICommand NavCommand { get; }
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateAccountCommand { get; }
+        public ICommand SendMessageCommand { get; }
+
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
         // Initialize NavCommand in the constructor to fix CS8618
@@ -72,6 +77,7 @@ namespace ChatApp.ViewModels
             INavigationService accountNavigationService)
         {
             //NavigationBarViewModel = navigationBarViewModel;
+            Messages = new ObservableCollection<string>();
 
             GetUserNameCommand = new RelayCommand(_ => { /* TODO */ });
             GetUserMessageCommand = new RelayCommand(_ => { /* TODO */ });
@@ -80,6 +86,21 @@ namespace ChatApp.ViewModels
 
             //NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
             NavigateAccountCommand = new NavigateCommand(accountNavigationService);
+            SendMessageCommand = new RelayCommand(_ => ExecuteSendMessageCommand());
+        }
+
+        private void ExecuteSendMessageCommand()
+        {
+
+            string userInput = UserMessage.Trim();
+            if (!string.IsNullOrEmpty(userInput))
+            {
+                Messages.Add($"You: {userInput}");
+
+                Messages.Add($"Bot: {userInput}");
+
+            }
+            UserMessage = string.Empty;
         }
     }
 }

@@ -17,10 +17,10 @@
 
         <Border Grid.Row="0">
             <Grid>
-                <Button Style="{StaticResource closeMenuButton}"
-                            ToolTip="Close"
-                            Command="{Binding CloseAvatarModalCommand}"
-                            HorizontalAlignment="Right">
+                <Button ToolTip="Close"
+                        Style="{StaticResource closeMenuButton}"
+                        Command="{Binding CloseAvatarModalCommand}"
+                        HorizontalAlignment="Right">
                     <Path Stroke="#fff"  
                               StrokeThickness="1.5"
                               Width="10" Height="10"

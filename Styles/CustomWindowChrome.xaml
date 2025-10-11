@@ -16,7 +16,7 @@
     <Style TargetType="{x:Type Window}" x:Key="CustomWindowCh">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="Background" Value="{DynamicResource WindowChromeBackgroundBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource CadetGrayBrush}"/>
         <Setter Property="BorderThickness" Value="{StaticResource WindowBorderThickness}"/>
         <Setter Property="WindowStyle" Value="None"/>
@@ -24,6 +24,7 @@
         <Setter Property="MinHeight" Value="400"/>
         <Setter Property="MinWidth" Value="500"/>
         <Setter Property="ResizeMode" Value="CanResize"/>
+        <Setter Property="WindowStyle" Value="None"/>
 
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -46,14 +47,15 @@
                         Background="{TemplateBinding Background}">
 
 
-                        <Grid Background="LightGray">
+                        <Grid Background="{TemplateBinding Background}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="32"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
                             <!-- Title bar -->
-                            <Grid x:Name="TitleBar">
+                            <Grid x:Name="TitleBar"
+                                  Background="{DynamicResource MaterialDesignPaper}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -66,9 +68,10 @@
                                        Source="/Images/Logo/favicon_plan.ico" Margin="2 2 0 2"/>
 
                                 <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"
-                                   FontWeight="SemiBold"
-                                   TextTrimming="CharacterEllipsis"
-                                   VerticalAlignment="Center"/>
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center"
+                                           Foreground="{DynamicResource MaterialDesignBody}"/>
 
 
                                 <Button
@@ -78,7 +81,9 @@
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                                     Style="{DynamicResource minButton}"
                                     >
-                                    <Path Margin="0 0 0 5" Stroke="#fff" StrokeThickness="1"
+                                    <Path Margin="0 0 0 5" 
+                                          Stroke="{DynamicResource MaterialDesignBody}" 
+                                          StrokeThickness="1"
                                           Data="M0,6 H10"
                                           RenderOptions.EdgeMode="Aliased"/>
                                 </Button>
@@ -93,7 +98,7 @@
                                     <Path Data="M2,0 L10,0 L10,8 M0,3 L8,3 M0,2 L8,2 L8,10 L0,10 Z"
                                           Width="10" Height="10"
                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}"
+                                          Stroke="{DynamicResource MaterialDesignBody}"
                                           StrokeThickness="1"
                                           RenderOptions.EdgeMode="Aliased"/>
                                 </Button>
@@ -109,7 +114,7 @@
                                         Data="M0,1 L10,1 L10,9 L0,9 Z"
                                         Width="10" Height="9"
                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}" 
+                                        Stroke="{DynamicResource MaterialDesignBody}"
                                         StrokeThickness="2"/>
                                 </Button>
 
@@ -122,7 +127,7 @@
                                     >
                                     <Path
                                         Width="10" Height="10"
-                                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}"                                         
+                                        Stroke="{DynamicResource MaterialDesignBody}"                                         
                                         StrokeThickness="1.5"
                                         Data="M0,0 L10,10 M0,10 L10,0"/>
                                 </Button>
