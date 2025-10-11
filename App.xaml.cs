@@ -88,7 +88,8 @@ namespace ChatApp
                 (_navigationStore,
                 () => new ChatViewModel
                     (_accountStore,
-                    CreateAccountNavigationService()),
+                    CreateAccountNavigationService(),
+                    CreateHomeNavigationService()),
                 CreateNavigationBarViewModel);
         }
 

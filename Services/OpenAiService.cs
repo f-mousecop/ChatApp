@@ -1,9 +1,6 @@
-﻿using OpenAI.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenAI;
+using OpenAI.Responses;
+
 
 namespace ChatApp.Services
 {
@@ -11,7 +8,6 @@ namespace ChatApp.Services
     {
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private readonly OpenAIResponseClient _responses;
-#pragma warning restore OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private readonly string _model;
 
@@ -21,13 +17,11 @@ namespace ChatApp.Services
             if (string.IsNullOrWhiteSpace(key))
                 throw new InvalidOperationException("Environment variable OPENAI_API_KEY is not set.");
 
-            // Pick your default model; override via ctor if desired
-            _model = string.IsNullOrWhiteSpace(model) ? "gpt-5" : model;
+            // Pick default model; override via ctor if desired
+            _model = string.IsNullOrWhiteSpace(model) ? "gpt-5-chat-latest" : model;
 
             // The SDK exposes a dedicated client for the Responses API
-#pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _responses = new OpenAIResponseClient(model: _model, apiKey: key);
-#pragma warning restore OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         public async Task<string> GetReplyAsync(string userText, CancellationToken ct = default)
@@ -35,7 +29,6 @@ namespace ChatApp.Services
             if (string.IsNullOrWhiteSpace(userText)) return string.Empty;
 
             // Simplest path pass a system instruction + user text
-#pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             OpenAIResponse response = await _responses.CreateResponseAsync(
                 userInputText: userText,
                 new ResponseCreationOptions
@@ -43,9 +36,42 @@ namespace ChatApp.Services
                     Instructions = "You are a helpful assistant."
                 },
                 ct);
-#pragma warning restore OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
             return (response.GetOutputText() ?? string.Empty).Trim();
+        }
+
+
+        /// <summary>
+        /// Streams assistant tokens. Invoks onToken(textDelta) for each delta
+        /// </summary>
+        /// <param name="userText"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task StreamReplyAsync(string userText, Action<string> onToken, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(userText)) return;
+
+            // Create a streaming response and iterate semantic streaming updates
+            await foreach (StreamingResponseUpdate update in _responses.CreateResponseStreamingAsync(
+                userInputText: userText,
+                new ResponseCreationOptions
+                {
+                    Instructions = "You are a helpful assistant."
+                },
+                ct))
+            {
+                // Text deltas arrive as StreamingResponseOutputTextDeltaUpdate
+                if (update is StreamingResponseOutputTextDeltaUpdate textDelta &&
+                    !string.IsNullOrEmpty(textDelta.Delta))
+                {
+                    onToken(textDelta.Delta);
+                }
+
+                // Options: watch for reasoning/status items:
+                // if (update is StreamingResponseOutputItemAddedUpdate item && item.Item is ReasoningResponseItem r) { ... }
+                // and stop on StreamingResponseCompletedUpdate for explicit completion
+            }
+#pragma warning restore OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
     }
 }

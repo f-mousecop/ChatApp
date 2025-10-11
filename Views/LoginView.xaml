@@ -65,7 +65,6 @@
                             />
 
                         <TextBox
-                            Name="userNameBox"
                             Height="28"
                             FontSize="{StaticResource FontSizeRegular}"
                             Foreground="#fff"
@@ -172,7 +171,6 @@
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
                         <Button
-                            x:Name="UserLogin"
                             Content="Login"
                             Command="{Binding LoginCommand}"
                             Height="40"
@@ -180,7 +178,6 @@
                             Margin="5">
                         </Button>
                         <Button
-                            x:Name="Quit"
                             Command="{Binding QuitCommand}"
                             Content="Quit"
                             Height="40"

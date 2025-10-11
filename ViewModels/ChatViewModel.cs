@@ -9,98 +9,186 @@ namespace ChatApp.ViewModels
 {
     public class ChatViewModel : BaseViewModel
     {
+        private readonly AccountStore _accountStore;
+        private readonly OpenAiService _openAiService = new();
+        private CancellationTokenSource? _runCts;
+
         // Initialize non-nullable fields to default values to fix CS8618
-        private string _username = string.Empty;
         private string _userMessage = string.Empty;
         private string _botMessage = string.Empty;
         private string _errorMessage = string.Empty;
+        private bool _busy;
 
-        public string UserName
-        {
-            get
-            {
-                return _username;
-            }
-            set
-            {
-                if (SetProperty(ref _username, value))
-                    ((RelayCommand)GetUserNameCommand).RaiseCanExecuteChanged();
-            }
-        }
+        public string? CurrentUserAccount => _accountStore.Username;
 
         public string UserMessage
         {
-            get { return _userMessage; }
+            get => _userMessage;
             set
             {
                 if (SetProperty(ref _userMessage, value))
-                    ((RelayCommand)GetUserMessageCommand).RaiseCanExecuteChanged();
+                {
+                    ((RelayCommand)SendMessageCommand).RaiseCanExecuteChanged();
+                    ((RelayCommand)SendStreamCommand).RaiseCanExecuteChanged(); // * For streaming later *
+                }
             }
         }
 
         public string BotMessage
         {
-            get { return _botMessage; }
+            get => _botMessage;
+            set => SetProperty(ref _botMessage, value);
+        }
+
+        public bool IsBusy
+        {
+            get => _busy;
             set
             {
-                if (SetProperty(ref _botMessage, value))
-                    ((RelayCommand)GetBotMessageCommand).RaiseCanExecuteChanged();
+                if (SetProperty(ref _busy, value))
+                {
+                    ((RelayCommand)SendMessageCommand).RaiseCanExecuteChanged();
+                    ((RelayCommand)SendStreamCommand).RaiseCanExecuteChanged(); // * For streaming later *
+                    ((RelayCommand)CancelCommand).RaiseCanExecuteChanged();     // * For streaming later *
+                }
             }
         }
 
         public string ErrorMessage
         {
-            get { return _errorMessage; }
-            set
-            {
-                if (SetProperty(ref _errorMessage, value))
-                    ((RelayCommand)GetErrorMessageCommand).RaiseCanExecuteChanged();
-            }
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
         }
 
         public ObservableCollection<string> Messages { get; set; }
 
 
-        public ICommand GetUserNameCommand { get; }
-        public ICommand GetUserMessageCommand { get; }
-        public ICommand GetBotMessageCommand { get; }
-        public ICommand GetErrorMessageCommand { get; }
-        public ICommand NavCommand { get; }
+
         public ICommand NavigateHomeCommand { get; }
         public ICommand NavigateAccountCommand { get; }
         public ICommand SendMessageCommand { get; }
+        public ICommand SendStreamCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
         // Initialize NavCommand in the constructor to fix CS8618
         public ChatViewModel(AccountStore accountStore,
-            INavigationService accountNavigationService)
+            INavigationService accountNavigationService,
+            INavigationService homeNavigationService)
         {
             //NavigationBarViewModel = navigationBarViewModel;
             Messages = new ObservableCollection<string>();
 
-            GetUserNameCommand = new RelayCommand(_ => { /* TODO */ });
-            GetUserMessageCommand = new RelayCommand(_ => { /* TODO */ });
-            GetBotMessageCommand = new RelayCommand(_ => { /* TODO */ });
-            GetErrorMessageCommand = new RelayCommand(_ => { /* TODO */ });
-
-            //NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
             NavigateAccountCommand = new NavigateCommand(accountNavigationService);
-            SendMessageCommand = new RelayCommand(_ => ExecuteSendMessageCommand());
+
+            /* Chat message commands */
+            // Send message (non-streaming)
+            SendMessageCommand = new RelayCommand(async _ => await SendMessageAsync(),
+                                _ => !IsBusy && !string.IsNullOrWhiteSpace(UserMessage));
+
+            // Send message (streaming)
+            SendStreamCommand = new RelayCommand(async _ => await SendStreamingAsync(),
+                                _ => !IsBusy && !string.IsNullOrWhiteSpace(UserMessage));
+
+            // Cancel message command
+            CancelCommand = new RelayCommand(_ => _runCts?.Cancel(), _ => IsBusy);
         }
 
-        private void ExecuteSendMessageCommand()
+
+
+        private async Task SendMessageAsync()
         {
+            var text = UserMessage;
+            if (string.IsNullOrWhiteSpace(text)) return;
 
-            string userInput = UserMessage.Trim();
-            if (!string.IsNullOrEmpty(userInput))
+            try
             {
-                Messages.Add($"You: {userInput}");
+                IsBusy = true;
+                AppendLine($"> You: {text}");
+                UserMessage = string.Empty;
 
-                Messages.Add($"Bot: {userInput}");
-
+                var reply = await _openAiService.GetReplyAsync(text);
+                AppendAssistant(reply);
             }
-            UserMessage = string.Empty;
+            catch (OperationCanceledException)
+            {
+                AppendLine("[Canceled]");
+            }
+            catch (Exception ex)
+            {
+                AppendLine($"[Error] {ex.Message}");
+            }
+            finally { IsBusy = false; }
+        }
+
+        private async Task SendStreamingAsync()
+        {
+            var text = UserMessage;
+            if (string.IsNullOrWhiteSpace(text)) return;
+
+            _runCts?.Cancel();
+            _runCts?.Dispose();
+            _runCts = new CancellationTokenSource();
+
+
+            try
+            {
+                IsBusy = true;
+                AppendLine($"> You: {text}");
+                UserMessage = string.Empty;
+
+                // Start assistant section header once
+                if (string.IsNullOrWhiteSpace(BotMessage))
+                    BotMessage = "Assistant: ";
+                else
+                    BotMessage += "Assistant: ";
+
+                await _openAiService.StreamReplyAsync(
+                    text,
+                    onToken: delta =>
+                    {
+                        // Streamed text delta arrives here (Responses API)
+                        BotMessage += delta;
+                    },
+                    ct: _runCts.Token
+                );
+
+                // Finish the assistant block with spacing
+                BotMessage += Environment.NewLine + Environment.NewLine;
+            }
+            catch (OperationCanceledException)
+            {
+                BotMessage += " [canceled] " + Environment.NewLine + Environment.NewLine;
+            }
+            catch (Exception ex)
+            {
+                AppendLine($"[Error] {ex.Message}");
+            }
+            finally { IsBusy = false; }
+        }
+
+        private void AppendAssistant(string reply)
+        {
+            if (string.IsNullOrWhiteSpace(reply))
+                AppendLine("Assistant: (no response)");
+            else
+                AppendLine($"Assistant: {reply}");
+        }
+
+        private void AppendLine(string v)
+        {
+            if (string.IsNullOrWhiteSpace(BotMessage))
+                BotMessage = v + Environment.NewLine + Environment.NewLine;
+            else
+                BotMessage += v + Environment.NewLine + Environment.NewLine;
+        }
+
+        public override void Dispose()
+        {
+            _runCts?.Cancel();
+            _runCts?.Dispose();
         }
     }
 }

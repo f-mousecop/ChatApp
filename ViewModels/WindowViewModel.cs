@@ -57,7 +57,7 @@ namespace ChatApp.ViewModels
                     return;
 
                 case AccountViewModel:
-                    ShellBackground = (Brush)Application.Current.FindResource("MaterialDesign.Brush.Primary.Foreground");
+                    ShellBackground = (Brush)Application.Current.FindResource("BackgroundDarkBrush");
                     return;
 
                 case ChatViewModel:
