@@ -24,8 +24,7 @@
 <img src="./Images/updated_ui.png" alt="Updated UI with drop menu" width="400">
 
 #### Implemented light/dark theme toggle button
-<img src="./Images/light_theme.png" alt="Light theme" width="300">
-<img src="./Images/dark_theme.png" alt="Dark theme" width="300">
+<img src="./Images/light_theme.png" alt="Light theme" width="300"> <img src="./Images/dark_theme.png" alt="Dark theme" width="300">
 
 ### Home Screen
 <img src="./Images/homeview_update.png" alt="Home Screen" width="400">
@@ -40,8 +39,7 @@
 - Updated account view with new Material Design theming
 - Avatar image zoom functionality when the rounded avatar is clicked
 
-<img src="./Images/account_view_update.png" alt="Login screen" width="300">
-<img src="./Images/avatar_zoom_account.png" alt="Avatar zoom" width="300">
+<img src="./Images/account_view_update.png" alt="Login screen" width="300"> <img src="./Images/avatar_zoom_account.png" alt="Avatar zoom" width="300">
 
 ---
 ### Home Screen While Logged In
