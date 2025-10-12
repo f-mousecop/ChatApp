@@ -26,15 +26,13 @@
                        FontSize="40"/>
 
 
-        <materialDesign:Card Grid.Row="1"
-                             Background="{DynamicResource MaterialDesignCardBackground}">
+        <materialDesign:Card Grid.Row="1">
             <DataGrid ItemsSource="{Binding Users}"
-                  SelectedItem="{Binding SelectedUser}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  CanUserAddRows="False"
-                  Margin="12"
-                  Grid.Row="1">
+                      SelectedItem="{Binding SelectedUser}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      Margin="5">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="SizeToCells"/>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>

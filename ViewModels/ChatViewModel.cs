@@ -1,8 +1,10 @@
 ﻿using ChatApp.Commands;
 using ChatApp.Services;
 using ChatApp.Stores;
+using ChatApp.Utils;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ChatApp.ViewModels
@@ -11,6 +13,7 @@ namespace ChatApp.ViewModels
     {
         private readonly AccountStore _accountStore;
         private readonly OpenAiService _openAiService = new();
+        private readonly MarkdownRenderer _markdownRenderer = new();
         private CancellationTokenSource? _runCts;
 
         // Initialize non-nullable fields to default values to fix CS8618
@@ -18,6 +21,7 @@ namespace ChatApp.ViewModels
         private string _botMessage = string.Empty;
         private string _errorMessage = string.Empty;
         private bool _busy;
+        private FlowDocument? _botMessageDocument;
 
         public string? CurrentUserAccount => _accountStore.Username;
 

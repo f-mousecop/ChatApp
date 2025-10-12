@@ -27,18 +27,20 @@
                        VerticalAlignment="Center"/>
 
 
-            <materialDesign:Card Grid.Row="1">
-                <ScrollViewer Margin="0 8"
+            <materialDesign:Card Grid.Row="1"
+                                 materialDesign:ElevationAssist.Elevation="Dp4">
+                <ScrollViewer 
                               VerticalScrollBarVisibility="Auto">
                     <TextBox Text="{Binding BotMessage}"
+                             Style="{DynamicResource MaterialDesignFilledTextBox}"
                              IsReadOnly="True"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
                              Padding="10"
-                             Style="{DynamicResource MaterialDesignFilledTextBox}"
                              FontSize="{StaticResource FontSizeSmall}"
                              FontFamily="{DynamicResource MaterialDesignFont}"
                              Foreground="{DynamicResource MaterialDesignBody}"
+                             materialDesign:TransitionAssist.DisableTransitions="True"
                              SelectionBrush="DodgerBlue"/>
                 </ScrollViewer>
             </materialDesign:Card>
@@ -59,6 +61,7 @@
                          materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
                          materialDesign:TextFieldAssist.UnderlineBrush="Black"
                          materialDesign:TextFieldAssist.TextBoxViewMargin="0 0 10 0"
+                         materialDesign:ElevationAssist.Elevation="Dp4"
                          CaretBrush="Black"
                          SelectionBrush="DodgerBlue"
                          VerticalContentAlignment="Top"
