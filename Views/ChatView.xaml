@@ -29,9 +29,17 @@
 
             <materialDesign:Card Grid.Row="1"
                                  materialDesign:ElevationAssist.Elevation="Dp4">
-                <ScrollViewer 
-                              VerticalScrollBarVisibility="Auto">
-                    <TextBox Text="{Binding BotMessage}"
+
+                <FlowDocumentScrollViewer 
+                    IsToolBarVisible="False"
+                    BorderThickness="0"
+                    TextOptions.TextFormattingMode="Display"
+                    TextOptions.TextHintingMode="Animated"
+                    Padding="10"
+                    FontFamily="{StaticResource MaterialDesignFont}"
+                    Document="{Binding BotMessageDocument}"/>
+
+                <!--<TextBox Text="{Binding BotMessage}"
                              Style="{DynamicResource MaterialDesignFilledTextBox}"
                              IsReadOnly="True"
                              TextWrapping="Wrap"
@@ -41,8 +49,8 @@
                              FontFamily="{DynamicResource MaterialDesignFont}"
                              Foreground="{DynamicResource MaterialDesignBody}"
                              materialDesign:TransitionAssist.DisableTransitions="True"
-                             SelectionBrush="DodgerBlue"/>
-                </ScrollViewer>
+                             SelectionBrush="DodgerBlue"/>-->
+
             </materialDesign:Card>
 
 

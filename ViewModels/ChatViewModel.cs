@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ChatApp.ViewModels
 {
@@ -22,6 +23,7 @@ namespace ChatApp.ViewModels
         private string _errorMessage = string.Empty;
         private bool _busy;
         private FlowDocument? _botMessageDocument;
+        private DispatcherTimer _renderDebounce;
 
         public string? CurrentUserAccount => _accountStore.Username;
 
@@ -41,7 +43,19 @@ namespace ChatApp.ViewModels
         public string BotMessage
         {
             get => _botMessage;
-            set => SetProperty(ref _botMessage, value);
+            set
+            {
+                if (SetProperty(ref _botMessage, value))
+                    DebounceRenderer();
+            }
+        }
+
+
+
+        public FlowDocument? BotMessageDocument
+        {
+            get => _botMessageDocument;
+            private set => SetProperty(ref _botMessageDocument, value);
         }
 
         public bool IsBusy
@@ -57,6 +71,8 @@ namespace ChatApp.ViewModels
                 }
             }
         }
+
+
 
         public string ErrorMessage
         {
@@ -171,6 +187,25 @@ namespace ChatApp.ViewModels
                 AppendLine($"[Error] {ex.Message}");
             }
             finally { IsBusy = false; }
+        }
+
+        // Throttle markdown rendering so that it doesn't render on each tick
+        private void DebounceRenderer()
+        {
+            if (_renderDebounce == null)
+            {
+                _renderDebounce ??= new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
+                _renderDebounce.Tick += OnRenderTick;
+            }
+
+            _renderDebounce.Stop();
+            _renderDebounce.Start();
+        }
+
+        private void OnRenderTick(object? sender, EventArgs e)
+        {
+            _renderDebounce.Stop();
+            BotMessageDocument = _markdownRenderer.Render(_botMessage);
         }
 
         private void AppendAssistant(string reply)
