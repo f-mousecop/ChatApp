@@ -61,5 +61,10 @@
     <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Dark" Color="{StaticResource Secondary700}"/>
     <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Dark.Foreground" Color="{StaticResource Secondary700Foreground}"/>
 
+    <SolidColorBrush x:Key="FwBrushError" Color="DarkRed"/>
+    <SolidColorBrush x:Key="FwBrushWarning" Color="#ff9966"/>
+    <SolidColorBrush x:Key="FwBrushInfo" Color="DimGray"/>
+    <SolidColorBrush x:Key="FwBrushSuccess" Color="ForestGreen"/>
+
 
 </ResourceDictionary>

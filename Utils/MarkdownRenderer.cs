@@ -20,7 +20,7 @@ namespace ChatApp.Utils
         {
             _md = new Markdown
             {
-
+                CodeStyle = (Style)Application.Current.FindResource("InlineCodeStyle")
             };
         }
 

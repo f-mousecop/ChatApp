@@ -16,6 +16,11 @@
         Title="Chat App" Height="700" Width="800"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource CustomWindowCh}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         utils:DwmShadow.Enable="True">
 
     <Window.CommandBindings>
@@ -42,20 +47,26 @@
     </Window.Resources>
 
 
-    <Border Background="{Binding ShellBackground}">
-        <Grid>
-            <custom:Modal 
-                Panel.ZIndex="100" 
-                IsOpen="{Binding IsModalOpen}"
-                >
-                <ContentControl Content="{Binding CurrentModalViewModel}"/>
-            </custom:Modal>
+    <materialDesign:DialogHost SnackbarMessageQueue="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=MessageQueue}">
+        <Border Background="{Binding ShellBackground}">
+            <Grid>
+                <custom:Modal 
+                    Panel.ZIndex="100" 
+                    IsOpen="{Binding IsModalOpen}">
+                    <ContentControl Content="{Binding CurrentModalViewModel}"/>
+                </custom:Modal>
 
-            <ContentControl
-                
-                x:Name="main"
-                Content="{Binding CurrentViewModel}">
-            </ContentControl>
-        </Grid>
-    </Border>
+                <ContentControl x:Name="main"
+                                Content="{Binding CurrentViewModel}">
+                </ContentControl>
+                <materialDesign:Snackbar 
+                    x:Name="AppSnackbar"
+                    MessageQueue="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=MessageQueue}"
+                    Message="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=Message, Mode=TwoWay}"
+                    Style="{DynamicResource AppSnackbar}"
+                    Panel.ZIndex="100"/>
+
+            </Grid>
+        </Border>
+    </materialDesign:DialogHost>
 </Window>

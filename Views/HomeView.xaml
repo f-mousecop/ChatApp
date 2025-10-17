@@ -64,34 +64,21 @@
                 HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <Button Margin="5" 
-                    Background="{StaticResource CadetGrayBrush}"
+            <Button Margin="5"
                     Width="100"
                     Padding="0"
                     Height="50"
                     Command="{Binding NavigateAccountCommand}"
                     Content="View Account"
                     Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Button Margin="5" 
-                        Background="{StaticResource CadetGrayBrush}"
+            <Button Margin="5"
                     Width="100"
                     Height="50"
                     Command="{Binding NavigateChatCommand}"
                     Content="Chat Now"
                     Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
-        <!--<Button 
-                Grid.Row="2"
-                HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-                Style="{StaticResource regularButtons}"
-                Background="{StaticResource CadetGrayBrush}"
-                Width="100"
-                Height="50"
-                Command="{Binding NavigateLoginCommand}"
-                Content="Login"
-                Margin="5"
-                Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+
         <Button Grid.Row="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

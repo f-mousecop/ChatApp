@@ -60,7 +60,6 @@
 
     <Grid Name="mainGrid"
           Focusable="True"
-          Background="Transparent"
           Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

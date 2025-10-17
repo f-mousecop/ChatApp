@@ -45,8 +45,8 @@ namespace ChatApp.ViewModels
             get => _botMessage;
             set
             {
-                if (SetProperty(ref _botMessage, value))
-                    DebounceRenderer();
+                SetProperty(ref _botMessage, value);
+                //DebounceRenderer();
             }
         }
 
@@ -126,7 +126,7 @@ namespace ChatApp.ViewModels
             try
             {
                 IsBusy = true;
-                AppendLine($"> You: {text}");
+                AppendLine($"p>.**You:** {text}");
                 UserMessage = string.Empty;
 
                 var reply = await _openAiService.GetReplyAsync(text);
@@ -156,7 +156,7 @@ namespace ChatApp.ViewModels
             try
             {
                 IsBusy = true;
-                AppendLine($"> You: {text}");
+                AppendLine($"p>.**You:** {text}");
                 UserMessage = string.Empty;
 
                 // Start assistant section header once
@@ -188,6 +188,7 @@ namespace ChatApp.ViewModels
             }
             finally { IsBusy = false; }
         }
+
 
         // Throttle markdown rendering so that it doesn't render on each tick
         private void DebounceRenderer()

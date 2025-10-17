@@ -6,9 +6,13 @@
              xmlns:local="clr-namespace:ChatApp.Views"
              xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components"
              d:DataContext="{d:DesignInstance Type=vm:ChatViewModel}"
+             xmlns:utils="clr-namespace:ChatApp.Utils"
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"            
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
 
     <Border Margin="5" Padding="20 0 20 0">
         <Grid>
@@ -19,8 +23,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" 
-                       Style="{DynamicResource MaterialDesignHeadline3TextBlock}" 
-                       FontFamily="{DynamicResource MaterialDesignFont}"
+                       Style="{DynamicResource MaterialDesignHeadline3TextBlock}"
                        Text="Chat" 
                        Margin="0 0 0 10"
                        HorizontalAlignment="Center"
@@ -30,26 +33,11 @@
             <materialDesign:Card Grid.Row="1"
                                  materialDesign:ElevationAssist.Elevation="Dp4">
 
-                <FlowDocumentScrollViewer 
-                    IsToolBarVisible="False"
-                    BorderThickness="0"
-                    TextOptions.TextFormattingMode="Display"
-                    TextOptions.TextHintingMode="Animated"
-                    Padding="10"
-                    FontFamily="{StaticResource MaterialDesignFont}"
-                    Document="{Binding BotMessageDocument}"/>
 
-                <!--<TextBox Text="{Binding BotMessage}"
-                             Style="{DynamicResource MaterialDesignFilledTextBox}"
-                             IsReadOnly="True"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             Padding="10"
-                             FontSize="{StaticResource FontSizeSmall}"
-                             FontFamily="{DynamicResource MaterialDesignFont}"
-                             Foreground="{DynamicResource MaterialDesignBody}"
-                             materialDesign:TransitionAssist.DisableTransitions="True"
-                             SelectionBrush="DodgerBlue"/>-->
+                <mdxam:MarkdownScrollViewer
+                    Padding="10"
+                    materialDesign:TextFieldAssist.TextBoxViewMargin="10 10 20 10"
+                    Markdown="{Binding BotMessage}"/>
 
             </materialDesign:Card>
 

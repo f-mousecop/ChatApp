@@ -22,7 +22,6 @@ namespace ChatApp.ViewModels
 
         public BaseViewModel CurrentModalViewModel => _modalStore.CurrentViewModel;
         public bool IsModalOpen => _modalStore.IsOpen;
-        public bool ControlsEnabled { get; }
 
         public WindowViewModel(NavigationStore navigationStore, ModalNavigationStore modalStore)
         {

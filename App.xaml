@@ -22,6 +22,8 @@
                 <ResourceDictionary Source="/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="/Styles/CustomWindowChrome.xaml"/>
                 <ResourceDictionary Source="/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="/Styles/RichTBStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/SnackbarStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

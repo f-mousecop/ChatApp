@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ChatApp.Views"
              xmlns:vm="clr-namespace:ChatApp.ViewModels" 
              xmlns:customControls="clr-namespace:ChatApp.CustomControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              d:DataContext="{d:DesignInstance Type=vm:SignUpViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -27,61 +28,61 @@
                         Width="350"
                         Margin="20">
 
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel>
-                                <TextBlock Text="Create an Account" 
-                                   FontSize="40"/>
-                                <Line Stroke="Black" StrokeThickness="2" X1="400" Margin="0,0,0,10"/>
-                                <Label Content="First Name:" />
-                                <TextBox Margin="0,0,0,5" Padding="2"
+
+                        <StackPanel>
+                            <TextBlock Text="Create an Account" 
+                                   FontSize="{StaticResource FontSizeLarge}"/>
+                            <Line Stroke="Black" StrokeThickness="2" X1="400" Margin="0,0,0,10"/>
+                            <Label Content="First Name:" />
+                            <TextBox Margin="0,0,0,5" Padding="2"
                                          MaxLength="34"
                                          Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Last Name:" />
-                                <TextBox Margin="0,0,0,5" Padding="2"
+                            <Label Content="Last Name:" />
+                            <TextBox Margin="0,0,0,5" Padding="2"
                                          MaxLength="34"
                                          Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Username:" />
-                                <TextBox Margin="0,0,0,5" Padding="2"
+                            <Label Content="Username:" />
+                            <TextBox Margin="0,0,0,5" Padding="2"
                                          MaxLength="34"
                                          Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Email:" />
-                                <TextBox Margin="0,0,0,5" Padding="2"
+                            <Label Content="Email:" />
+                            <TextBox Margin="0,0,0,5" Padding="2"
                                          MaxLength="34"
                                          Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Mobile Number:" />
-                                <TextBox Margin="0,0,0,5" Padding="2"
+                            <Label Content="Mobile Number:" />
+                            <TextBox Margin="0,0,0,5" Padding="2"
                                          MaxLength="34"
                                          Text="{Binding MobileNumber, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <Label Content="Password:" />
+                            <Label Content="Password:" />
 
-                                <customControls:SignupBindablePassBox
+                            <customControls:SignupBindablePassBox
                                     Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    PasswordsMatch="{Binding PasswordsMatch, Mode=OneWay}">
-                                </customControls:SignupBindablePassBox>
+                                PasswordsMatch="{Binding PasswordsMatch}">
+                            </customControls:SignupBindablePassBox>
 
-                                <Label Content="Confirm Password:" />
-                                <customControls:SignupBindablePassBox            
+                            <Label Content="Confirm Password:" />
+                            <customControls:SignupBindablePassBox  
                                     Password="{Binding ConfirmPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    PasswordsMatch="{Binding PasswordsMatch, Mode=OneWay}">
-                                </customControls:SignupBindablePassBox>
+                                PasswordsMatch="{Binding PasswordsMatch}">
+                            </customControls:SignupBindablePassBox>
 
-                                <TextBlock Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"
                                            FontSize="{StaticResource FontSizeSmall}"/>
 
-                                <WrapPanel HorizontalAlignment="Center">
-                                    <Button
+                            <WrapPanel HorizontalAlignment="Center">
+                                <Button
                                         x:Name="UserSignup"
                                         Content="Create Account" Margin="10" 
-                                        Width="100" Height="40" 
+                                        Width="130" Height="40" 
                                         Command="{Binding SubmitCommand}"/>
-                                    <Button Name="GoBack" Content="Go Back" 
-                                        Margin="10" Width="100" 
+                                <Button Name="GoBack" Content="Go Back" 
+                                        Margin="10" Width="130" 
                                         Height="40" 
                                         Command="{Binding NavigateBackCommand}"/>
-                                </WrapPanel>
-                            </StackPanel>
-                        </ScrollViewer>
+                            </WrapPanel>
+                        </StackPanel>
+
                     </Border>
                 </StackPanel>
             </ScrollViewer>

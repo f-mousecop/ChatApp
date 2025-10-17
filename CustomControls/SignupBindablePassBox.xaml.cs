@@ -22,7 +22,11 @@ namespace ChatApp.CustomControls
     public partial class SignupBindablePassBox : UserControl
     {
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(SecureString), typeof(SignupBindablePassBox));
+            DependencyProperty.Register(
+                "Password",
+                typeof(SecureString),
+                typeof(SignupBindablePassBox),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public SecureString Password
         {
@@ -45,6 +49,7 @@ namespace ChatApp.CustomControls
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             Password = signupPasswordBox.SecurePassword;
+            ApplyValidation(PasswordsMatch);
         }
 
         // DP to control borderbrush whether passwords match
@@ -55,7 +60,34 @@ namespace ChatApp.CustomControls
         }
 
         public static readonly DependencyProperty PasswordsMatchProperty =
-            DependencyProperty.Register(nameof(PasswordsMatch), typeof(bool), typeof(SignupBindablePassBox),
-                new PropertyMetadata(false));
+            DependencyProperty.Register(
+                nameof(PasswordsMatch),
+                typeof(bool),
+                typeof(SignupBindablePassBox),
+                new PropertyMetadata(false, OnPassWordsMatchChanged));
+
+        private static void OnPassWordsMatchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (SignupBindablePassBox)d;
+            ctrl.ApplyValidation((bool)e.NewValue);
+        }
+
+        private void ApplyValidation(bool matches)
+        {
+            // Get binding expression for the Password DP
+            var be = GetBindingExpression(PasswordProperty);
+            if (be == null) return;
+
+            if (matches)
+            {
+                Validation.ClearInvalid(be);
+            }
+            else
+            {
+                // Add/replace validation error for ValidationAssist
+                var error = new ValidationError(new DataErrorValidationRule(), be, "Passwords do not match", null);
+                Validation.MarkInvalid(be, error);
+            }
+        }
     }
 }

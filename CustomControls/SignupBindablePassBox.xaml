@@ -7,48 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <Style TargetType="PasswordBox" x:Key="PasswordValidationStyle">
-            <Setter Property="BorderBrush" Value="#ffabadb3"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="#FF000000"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="MaxLength" Value="36"/>
-            <Setter Property="Background" Value="#FFFFFF"/>
-        </Style>
 
-        <Style TargetType="Border" x:Key="PasswordValidation">
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType=PasswordBox}}"/>
-            <Style.Triggers>
-                <DataTrigger Value="True">
-                    <DataTrigger.Binding>
-                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}"
-                                 Path="PasswordsMatch"/>
-                    </DataTrigger.Binding>
-                    <Setter Property="BorderBrush" Value="Green"/>
-                </DataTrigger>
-                <DataTrigger Value="False">
-                    <DataTrigger.Binding>
-                        <Binding RelativeSource="{RelativeSource AncestorType=UserControl}"
-                                 Path="PasswordsMatch"/>
-                    </DataTrigger.Binding>
-                    <Setter Property="BorderBrush" Value="Red"/>
-                </DataTrigger>
-            </Style.Triggers>
 
-        </Style>
-    </UserControl.Resources>
-
-    <Border CornerRadius="3" Style="{StaticResource PasswordValidation}">
+    <Border CornerRadius="3">
         <PasswordBox
             x:Name="signupPasswordBox"
-            Height="21"
-            Padding="1 0 0 1"
-            Style="{StaticResource PasswordValidationStyle}">
+            Height="22"
+            Padding="2"
+            MaxLength="34">
         </PasswordBox>
     </Border>
 </UserControl>

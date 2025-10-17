@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.Views" 
              xmlns:customControls="clr-namespace:ChatApp.CustomControls"
-             xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm="clr-namespace:ChatApp.ViewModels" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:utilities="clr-namespace:ChatApp.Utils.SnackBarUtils"
              d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -19,7 +21,7 @@
             <Border HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="{StaticResource CadetGrayBrush}"
-                    BorderThickness="2"
+                    BorderThickness="1"
                     CornerRadius="4">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -58,13 +60,14 @@
 
                     <StackPanel Grid.Row="1" Margin="15">
                         <TextBlock
-                            FontSize="{StaticResource FontSizeRegular}"
-                            Foreground="{StaticResource CadetGrayBrush}"
                             Text="Username:"
+                            Foreground="#fff"
+                            FontSize="{StaticResource FontSizeRegular}"
                             Margin="0 15 0 0"
                             />
 
                         <TextBox
+                            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                             Height="28"
                             FontSize="{StaticResource FontSizeRegular}"
                             Foreground="#fff"
@@ -73,8 +76,7 @@
                             MaxLength="36"   
                             Margin="0 5 22 0"
                             Padding="30 0 0 0"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}">
+                            VerticalContentAlignment="Center">
                             <TextBox.Background>
                                 <ImageBrush ImageSource="/Images/loginico.png"
                                             Stretch="None"
@@ -86,7 +88,7 @@
                     <StackPanel Grid.Row="2" Margin="15">
                         <TextBlock
                             FontSize="{StaticResource FontSizeRegular}"
-                            Foreground="{StaticResource CadetGrayBrush}"
+                            Foreground="#fff"
                             Text="Password:"
                             Margin="0 15 0 0"/>
 
@@ -131,40 +133,29 @@
                                     </Style>
                                 </ToggleButton.Style>
                             </ToggleButton>
-
                         </Grid>
 
 
                         <WrapPanel HorizontalAlignment="Center" Margin="0,15,10,0">
-                            <TextBlock Padding="0,0,5,0" 
-                                       HorizontalAlignment="Left" 
-                                       FontSize="14" 
+                            <TextBlock Text="Don't have an account?" 
+                                       Padding="0,0,5,0" 
+                                       HorizontalAlignment="Left"
                                        Foreground="LightGray">
-                                    Don't have an account? 
-                                <Hyperlink Command="{Binding NavigateSignUpCommand}"
-                                           >Sign up</Hyperlink>
                             </TextBlock>
-
-                            <TextBlock Text="||" FontSize="14" Foreground="LightGray"/>
-                            <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right" FontSize="14">
+                            <TextBlock Foreground="LightGray" Padding="0 0 5 0">
+                                <Hyperlink Command="{Binding NavigateSignUpCommand}">Create Account</Hyperlink>
+                            </TextBlock>
+                            <materialDesign:PackIcon Kind="BorderVertical"
+                                                     Height="15"
+                                                     Width="2"
+                                                     BorderBrush="LightGray"
+                                                     BorderThickness="1"/>
+                            <TextBlock Padding="5,0,0,0" HorizontalAlignment="Right">
                             <Hyperlink Command="{Binding NavigateToForgotPassCommand}">Forgot Password?</Hyperlink>
                             </TextBlock>
-
                         </WrapPanel>
-                        <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Foreground="#d7596d"
-                                 Background="Transparent"
-                                 Visibility="{Binding ShowErrorMessage, Converter={StaticResource BoolToVisConverter}}"
-                                 HorizontalAlignment="Center"
-                                 FontSize="{StaticResource FontSizeRegular}"
-                                 FontWeight="Medium"
-                                 BorderBrush="Transparent"
-                                 IsReadOnly="True"
-                                 Focusable="False"
-                                 BorderThickness="0"
-                                 Margin="10"
-                                 TextWrapping="Wrap"/>
                     </StackPanel>
+
                     <StackPanel
                         Grid.Row="3"
                         Margin="0,35"

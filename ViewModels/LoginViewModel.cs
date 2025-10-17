@@ -5,6 +5,7 @@ using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.Utils;
+using MaterialDesignThemes.Wpf;
 using System.Diagnostics;
 using System.Net;
 using System.Security;
@@ -23,6 +24,8 @@ namespace ChatApp.ViewModels
         private string _username = string.Empty;
         private SecureString _password;
         private string _errorMessage = string.Empty;
+
+        public SnackbarManager Snackbar { get; }
 
         public bool ShowErrorMessage => !string.IsNullOrEmpty(_errorMessage);
         public bool IsAdmin => _accountStore.IsAdmin;
@@ -70,6 +73,13 @@ namespace ChatApp.ViewModels
             }
         }
 
+        //private SnackbarMessageQueue _messageQueue;
+        //public SnackbarMessageQueue MessageQueue
+        //{
+        //    get => _messageQueue;
+        //    set => SetProperty(ref _messageQueue, value);
+        //}
+
 
         // Commands
         public ICommand ApplyThemeCommand { get; }
@@ -97,6 +107,10 @@ namespace ChatApp.ViewModels
             _userDestination = userDestination;
             _adminDestination = adminDestination;
             _userRepository = new UserRepository();
+
+            var queue = new SnackbarMessageQueue();
+
+            Snackbar = new SnackbarManager(queue);
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
             CloseModalCommand = new RelayCommand(_ => _closeModalService.Navigate());
@@ -128,6 +142,8 @@ namespace ChatApp.ViewModels
                 if (!isValidUser)
                 {
                     ErrorMessage = "Invalid username or password.";
+                    SnackbarManager.Instance.Enqueue(ErrorMessage, SnackbarManager.MessageToSnackLevel.Error,
+                        duration: TimeSpan.FromSeconds(10));
                     return;
                 }
 
@@ -156,6 +172,9 @@ namespace ChatApp.ViewModels
 
                 OnPropertyChanged(nameof(IsAdmin));
 
+                SnackbarManager.Instance.Enqueue($"Login Success, welcome, {Username}", SnackbarManager.MessageToSnackLevel.Success,
+                    duration: TimeSpan.FromSeconds(5));
+
                 _closeModalService.Navigate();
 
                 if (_accountStore.IsAdmin)
@@ -172,16 +191,21 @@ namespace ChatApp.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                SnackbarManager.Instance.Enqueue(e.Message, SnackbarManager.MessageToSnackLevel.Error,
+                        duration: TimeSpan.FromSeconds(10));
                 ErrorMessage = e.Message;
             }
 
 
         }
 
+
+        /* THIS IS WHERE I WANT TO TEST THE NEW SNACKBAR MANAGER */
         private void ExecuteRecoverPassCommand(string username, string email)
         {
-            MessageBox.Show("Need to implement", "Implement", MessageBoxButton.OK, MessageBoxImage.Hand);
+            SnackbarManager.Instance.Enqueue("Testing snackbar", SnackbarManager.MessageToSnackLevel.Success,
+                        duration: TimeSpan.FromSeconds(10), true);
+            return;
         }
     }
 }

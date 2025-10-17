@@ -103,8 +103,7 @@
 
         <StackPanel Grid.Column="3"
                     Orientation="Horizontal">
-            <materialDesign:PopupBox IsEnabled="{Binding ControlsEnabled, RelativeSource={RelativeSource FindAncestor,
-                AncestorType=Window}}" StaysOpen="True"
+            <materialDesign:PopupBox IsEnabled="True" StaysOpen="True"
                                       PlacementMode="BottomAndAlignRightEdges">
                 <Grid Width="200" Margin="8 8 8 8">
                     <Grid.Resources>
