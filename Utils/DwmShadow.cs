@@ -40,10 +40,6 @@ namespace ChatApp.Utils
             {
                 window.SourceInitialized -= Win_SourceInitialized;
                 Apply(window);
-
-                // Debug check
-                //bool layered = HwndDebug.IsLayered(window);
-                //Debug.WriteLine($"[DWM] {window.Title} layered? {layered}");
             }
         }
 

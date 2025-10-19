@@ -15,13 +15,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+        <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"
+                             Background="{DynamicResource MaterialDesignPaper}"/>
 
         <ContentControl 
             Grid.Row="1" 
             MaxWidth="1000"
             Margin="10"
-            Content="{Binding ContentViewModel}"/>
+            Content="{Binding ContentViewModel}"
+            Focusable="False"/>
 
     </Grid>
 </UserControl>

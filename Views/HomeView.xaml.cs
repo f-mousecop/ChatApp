@@ -24,15 +24,6 @@ namespace ChatApp.Views
         public HomeView()
         {
             InitializeComponent();
-            DispatcherTimer tmr = new DispatcherTimer();
-            tmr.Interval = TimeSpan.Zero;
-            tmr.Tick += Tmr_Tick;
-            tmr.Start();
-        }
-
-        private void Tmr_Tick(object? sender, EventArgs e)
-        {
-            curr_Date_Time.Text = DateTime.UtcNow.ToLocalTime().ToString();
         }
     }
 }

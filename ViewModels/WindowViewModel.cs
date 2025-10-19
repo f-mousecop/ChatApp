@@ -1,5 +1,6 @@
 ﻿using ChatApp.Models;
 using ChatApp.Stores;
+using MaterialDesignThemes.Wpf;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
@@ -55,11 +56,11 @@ namespace ChatApp.ViewModels
                     return;
 
                 case AccountViewModel:
-                    ShellBackground = (Brush)Application.Current.FindResource("ForegroundLightBrush");
+                    ShellBackground = (Brush)Application.Current.FindResource("BackgroundDarkBrush");
                     return;
 
                 case ChatViewModel:
-                    ShellBackground = (Brush)Application.Current.FindResource("TeaGreenBrush");
+                    ShellBackground = (Brush)Application.Current.FindResource("CadetGrayBrush");
                     return;
 
                 case SignUpViewModel:

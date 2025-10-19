@@ -1,22 +1,51 @@
-﻿using System.Windows;
+﻿using ChatApp.ViewModels;
+using MaterialDesignThemes.Wpf;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ChatApp.Utils
 {
-    public static class ThemeService
+    public class ThemeService : BaseViewModel
     {
-        public const string BackgroundKey = "WindowChromeBackgroundBrush";
-        public static void SetWindowTheme(Brush brush, Window? window = null)
+        private bool _isDarkTheme;
+        public bool IsDarkTheme
         {
-            var target = window ?? Application.Current.MainWindow;
-            if (target != null) return;
-
-            if (!target.Dispatcher.CheckAccess())
+            get => _isDarkTheme;
+            set
             {
-                target.Dispatcher.Invoke(() => SetWindowTheme(brush, target));
-                return;
+                if (SetProperty(ref _isDarkTheme, value))
+                {
+                    ModifyTheme(theme => theme.SetBaseTheme(value ? BaseTheme.Dark : BaseTheme.Light));
+                }
             }
-            target.Resources[BackgroundKey] = brush;
+        }
+
+
+
+        public ThemeService()
+        {
+            var palette = new PaletteHelper();
+            Theme theme = palette.GetTheme();
+
+            IsDarkTheme = theme.GetBaseTheme() == BaseTheme.Dark;
+
+            if (palette.GetThemeManager() is { } themeManager)
+            {
+                themeManager.ThemeChanged += (_, e) =>
+                {
+                    IsDarkTheme = e.NewTheme?.GetBaseTheme() == BaseTheme.Dark;
+                };
+            }
+        }
+
+        private static void ModifyTheme(Action<Theme> modificationAction)
+        {
+            var palette = new PaletteHelper();
+            Theme theme = palette.GetTheme();
+
+            modificationAction?.Invoke(theme);
+
+            palette.SetTheme(theme);
         }
     }
 }

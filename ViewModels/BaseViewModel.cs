@@ -8,7 +8,7 @@ namespace ChatApp.ViewModels
     /// </summary>
 
     //[ImplementPropertyChanged]
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged, IDisposable
     {
         /// <summary>
         /// The event that is fired when any child property changes its value

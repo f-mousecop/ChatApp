@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.Components"
-             xmlns:vm="clr-namespace:ChatApp.ViewModels"
+             xmlns:vm="clr-namespace:ChatApp.ViewModels" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=vm:NavigationBarViewModel, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d" 
-             Background="{StaticResource CadetGrayBrush}"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="5 0 5 0" MaxWidth="1000">
+    <Grid MaxWidth="1000"
+          Background="{DynamicResource MaterialDesignBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -24,80 +25,146 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Column="0" Background="Transparent"
+        <Menu Grid.Column="0"
               VerticalAlignment="Center">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Home" Command="{Binding NavigateHomeCommand}"/>
-                <MenuItem Header="_Account" Command="{Binding NavigateAccountCommand}"
-                          Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"/>
-                <MenuItem Header="_Admin Panel" Command="{Binding NavigateAdminPanelCommand}"
+            <MenuItem Header="_File" ToolTip="File">
+                <MenuItem Header="_Home" 
+                          ToolTip="Home"
+                          Command="{Binding NavigateHomeCommand}"/>
+                <MenuItem Header="_Account"
+                          ToolTip="Account"
+                          Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}">
+                    <MenuItem Header="_Overview" 
+                              ToolTip="Overview"
+                              Command="{Binding NavigateAccountCommand}"/>
+                    <MenuItem Header="_Logout" 
+                              ToolTip="Logout"
+                              Command="{Binding NavigateLogoutCommand}"/>
+                </MenuItem>
+                <MenuItem Header="_Close"
+                          ToolTip="Close"
+                          Command="SystemCommands.CloseWindowCommand"/>
+                <MenuItem Header="Admin _Panel" 
+                          ToolTip="Admin Panel"
+                          Command="{Binding NavigateAdminPanelCommand}"
                           Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisConverter}}"/>
             </MenuItem>
         </Menu>
 
+        <Line Y1="5" Y2="45"
+              Visibility="Visible"
+              Stroke="{DynamicResource MaterialDesignBody}" StrokeThickness="1"
+              Grid.Column="1"/>
+
         <TextBlock 
             Grid.Column="1" 
-            FontSize="{StaticResource FontSizeRegular}"
-            Margin="5"
+            FontWeight="Bold"
+            Padding="16 0 16 0"
             VerticalAlignment="Center"
+            Style="{DynamicResource MaterialDesignHeadlineSmallTextBlock}"
             Text="{Binding CurrentUserAccount, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-        <WrapPanel Grid.Column="2" Margin="0 0 0 10">
-            <Button 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            x:Name="homeButton"
-            Command="{Binding NavigateHomeCommand}"
-            Margin="15 10 0 0"
-            Width="80"
-            Height="30"
-            Style="{StaticResource regularButtons}"
-            Content="Home" />
 
-            <Button 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Command="{Binding NavigateChatCommand}"
-            Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-            Margin="15 10 0 0"
-            Width="80"
-                Height="30"
-            Style="{StaticResource regularButtons}"
-            Content="Chat" />
-            <Button 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Command="{Binding NavigateAccountCommand}"
-            Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-            Margin="15 10 0 0"
-            Width="80"
-                Height="30"
-            Style="{StaticResource regularButtons}"
-            Content="Account" />
+        <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0 0 0 10">
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    x:Name="homeButton"
+                    Command="{Binding NavigateHomeCommand}"
+                    Margin="15 10 0 0"
+                    Width="80"
+                    Height="30"
+                    Content="Home" 
+                    ToolTip="Home"/>
 
-            <Button
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Command="{Binding NavigateLoginCommand}"
-                Margin="15 10 0 0"
-                Width="80"
-                Height="30"
-                Style="{StaticResource regularButtons}"
-                Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-                Content="Login"/>
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding NavigateChatCommand}"
+                    Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
+                    Margin="15 10 0 0"
+                    Width="80"
+                    Height="30"
+                    Content="Chat"
+                    ToolTip="Chat"/>
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding NavigateAccountCommand}"
+                    Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
+                    Margin="15 10 0 0"
+                    Width="80"
+                    Height="30"
+                    Padding="0"
+                    Content="Account" 
+                    ToolTip="Account"/>
 
-            <Button 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Command="{Binding NavigateLogoutCommand}"
-            Margin="15 10 0 0"
-            Width="80"
-                Height="30"
-            Style="{StaticResource regularButtons}"
-            Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-            Content="Logout" />
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding NavigateLoginCommand}"
+                    Margin="15 10 0 0"
+                    Width="80"
+                    Height="30"
+                    Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BoolToVisConverter}}"
+                    Content="Login"
+                    ToolTip="Login"/>
 
-        </WrapPanel>
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding NavigateLogoutCommand}"
+                    Margin="15 10 0 0"
+                    Width="80"
+                    Height="30"
+                    Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
+                    Content="Logout"
+                    ToolTip="Logout"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3"
+                    Orientation="Horizontal">
+            <materialDesign:PopupBox IsEnabled="True" StaysOpen="True"
+                                      PlacementMode="BottomAndAlignRightEdges"
+                                     ToolTip="Change Theme">
+                <Grid Width="200" Margin="8 8 8 8">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" 
+                               Grid.Row="0" 
+                               Margin="8 8 8 16"
+                               Grid.ColumnSpan="2"
+                               Text="Theme"
+                               Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <Separator Grid.Row="0"
+                               Grid.ColumnSpan="3"
+                               VerticalAlignment="Bottom"/>
+
+                    <TextBlock Grid.Column="0" 
+                               Grid.Row="1"
+                               Text="Light"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+
+                    <ToggleButton Grid.Column="1" 
+                                  Grid.Row="1"
+                                  ToolTip="Change Theme"
+                                  Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                  IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Column="2" 
+                               Grid.Row="1"
+                               Text="Dark"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                </Grid>
+            </materialDesign:PopupBox>
+        </StackPanel>
     </Grid>
 </UserControl>

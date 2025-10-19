@@ -5,6 +5,7 @@ using ChatApp.Repositories;
 using ChatApp.Services;
 using ChatApp.Stores;
 using ChatApp.Utils;
+using MaterialDesignThemes.Wpf;
 using System.Diagnostics;
 using System.Net;
 using System.Security;
@@ -24,6 +25,8 @@ namespace ChatApp.ViewModels
         private SecureString _password;
         private string _errorMessage = string.Empty;
 
+        public SnackbarManager Snackbar { get; }
+
         public bool ShowErrorMessage => !string.IsNullOrEmpty(_errorMessage);
         public bool IsAdmin => _accountStore.IsAdmin;
 
@@ -42,7 +45,7 @@ namespace ChatApp.ViewModels
 
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (SetProperty(ref _username, value))
@@ -69,6 +72,13 @@ namespace ChatApp.ViewModels
                     OnPropertyChanged(nameof(ShowErrorMessage));
             }
         }
+
+        //private SnackbarMessageQueue _messageQueue;
+        //public SnackbarMessageQueue MessageQueue
+        //{
+        //    get => _messageQueue;
+        //    set => SetProperty(ref _messageQueue, value);
+        //}
 
 
         // Commands
@@ -97,6 +107,10 @@ namespace ChatApp.ViewModels
             _userDestination = userDestination;
             _adminDestination = adminDestination;
             _userRepository = new UserRepository();
+
+            var queue = new SnackbarMessageQueue();
+
+            Snackbar = new SnackbarManager(queue);
 
             LoginCommand = new RelayCommand(async _ => await ExecuteLoginCommand(), _ => CanExecuteLoginCommand());
             CloseModalCommand = new RelayCommand(_ => _closeModalService.Navigate());
@@ -156,6 +170,9 @@ namespace ChatApp.ViewModels
 
                 OnPropertyChanged(nameof(IsAdmin));
 
+                SnackbarManager.Instance.Enqueue($"Login Success! welcome, {Username}", SnackbarManager.MessageToSnackLevel.Success,
+                    duration: TimeSpan.FromSeconds(5));
+
                 _closeModalService.Navigate();
 
                 if (_accountStore.IsAdmin)
@@ -172,7 +189,8 @@ namespace ChatApp.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                SnackbarManager.Instance.Enqueue(e.Message, SnackbarManager.MessageToSnackLevel.Error,
+                        duration: TimeSpan.FromSeconds(10));
                 ErrorMessage = e.Message;
             }
 
@@ -180,26 +198,12 @@ namespace ChatApp.ViewModels
         }
 
 
-        private void ApplyTheme(object obj)
-        {
-            var gradient = new LinearGradientBrush
-            {
-                StartPoint = new Point(0, 0),
-                EndPoint = new Point(1, 1),
-                GradientStops = {
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#0f172a"), 0.0),
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#6b21a8"), 1.0),
-                }
-            };
-
-            ThemeService.SetWindowTheme(gradient);
-        }
-
-
 
         private void ExecuteRecoverPassCommand(string username, string email)
         {
-            MessageBox.Show("Need to implement", "Implement", MessageBoxButton.OK, MessageBoxImage.Hand);
+            SnackbarManager.Instance.Enqueue("Need to implement Recover Password", SnackbarManager.MessageToSnackLevel.Success,
+                        duration: TimeSpan.FromSeconds(10), true);
+            return;
         }
     }
 }

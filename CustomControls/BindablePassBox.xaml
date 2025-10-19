@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:ChatApp.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
@@ -10,13 +11,16 @@
     <Grid>
         <PasswordBox
             x:Name="passwordBox"
+            materialDesign:HintAssist.Hint="Password"
+            materialDesign:HintAssist.IsFloating="True"
+            materialDesign:TextFieldAssist.HasClearButton="True"
+            materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
             Height="28"
             Padding="30 0 0 0"
             FontSize="{StaticResource FontSizeRegular}"
             Foreground="#fff"
             CaretBrush="LightGray"
             BorderBrush="{StaticResource CadetGrayBrush}"
-            BorderThickness="0 0 0 1"
             Margin="0 5 0 0"
             VerticalContentAlignment="Center"
             MaxLength="36">
@@ -29,13 +33,16 @@
 
         <TextBox
             x:Name="clearBox"
+            materialDesign:HintAssist.Hint="Password"
+            materialDesign:HintAssist.IsFloating="True"
+            materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+            materialDesign:TextFieldAssist.HasClearButton="True"
             Height="28"
             Padding="30 0 0 0"
             FontSize="{StaticResource FontSizeRegular}"
             Foreground="#fff"
             CaretBrush="LightGray"
             BorderBrush="{StaticResource CadetGrayBrush}"
-            BorderThickness="0 0 0 1"
             Margin="0 5 0 0"
             VerticalContentAlignment="Center"
             MaxLength="36"

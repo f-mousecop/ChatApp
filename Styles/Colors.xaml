@@ -1,6 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.DeepPurple.Primary.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Lime.Secondary.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
     <LinearGradientBrush x:Key="WindowsBackgroundBrush">
         <GradientStop Offset="0" Color="#0f172a"/>
         <GradientStop Offset="0.5" Color="#333"/>
@@ -36,4 +42,29 @@
 
     <Color x:Key="CyanDark">DarkCyan</Color>
     <SolidColorBrush x:Key="CyanDarkBrush" Color="{StaticResource CyanDark}"/>
+
+
+    <!-- Primary palette -->
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Light" Color="{StaticResource Primary200}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Light.Foreground" Color="{StaticResource Primary200Foreground}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary" Color="{StaticResource Primary500}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Foreground" Color="{StaticResource Primary500Foreground}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Dark" Color="{StaticResource Primary700}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Dark.Foreground" Color="{StaticResource Primary700Foreground}"/>
+
+
+    <!-- Secondary palette -->
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Light" Color="{StaticResource Secondary200}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Light.Foreground" Color="{StaticResource Secondary200Foreground}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary" Color="{StaticResource Secondary400}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Foreground" Color="{StaticResource Secondary400Foreground}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Dark" Color="{StaticResource Secondary700}"/>
+    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Dark.Foreground" Color="{StaticResource Secondary700Foreground}"/>
+
+    <SolidColorBrush x:Key="FwBrushError" Color="DarkRed"/>
+    <SolidColorBrush x:Key="FwBrushWarning" Color="#ff9966"/>
+    <SolidColorBrush x:Key="FwBrushInfo" Color="DimGray"/>
+    <SolidColorBrush x:Key="FwBrushSuccess" Color="ForestGreen"/>
+
+
 </ResourceDictionary>

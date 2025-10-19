@@ -6,45 +6,102 @@
              xmlns:local="clr-namespace:ChatApp.Views"
              xmlns:vm="clr-namespace:ChatApp.ViewModels" xmlns:components="clr-namespace:ChatApp.Components"
              d:DataContext="{d:DesignInstance Type=vm:ChatViewModel}"
+             xmlns:utils="clr-namespace:ChatApp.Utils"
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"            
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border Margin="10" Padding="20">
+
+    <Border Margin="5" Padding="20 0 20 0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*"/>
-                <RowDefinition />
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" FontSize="40" Text="Chat Page" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="0" 
+                       Style="{DynamicResource MaterialDesignHeadline3TextBlock}"
+                       Text="Chat" 
+                       Margin="0 0 0 10"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
 
-            <Border CornerRadius="50" BorderBrush="Black" Grid.Row="1">
-                <ListBox x:Name="MessagesList" ItemsSource="{Binding Messages}" Margin="5" Background="White" Height="250">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Border>
 
-            <StackPanel 
-                            Orientation="Horizontal" 
-                            Margin="5" HorizontalAlignment="Right"
-                            Grid.Row="2">
-                <TextBox x:Name="UserInput" Width="600" 
-                         Height="80" Margin="0,0,5,0" 
-                         Padding="5" TextWrapping="Wrap"/>
-                <Button Content="Send" x:Name="SendButton" 
-                        Style="{StaticResource regularButtons}"
-                        Width="80" Height="80" Command="{Binding SendMessageCommand}" 
-                        Margin="20,0,0,0"/>
+            <materialDesign:Card Grid.Row="1"
+                                 materialDesign:ElevationAssist.Elevation="Dp4">
+
+
+                <mdxam:MarkdownScrollViewer
+                    Padding="10"
+                    Focusable="False"
+                    materialDesign:TextFieldAssist.TextBoxViewMargin="10 10 20 10"
+                    Markdown="{Binding BotMessage}"/>
+
+            </materialDesign:Card>
+
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="5"
+                        Grid.Row="2">
+                <TextBox Width="600" 
+                         materialDesign:HintAssist.Hint=""
+                         MinHeight="60" MaxHeight="140"
+                         Margin="0,10,5,0" 
+                         Padding="10 10 5 5" TextWrapping="Wrap"
+                         Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource MaterialDesignFilledTextBox}"
+                         materialDesign:TransitionAssist.DisableTransitions="True"
+                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                         materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
+                         materialDesign:TextFieldAssist.UnderlineBrush="Black"
+                         materialDesign:TextFieldAssist.TextBoxViewMargin="0 0 10 0"
+                         materialDesign:ElevationAssist.Elevation="Dp4"
+                         CaretBrush="Black"
+                         SelectionBrush="DodgerBlue"
+                         VerticalContentAlignment="Top"
+                         FontSize="{StaticResource FontSizeSmall}"
+                         VerticalScrollBarVisibility="Auto"
+                         AcceptsReturn="True"/>
+
+                <StackPanel VerticalAlignment="Center"
+                            Margin="5 10 0 0">
+                    <Button Content="Send" x:Name="SendButton" 
+                        Width="80" Command="{Binding SendMessageCommand}" 
+                        Margin="0 0 0 10"/>
+
+                    <Button Content="Stream"
+                            Width="80"
+                            Margin="0 0 0 10"
+                            Command="{Binding SendStreamCommand}"/>
+
+                    <Button Width="80"
+                            Command="{Binding CancelCommand}">
+                        <materialDesign:PackIcon Kind="Cancel"/>
+                    </Button>
+                </StackPanel>
+
             </StackPanel>
-            <Button Grid.Row="3" Name="Navigate"
-                    Style="{StaticResource regularButtons}"
-                    Width="100" Height="60" Content="Account Home" 
-                    Command="{Binding NavigateAccountCommand}"/>
+            <StackPanel Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 10 0 0">
+
+                <Button Width="100"
+                        Height="40"
+                        Margin="0 0 5 0"
+                        Content="Home"
+                        Command="{Binding NavigateHomeCommand}"/>
+                <Button Width="100" 
+                        Height="40" 
+                        Margin="5 0 0 0"
+                        Content="Account" 
+                        Command="{Binding NavigateAccountCommand}"/>
+
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

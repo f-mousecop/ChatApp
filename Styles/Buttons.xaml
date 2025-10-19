@@ -2,18 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Styles/Colors.xaml"/>
-        <ResourceDictionary Source="/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+
+    <!-- Rounded image button for expanding avatar -->
     <Style TargetType="{x:Type Button}" x:Key="avatarButton">
-        <Setter Property="Height" Value="80"/>
-        <Setter Property="Width" Value="80"/>
+        <Setter Property="Height" Value="100"/>
+        <Setter Property="Width" Value="100"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                            CornerRadius="40"
+                            CornerRadius="50"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
@@ -42,151 +43,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="regularButtons">
-        <Setter Property="Background" Value="{StaticResource BackgroundGrayBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
-        <Setter Property="Margin" Value="0 10"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            CornerRadius="10"
-                            Padding="{TemplateBinding Padding}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter x:Name="contentPresenter"
-                              Margin="0"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Focusable="False"
-                              RecognizesAccessKey="True"/>
-
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="DarkSlateGray"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6"/>
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CyanDarkBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CyanDarkBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"
-                                                    CenterX="0" CenterY="0" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="modalMenuButton">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            Width="{TemplateBinding Width}" 
-                            Height="{TemplateBinding Height}"
-                            CornerRadius="12"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter x:Name="contentPresenter"
-                                          Margin="0"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Focusable="False"
-                                          RecognizesAccessKey="True"/>
-
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource BattleshipGrayBrush}"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="Gray"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"
-                                            CenterX="0" CenterY="0" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="showPasswordMenuButton">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                        Width="{TemplateBinding Width}" 
-                        Height="{TemplateBinding Height}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}"
-                        SnapsToDevicePixels="True">
-                        <ContentPresenter x:Name="contentPresenter"
-                                      Margin="0"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"
-                                      Focusable="False"
-                                      RecognizesAccessKey="True"/>
-
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="Gray"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"
-                                        CenterX="0" CenterY="0" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
 
+    <!-- WindowChrome menu button style -->
     <Style TargetType="{x:Type Button}" x:Key="windowMenuButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Padding" Value="0" />
@@ -233,6 +92,8 @@
         </Setter>
     </Style>
 
+
+    <!-- Close menu WindowChrome button style -->
     <Style TargetType="{x:Type Button}" x:Key="closeMenuButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="IsTabStop" Value="False"/>
@@ -273,6 +134,8 @@
         </Setter>
     </Style>
 
+
+    <!-- Setters for button styles -->
     <Style TargetType="{x:Type Button}" x:Key="minButton" BasedOn="{StaticResource windowMenuButton}">
         <Setter Property="Background" Value="{StaticResource CyanDarkBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -282,11 +145,6 @@
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
     <Style TargetType="{x:Type Button}" x:Key="restoreButton" BasedOn="{StaticResource windowMenuButton}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="showPassButton" BasedOn="{StaticResource showPasswordMenuButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
