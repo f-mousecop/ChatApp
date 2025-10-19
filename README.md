@@ -13,7 +13,9 @@
 - [x] Updated UI with Material Design in XAML Toolkit
 - [x] Set up OpenAI API
 - [x] Add Chat/Messages model
-	- [ ] Implement method to bind formatted response to RichTextBox
+	- ~~[ ] Implement method to bind formatted response to RichTextBox~~
+	- [x] Use MdXamls MarkDownScrollViewer
+		- [ ] Work on MarkDownRenderer to render streaming response in chunks to mitigate memory spikes
 - [ ] Finish Chat/Messages view/view model   
 
 ---
