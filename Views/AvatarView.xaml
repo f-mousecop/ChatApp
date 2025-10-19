@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid Background="{DynamicResource BackgroundDarkBrush}">
+    <Grid Background="{DynamicResource MaterialDesignShadowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition />
@@ -30,7 +30,10 @@
         </Border>
 
         <Border Grid.Row="1"
-                Margin="30 10 30 42">
+                Margin="30 10 30 42"
+                BorderThickness="1"
+                BorderBrush="DimGray"
+                CornerRadius="2">
             <Image Source="{Binding CurrentUserAccount.AvatarImage}"
                    MaxWidth="750" MaxHeight="450"/>
         </Border>

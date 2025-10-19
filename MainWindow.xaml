@@ -61,6 +61,7 @@
                 </ContentControl>
                 <materialDesign:Snackbar 
                     x:Name="AppSnackbar"
+                    Focusable="False"
                     MessageQueue="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=MessageQueue}"
                     Message="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=Message, Mode=TwoWay}"
                     Style="{DynamicResource AppSnackbar}"

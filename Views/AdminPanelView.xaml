@@ -48,17 +48,18 @@
 
         <TextBox Grid.Row="2"
                  Background="Transparent"
+                 materialDesign:HintAssist.Hint=""
                  BorderThickness="0"
                  IsReadOnly="True"
                  MaxHeight="40"
                  Margin="12 0 12 5"
                  VerticalScrollBarVisibility="Auto"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   Visibility="{Binding ShowErrorMessage, Converter={StaticResource boolToVis}}"
-                   TextWrapping="Wrap"
-                   HorizontalAlignment="Center"
-                   FontSize="{StaticResource FontSizeSmall}"
-                   Foreground="Red"/>
+                 Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Visibility="{Binding ShowErrorMessage, Converter={StaticResource boolToVis}}"
+                 TextWrapping="Wrap"
+                 HorizontalAlignment="Center"
+                 FontSize="{StaticResource FontSizeSmall}"
+                 Foreground="Red"/>
 
         <Grid Grid.Row="3">
 

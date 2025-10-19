@@ -33,21 +33,24 @@
 
                 <TextBox Grid.Column="3"
                          IsReadOnly="True"
+                         materialDesign:HintAssist.Hint=""
                          FontSize="{StaticResource FontSizeRegular}"
                          BorderThickness="0"
                          VerticalAlignment="Center"
                          Text="{Binding Value}"
                          Foreground="{DynamicResource ForegroundLightBrush}"
-                         materialDesign:TransitionAssist.DisableTransitions="True">
+                         materialDesign:TransitionAssist.DisableTransitions="True"
+                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed">
                 </TextBox>
 
                 <!-- Copy button uses CommandTarget to copy from the TextBox -->
                 <Button Grid.Column="4"
+                        ToolTip="Copy"
                         Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                         CommandParameter="{Binding Value}"
                         Margin="0 0 0 8"
-                        Padding="5">
-                    Copy
+                        Padding="6">
+                    <materialDesign:PackIcon Kind="ContentCopy"/>
                 </Button>
                 <Separator Grid.ColumnSpan="5" VerticalAlignment="Bottom"
                            Margin="0 20 0 0"
@@ -83,6 +86,7 @@
 
             <StackPanel Grid.Column="0">
                 <Button Style="{StaticResource avatarButton}"
+                        ToolTip="Expand Avatar"
                         BorderThickness="1"
                         Command="{Binding OpenAvatarPopup}"
                         Margin="0 0 0 5">
@@ -93,6 +97,7 @@
                 </Button>
 
                 <Button Content="Change Avatar"
+                        ToolTip="Change Avatar"
                         FontSize="12"
                         Height="30"
                         Command="{Binding ChangeAvatarCommand}"/>
@@ -137,19 +142,22 @@
                         Height="50"
                         Command="{Binding NavigateChatCommand}"
                         Margin="10"
-                        Content="Chat Now"/>
+                        Content="Chat Now"
+                        ToolTip="Chat Now"/>
                 <Button HorizontalAlignment="Center"
                         Width="100"
                         Height="50"
                         Margin="10"                    
                         Command="{Binding NavigateHomeCommand}"
-                        Content="Go Home"/>
+                        Content="Go Home"
+                        ToolTip="Go Home"/>
                 <Button HorizontalAlignment="Center"
                         Width="100"
                         Height="50"
                         Margin="10"                   
                         Command="{Binding NavigateLogoutCommand}"
-                        Content="Logout"/>
+                        Content="Logout"
+                        ToolTip="Logout"/>
             </StackPanel>
         </materialDesign:ColorZone>
 

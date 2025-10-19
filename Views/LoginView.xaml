@@ -8,6 +8,7 @@
              xmlns:vm="clr-namespace:ChatApp.ViewModels" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:utilities="clr-namespace:ChatApp.Utils.SnackBarUtils"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -59,22 +60,19 @@
                     </Grid>
 
                     <StackPanel Grid.Row="1" Margin="15">
-                        <TextBlock
-                            Text="Username:"
-                            Foreground="#fff"
-                            FontSize="{StaticResource FontSizeRegular}"
-                            Margin="0 15 0 0"
-                            />
-
                         <TextBox
                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            materialDesign:HintAssist.Hint="Username"
+                            materialDesign:HintAssist.IsFloating="True"
+                            materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                            materialDesign:TextFieldAssist.HasClearButton="True"
                             Height="28"
                             FontSize="{StaticResource FontSizeRegular}"
                             Foreground="#fff"
                             CaretBrush="LightGray"
                             BorderBrush="{StaticResource CadetGrayBrush}"
                             MaxLength="36"   
-                            Margin="0 5 22 0"
+                            Margin="0 5 24 0"
                             Padding="30 0 0 0"
                             VerticalContentAlignment="Center">
                             <TextBox.Background>
@@ -86,12 +84,6 @@
 
                     </StackPanel>
                     <StackPanel Grid.Row="2" Margin="15">
-                        <TextBlock
-                            FontSize="{StaticResource FontSizeRegular}"
-                            Foreground="#fff"
-                            Text="Password:"
-                            Margin="0 15 0 0"/>
-
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -104,8 +96,6 @@
                             </customControls:BindablePassBox>
 
                             <ToggleButton Grid.Column="1"
-                                          Width="22" Height="22"
-                                          BorderThickness="0"
                                           IsChecked="{Binding ShowPassword, Mode=TwoWay}"
                                           Focusable="False">
                                 <ToggleButton.Style>
@@ -113,18 +103,22 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ToggleButton">
-                                                    <Border>
-                                                        <Image x:Name="Icon"
-                                                               Source="/Images/visibility_22dp.png"/>
-                                                    </Border>
+                                                    <Grid>
+                                                        <materialDesign:PackIcon x:Name="Icon"
+                                                                                 Kind="Visibility"
+                                                                                 Foreground="#fff"
+                                                                                 Background="Transparent"
+                                                                                 VerticalAlignment="Center"
+                                                                                 Margin="2 0 0 0"
+                                                                                 Width="22" Height="22"/>
+                                                    </Grid>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
                                                             <Setter Property="Opacity" Value="0.6"/>
                                                             <Setter Property="Cursor" Value="Hand"/>
                                                         </Trigger>
                                                         <Trigger Property="IsChecked" Value="True">
-                                                            <Setter TargetName="Icon" Property="Source"
-                                                                    Value="/Images/visibility_off_22dp.png"/>
+                                                            <Setter TargetName="Icon" Property="Kind" Value="VisibilityOff"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>

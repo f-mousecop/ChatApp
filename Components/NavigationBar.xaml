@@ -14,7 +14,8 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="5 0 5 0" MaxWidth="1000">
+    <Grid MaxWidth="1000"
+          Background="{DynamicResource MaterialDesignBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -26,28 +27,39 @@
 
         <Menu Grid.Column="0"
               VerticalAlignment="Center">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Home" Command="{Binding NavigateHomeCommand}"/>
+            <MenuItem Header="_File" ToolTip="File">
+                <MenuItem Header="_Home" 
+                          ToolTip="Home"
+                          Command="{Binding NavigateHomeCommand}"/>
                 <MenuItem Header="_Account"
+                          ToolTip="Account"
                           Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}">
-                    <MenuItem Header="_Overview" Command="{Binding NavigateAccountCommand}"/>
-                    <MenuItem Header="_Logout" Command="{Binding NavigateLogoutCommand}"/>
+                    <MenuItem Header="_Overview" 
+                              ToolTip="Overview"
+                              Command="{Binding NavigateAccountCommand}"/>
+                    <MenuItem Header="_Logout" 
+                              ToolTip="Logout"
+                              Command="{Binding NavigateLogoutCommand}"/>
                 </MenuItem>
-                <MenuItem Header="_Close" Command="SystemCommands.CloseWindowCommand"/>
-                <MenuItem Header="_Admin Panel" Command="{Binding NavigateAdminPanelCommand}"
+                <MenuItem Header="_Close"
+                          ToolTip="Close"
+                          Command="SystemCommands.CloseWindowCommand"/>
+                <MenuItem Header="Admin _Panel" 
+                          ToolTip="Admin Panel"
+                          Command="{Binding NavigateAdminPanelCommand}"
                           Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisConverter}}"/>
             </MenuItem>
         </Menu>
 
         <Line Y1="5" Y2="45"
               Visibility="Visible"
-              Stroke="Black" StrokeThickness="1"
+              Stroke="{DynamicResource MaterialDesignBody}" StrokeThickness="1"
               Grid.Column="1"/>
 
         <TextBlock 
             Grid.Column="1" 
             FontWeight="Bold"
-            Margin="5"
+            Padding="16 0 16 0"
             VerticalAlignment="Center"
             Style="{DynamicResource MaterialDesignHeadlineSmallTextBlock}"
             Text="{Binding CurrentUserAccount, UpdateSourceTrigger=PropertyChanged}"/>
@@ -62,7 +74,8 @@
                     Margin="15 10 0 0"
                     Width="80"
                     Height="30"
-                    Content="Home" />
+                    Content="Home" 
+                    ToolTip="Home"/>
 
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -71,7 +84,8 @@
                     Margin="15 10 0 0"
                     Width="80"
                     Height="30"
-                    Content="Chat" />
+                    Content="Chat"
+                    ToolTip="Chat"/>
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Command="{Binding NavigateAccountCommand}"
@@ -80,7 +94,8 @@
                     Width="80"
                     Height="30"
                     Padding="0"
-                    Content="Account" />
+                    Content="Account" 
+                    ToolTip="Account"/>
 
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -89,7 +104,8 @@
                     Width="80"
                     Height="30"
                     Visibility="{Binding IsNotLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-                    Content="Login"/>
+                    Content="Login"
+                    ToolTip="Login"/>
 
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -98,24 +114,16 @@
                     Width="80"
                     Height="30"
                     Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}"
-                    Content="Logout" />
+                    Content="Logout"
+                    ToolTip="Logout"/>
         </StackPanel>
 
         <StackPanel Grid.Column="3"
                     Orientation="Horizontal">
             <materialDesign:PopupBox IsEnabled="True" StaysOpen="True"
-                                      PlacementMode="BottomAndAlignRightEdges">
+                                      PlacementMode="BottomAndAlignRightEdges"
+                                     ToolTip="Change Theme">
                 <Grid Width="200" Margin="8 8 8 8">
-                    <Grid.Resources>
-                        <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignActionCheckBox}">
-                            <Setter Property="Margin" Value="8 8 10 8"/>
-                        </Style>
-
-                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
-                            <Setter Property="Margin" Value="8 8 8 8"/>
-                            <Setter Property="materialDesign:HintAssist.IsFloating" Value="True"/>
-                        </Style>
-                    </Grid.Resources>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -146,6 +154,7 @@
 
                     <ToggleButton Grid.Column="1" 
                                   Grid.Row="1"
+                                  ToolTip="Change Theme"
                                   Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                   IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"/>
 

@@ -22,7 +22,8 @@
             Grid.Row="1" 
             MaxWidth="1000"
             Margin="10"
-            Content="{Binding ContentViewModel}"/>
+            Content="{Binding ContentViewModel}"
+            Focusable="False"/>
 
     </Grid>
 </UserControl>

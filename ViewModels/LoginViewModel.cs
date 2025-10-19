@@ -45,7 +45,7 @@ namespace ChatApp.ViewModels
 
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (SetProperty(ref _username, value))

@@ -22,10 +22,8 @@ namespace ChatApp.ViewModels
         private string _botMessage = string.Empty;
         private string _errorMessage = string.Empty;
         private bool _busy;
-        private FlowDocument? _botMessageDocument;
+        private FlowDocument? _botMessageDocument = new();
         private DispatcherTimer _renderDebounce;
-
-        public string? CurrentUserAccount => _accountStore.Username;
 
         public string UserMessage
         {
@@ -80,8 +78,6 @@ namespace ChatApp.ViewModels
             set => SetProperty(ref _errorMessage, value);
         }
 
-        public ObservableCollection<string> Messages { get; set; }
-
 
 
         public ICommand NavigateHomeCommand { get; }
@@ -90,16 +86,12 @@ namespace ChatApp.ViewModels
         public ICommand SendStreamCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         // Initialize NavCommand in the constructor to fix CS8618
         public ChatViewModel(AccountStore accountStore,
             INavigationService accountNavigationService,
             INavigationService homeNavigationService)
         {
-            //NavigationBarViewModel = navigationBarViewModel;
-            Messages = new ObservableCollection<string>();
-
             NavigateHomeCommand = new NavigateCommand(homeNavigationService);
             NavigateAccountCommand = new NavigateCommand(accountNavigationService);
 
@@ -157,13 +149,20 @@ namespace ChatApp.ViewModels
             {
                 IsBusy = true;
                 AppendLine($"p>.**You:** {text}");
+
+                // Start fresh stream document per exchange
+                //BotMessageDocument = new FlowDocument();
+
+                // Seed header
+                //_markdownRenderer.AppendToDocument(BotMessageDocument, $"p>.**You**: {text}\n\n**Assistant**: ");
+
                 UserMessage = string.Empty;
 
                 // Start assistant section header once
                 if (string.IsNullOrWhiteSpace(BotMessage))
-                    BotMessage = "Assistant: ";
+                    BotMessage = $"**Assistant**: ";
                 else
-                    BotMessage += "Assistant: ";
+                    BotMessage += $"**Assistant**: ";
 
                 await _openAiService.StreamReplyAsync(
                     text,
@@ -171,6 +170,7 @@ namespace ChatApp.ViewModels
                     {
                         // Streamed text delta arrives here (Responses API)
                         BotMessage += delta;
+                        //_markdownRenderer.AppendToDocument(BotMessageDocument, delta);
                     },
                     ct: _runCts.Token
                 );
@@ -191,23 +191,23 @@ namespace ChatApp.ViewModels
 
 
         // Throttle markdown rendering so that it doesn't render on each tick
-        private void DebounceRenderer()
-        {
-            if (_renderDebounce == null)
-            {
-                _renderDebounce ??= new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
-                _renderDebounce.Tick += OnRenderTick;
-            }
+        //private void DebounceRenderer()
+        //{
+        //    if (_renderDebounce == null)
+        //    {
+        //        _renderDebounce ??= new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
+        //        _renderDebounce.Tick += OnRenderTick;
+        //    }
 
-            _renderDebounce.Stop();
-            _renderDebounce.Start();
-        }
+        //    _renderDebounce.Stop();
+        //    _renderDebounce.Start();
+        //}
 
-        private void OnRenderTick(object? sender, EventArgs e)
-        {
-            _renderDebounce.Stop();
-            BotMessageDocument = _markdownRenderer.Render(_botMessage);
-        }
+        //private void OnRenderTick(object? sender, EventArgs e)
+        //{
+        //    _renderDebounce.Stop();
+        //    BotMessageDocument = _markdownRenderer.Render(_botMessage);
+        //}
 
         private void AppendAssistant(string reply)
         {
