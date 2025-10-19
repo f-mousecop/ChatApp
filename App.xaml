@@ -14,16 +14,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
 
 
-                <ResourceDictionary Source="/Styles/ViewModelTemplates.xaml"/>
+                <ResourceDictionary Source="Styles/ViewModelTemplates.xaml"/>
 
                 <!-- Old styles -->
-                <ResourceDictionary Source="/Styles/Colors.xaml"/>
-                <ResourceDictionary Source="/Styles/ShellBrushes.xaml"/>
-                <ResourceDictionary Source="/Styles/Fonts.xaml"/>
-                <ResourceDictionary Source="/Styles/CustomWindowChrome.xaml"/>
-                <ResourceDictionary Source="/Styles/Buttons.xaml"/>
-                <ResourceDictionary Source="/Styles/RichTBStyles.xaml"/>
-                <ResourceDictionary Source="/Styles/SnackbarStyle.xaml"/>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="Styles/ShellBrushes.xaml"/>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/SnackbarStyle.xaml"/>
+                <ResourceDictionary Source="Styles/CustomWindowChrome.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

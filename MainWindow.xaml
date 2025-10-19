@@ -66,7 +66,6 @@
                     Message="{Binding Source={x:Static utils:SnackbarManager.Instance}, Path=Message, Mode=TwoWay}"
                     Style="{DynamicResource AppSnackbar}"
                     Panel.ZIndex="100"/>
-
             </Grid>
         </Border>
     </materialDesign:DialogHost>

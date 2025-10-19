@@ -2,8 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ChatApp"
                     xmlns:vm="clr-namespace:ChatApp.ViewModels"
-                    xmlns:views="clr-namespace:ChatApp.Views" xmlns:components="clr-namespace:ChatApp.Components">
+                    xmlns:views="clr-namespace:ChatApp.Views"
+                    xmlns:components="clr-namespace:ChatApp.Components">
 
+    <DataTemplate DataType="{x:Type vm:LayoutViewModel}">
+        <components:Layout/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+        <views:HomeView/>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type vm:LoginViewModel}">
         <views:LoginView/>
     </DataTemplate>
@@ -16,14 +24,8 @@
     <DataTemplate DataType="{x:Type vm:AccountViewModel}">
         <views:AccountView/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
-        <views:HomeView/>
-    </DataTemplate>
     <DataTemplate DataType="{x:Type vm:AdminPanelViewModel}">
         <views:AdminPanelView/>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:LayoutViewModel}">
-        <components:Layout/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:AvatarViewModel}">
         <views:AvatarView/>

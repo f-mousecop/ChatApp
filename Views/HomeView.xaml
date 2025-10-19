@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:ChatApp.ViewModels"
              xmlns:components="clr-namespace:ChatApp.Components"
              xmlns:customControls="clr-namespace:ChatApp.CustomControls"
+             xmlns:services="clr-namespace:ChatApp.Services"
              d:DataContext="{d:DesignInstance Type=vm:HomeViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -24,14 +25,14 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" FontSize="{StaticResource FontSizeLarge}" 
-                       Text="Home" HorizontalAlignment="Center"
+                   Text="Home" HorizontalAlignment="Center"
                    Foreground="{StaticResource ForegroundLightBrush}"
-                       FontWeight="Bold"/>
+                   FontWeight="Bold"/>
         <TextBlock Grid.Row="0" Margin="0 10 20 0" 
-                       HorizontalAlignment="Right"
-                       FontSize="{StaticResource FontSizeRegular}" 
-                       Name="curr_Date_Time" 
-                       Foreground="{StaticResource ForegroundLightBrush}"/>
+                   HorizontalAlignment="Right" 
+                   Foreground="{StaticResource ForegroundLightBrush}"
+                   services:ClockService.IsEnabled="True"
+                   services:ClockService.Format="MMM d, yyyy h:mm tt"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

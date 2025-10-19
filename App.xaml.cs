@@ -5,6 +5,7 @@ using ChatApp.Stores;
 using ChatApp.Utils;
 using ChatApp.ViewModels;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.Windows;
 
 namespace ChatApp
@@ -25,6 +26,20 @@ namespace ChatApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            DispatcherUnhandledException += (s, ex) =>
+            {
+                MessageBox.Show(ex.Exception.ToString(), "DispatcherUnhandledException");
+                ex.Handled = true;
+            };
+            AppDomain.CurrentDomain.UnhandledException += (s, ex) =>
+                MessageBox.Show(ex.ExceptionObject.ToString(), "UnhandledException");
+
+            TaskScheduler.UnobservedTaskException += (s, ex) =>
+            {
+                MessageBox.Show(ex.Exception.ToString(), "UnobservedException");
+                ex.SetObserved();
+            };
+
 
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
@@ -39,6 +54,7 @@ namespace ChatApp
             // Nav to home
             var homeSvc = CreateHomeNavigationService();
             homeSvc.Navigate();
+            Debug.WriteLine("Current vm: " + _navigationStore.CurrentViewModel?.GetType().FullName);
 
             MainWindow = new MainWindow()
             {

@@ -7,9 +7,9 @@
              xmlns:customControls="clr-namespace:ChatApp.CustomControls"
              xmlns:vm="clr-namespace:ChatApp.ViewModels" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:utilities="clr-namespace:ChatApp.Utils.SnackBarUtils"
+             xmlns:utils="clr-namespace:ChatApp.Utils"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-             d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:LoginViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -40,12 +40,13 @@
                         </Grid.ColumnDefinitions>
 
                         <Label
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Content="Sign In"                  
-                        FontSize="40"
-                        Foreground="#fff"/>
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="10"
+                            Content="Sign In"                  
+                            FontSize="{StaticResource FontSizeLarge}"
+                            Foreground="#fff"/>
 
                         <Button Grid.Column="2"
                                 ToolTip="Close"
@@ -53,13 +54,14 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Margin="5"
-                                Padding="5">
+                                Width="24" Height="24"
+                                Padding="0">
                             <materialDesign:PackIcon Kind="Close"/>
                         </Button>
 
                     </Grid>
 
-                    <StackPanel Grid.Row="1" Margin="15">
+                    <StackPanel Grid.Row="1" Margin="15 0 15 10">
                         <TextBox
                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                             materialDesign:HintAssist.Hint="Username"
@@ -83,7 +85,7 @@
                         </TextBox>
 
                     </StackPanel>
-                    <StackPanel Grid.Row="2" Margin="15">
+                    <StackPanel Grid.Row="2" Margin="15 10 15 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -148,11 +150,25 @@
                             <Hyperlink Command="{Binding NavigateToForgotPassCommand}">Forgot Password?</Hyperlink>
                             </TextBlock>
                         </WrapPanel>
+                        <TextBox Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="#d7596d"
+                                 Background="Transparent"
+                                 Visibility="{Binding ShowErrorMessage, Converter={StaticResource BoolToVisConverter}}"
+                                 HorizontalAlignment="Center"
+                                 materialDesign:HintAssist.Hint=""
+                                 FontSize="{StaticResource FontSizeSmall}"
+                                 FontWeight="Medium"
+                                 BorderBrush="Transparent"
+                                 IsReadOnly="True"
+                                 Focusable="False"
+                                 BorderThickness="0"
+                                 Margin="10 10 10 0"
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
 
                     <StackPanel
                         Grid.Row="3"
-                        Margin="0,35"
+                        Margin="0,15"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
                         <Button
@@ -170,6 +186,7 @@
                             Margin="5">
                         </Button>
                     </StackPanel>
+
                 </Grid>
             </Border>
         </ScrollViewer>

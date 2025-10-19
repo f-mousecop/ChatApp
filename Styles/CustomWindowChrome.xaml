@@ -134,9 +134,13 @@
                             </Grid>
 
                             <!-- Content -->
-                            <ContentPresenter Grid.Row="1" />
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter/>
+                            </AdornerDecorator>
+
                         </Grid>
                     </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter TargetName="Maximize" Property="Visibility" Value="Collapsed"/>
